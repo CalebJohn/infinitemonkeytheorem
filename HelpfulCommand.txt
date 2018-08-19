@@ -1,0 +1,10 @@
+pelican content
+  -- This command regenerates the output directory
+
+pelican content -r
+  -- Auto reloads the content every time there is a detected change
+
+python -m pelican.server
+  -- Opens a server at localhost:8000
+
+It is recommended that during development you run the second and third commands provided here in separate terminals.

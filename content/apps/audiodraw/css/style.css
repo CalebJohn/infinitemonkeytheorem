@@ -1,0 +1,70 @@
+body {
+   background-color: rgb(32,35,50);
+}
+
+.text {
+  margin: 0px 5px;
+  font-size: 20px;
+  display: inline-block;
+}
+
+.btns {
+  margin: 5px 18px;
+  display: inline-block;
+}
+
+#instructions {
+  position: relative;
+  width: 900px;
+  margin: 0px auto;
+  color: rgb(180, 180, 185);
+  font-size: 18px;
+}
+
+#app {
+  position: relative;
+  width: 900px;
+  /* height: 500px; */
+  margin: 0px auto;
+  background: rgb(180, 180, 185);
+}
+
+.board {
+  position: relative;
+  width: 800px;
+  height: 400px;
+  margin: 0px auto;
+  background: rgb(197, 197, 206);
+  overflow: hidden;
+}
+
+.btn {
+  color: #fff;
+  background-color: rgb(40, 40, 40);
+  padding: 15px 20px;
+  margin: 1px 2px;
+  display: inline-block;
+}
+
+.vertical {
+  height: 100%;
+  position: absolute;
+  width: 2px;
+  background: #777;
+}
+
+.scale {
+  position: relative;
+  margin: 0px 5px;
+  font-size: 30px;
+  display: inline-block;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  background-color: rgb(100, 100, 100);
+}
+

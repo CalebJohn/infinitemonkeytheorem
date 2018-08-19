@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="playNote.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="app">
+      </div>
+    </div>
+    <div id="instructions">
+      <h1>Instructions:</h1>
+      <ul>
+      <li>Just click and drag on the canvas to draw a line!</li>
+      <li>There are 2 input lines (both are necessary to produce sound):</li>
+      <li>The Volume line (black), this controls volume with respect to time</li>
+      <li>The frequency line (red), similarly this controls frequency with time</li>
+      <li>Use the "Toggle Line" button to switch between these</li>
+      <li>The slider to the right of the buttons controls adjusts the zoom level allowing you to input a longer or shorter tone</li>
+      <li>Currently the vertical lines represent 200ms time divisions</li>
+      </ul>
+    </div>
+    <script src="js/compiled/draw_music.js" type="text/javascript"></script>
+  </body>
+</html>
