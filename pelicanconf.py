@@ -54,11 +54,11 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
 
 # NEST_CSS_MINIFY = True
 # Add items to top menu before pages
-MENUITEMS = [('Categories','/categories.html')]
+MENUITEMS = [('Categories','/categories.html'), ('About Us','/pages/about-us.html')]
 # NEST_HEADER_IMAGES = 'banana.jpg'
 # Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
-NEST_SITEMAP_MENU = [('Archives', '/archives.html'), ('Authors','/authors.html'), ('Categories','/categories.html'), ('Tags','/tags.html'), ('Studies','/category/studies.html')]
+NEST_SITEMAP_MENU = [('About Us', '/pages/about-us.html'), ('Archives', '/archives.html'), ('Authors','/authors.html'), ('Categories','/categories.html'), ('Tags','/tags.html')]
 NEST_SITEMAP_ATOM_LINK = u'Atom Feed'
 NEST_SITEMAP_RSS_LINK = u'RSS Feed'
 NEST_SOCIAL_COLUMN_TITLE = u'Social'
