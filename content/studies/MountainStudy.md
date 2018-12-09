@@ -6,7 +6,7 @@ Authors: Clay John
 Summary: A study into a specific art style for a project I am working on
 
 <script src="scripts/processing.min.js"></script>
-<center><canvas id="proc-canvas" data-processing-sources="scripts/Mountain_study.pde"></canvas></center>
+<center><canvas id="proc-canvas" class="processing" data-processing-sources="scripts/Mountain_study.pde"></canvas></center>
 
 
 This is a quick experiment I threw together this weekend to play with simple scenes and get an idea about how I want the art direction to go in a future project.

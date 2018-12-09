@@ -1,5 +1,6 @@
 *.pyc
 *.un~
+*~
 __pycache__
 output
 deploy

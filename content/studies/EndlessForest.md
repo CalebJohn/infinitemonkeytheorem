@@ -47,6 +47,12 @@ Summary: Trying to create an endless forest full of vistas
 	bottom: 0;
 	z-index: 2;
   }
+	div {
+		user-select: auto;
+	}
+	canvas {
+		user-select: none;
+	}
 </style>
 <div id="top" style="display:none">
 </div>
@@ -87,6 +93,10 @@ Summary: Trying to create an endless forest full of vistas
       controls = new THREE.DeviceOrientationControls(camera);
       var blocker = document.getElementById( 'blocker' );
       blocker.remove();
+			var list = document.getElementsByTagName("div");
+			for (var i=0;i<list.length;i++) {
+				list[i].style.userSelect = "none";
+			}
     } else {
 		  controls = new THREE.PointerLockControls( camera );
 
