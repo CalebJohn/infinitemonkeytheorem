@@ -84,18 +84,24 @@
                     <div class="header-logo">
                         <a class="pull-left" href="{{ SITEURL }}/">{{ SITENAME }}</a>
                     </div>
-                    <div class="nav pull-right">
-                        {% for title, link in MENUITEMS %}
-                            <a href="{{ SITEURL }}{{ link }}">{{ title }}</a>
-                        {% endfor %}
-                        {% if DISPLAY_PAGES_ON_MENU %}
-                        {% for pg in PAGES %}
-                            <a {% if pg == page %} class="active"{% endif %} href="{{ SITEURL }}/{{ pg.url }}">{{ pg.title }}</a>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+										<div class="nav pull-right" >
+          							{% for title, link in MENUITEMS %}
+														{% if link is string %}
+															<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
+														{% elif link is iterable %}
+															<div class="dropdown">
+															<a>{{ title }}</a>
+															<div class="dropdown-content">
+														{% for menu_item, item_link in link %}
+															<a class="white" href="{{ SITEURL  }}{{ item_link }}">{{ menu_item }}</a>
+														{% endfor %}
+															</div>
+															</div>
+														{% endif %}
+          							{% endfor %}
+      							</div><!-- /.navbar-collapse -->
+								</div>
+						</div>
             <!-- /Static navbar -->
 
             <!-- Header -->

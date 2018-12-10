@@ -54,11 +54,11 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
 
 # NEST_CSS_MINIFY = True
 # Add items to top menu before pages
-MENUITEMS = [('Categories','/categories.html'), ('About Us','/pages/about-us.html')]
+MENUITEMS = [('Menu', [('About Us', '/pages/about-us.html'), ('Authors','/authors.html'), ('Categories','/categories.html'), ('Tags','/tags.html')])]
 # NEST_HEADER_IMAGES = 'banana.jpg'
 # Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
-NEST_SITEMAP_MENU = [('About Us', '/pages/about-us.html'), ('Archives', '/archives.html'), ('Authors','/authors.html'), ('Categories','/categories.html'), ('Tags','/tags.html')]
+NEST_SITEMAP_MENU = [('Archives', '/archives.html')]
 NEST_SITEMAP_ATOM_LINK = u'Atom Feed'
 NEST_SITEMAP_RSS_LINK = u'RSS Feed'
 NEST_SOCIAL_COLUMN_TITLE = u'Social'
@@ -67,7 +67,7 @@ NEST_COPYRIGHT = u'&copy; infinitemonkeytheorem 2018'
 # index.html
 NEST_INDEX_HEAD_TITLE = u'Homepage'
 NEST_INDEX_HEADER_TITLE = u'Posts'
-NEST_INDEX_CONTENT_TITLE = u'Most Recent Posts'
+NEST_INDEX_CONTENT_TITLE = u'All Posts'
 # archives.html
 NEST_ARCHIVES_HEAD_TITLE = u'Archives'
 NEST_ARCHIVES_HEAD_DESCRIPTION = u'Posts Archives'
