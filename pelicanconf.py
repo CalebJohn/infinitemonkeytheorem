@@ -52,7 +52,6 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
          ('Python.org', 'http://python.org/'),
          ('Jinja2', 'http://jinja.pocoo.org/'),)
 
-# NEST_CSS_MINIFY = True
 # Add items to top menu before pages
 MENUITEMS = [('Menu', [('About Us', '/pages/about-us.html'), ('Authors','/authors.html'), ('Categories','/categories.html'), ('Tags','/tags.html')])]
 # NEST_HEADER_IMAGES = 'banana.jpg'
