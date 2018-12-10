@@ -345,6 +345,11 @@ h4:after {
   height: 100px;
   margin: 2px 5px;
 }
+.content img.blog {
+	margin-top: 15px;
+	width: auto;
+	max-width: 90%;
+}
 
 .content img{
     border: 0;
@@ -457,6 +462,21 @@ h4:after {
     font-weight: 400;
 		color: #4b505a;
     /* line-height: 100px; */
+}
+
+
+.archive dt.blog{
+    font-size: 3vw;
+    font-weight: 400;
+		color: #4b505a;
+		text-align: center;
+		float: none;
+		width: auto;
+}
+@media (min-width: 512px){
+	.archive dt.blog{
+		font-size: 16px;
+	}
 }
 /* Styling */
 

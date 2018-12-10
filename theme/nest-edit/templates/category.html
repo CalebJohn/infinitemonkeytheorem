@@ -18,10 +18,13 @@
             <dl class="dl-horizontal">
             	{% for article in articles %}
                 {% if category|string in PROJECT_CATEGORY_TITLES %}
-            	<dt style="line-height: 100px;">{{ article.locale_date}}</dt>
-                <dd><a class="internal" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}
-                  <img class="proj-thumb" src="{{ SITEURL }}/thumbnails/{{ article.slug }}_thumb.png">
-                </a></dd>
+            		<dt class="blog" >{{ article.locale_date}}
+                	<a class="internal" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+								</dt>
+								<dd></dd>
+								<a class="internal" href="{{ SITEURL }}/{{ article.url }}">
+                	<img class="blog" src="{{ SITEURL }}/images/{{ article.slug }}.png">
+								</a>
                 {% else %}
                 <dt>{{ article.locale_date}}</dt>
                 <dd><a class="internal" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}

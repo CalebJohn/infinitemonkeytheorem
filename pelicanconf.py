@@ -13,8 +13,8 @@ TIMEZONE = 'Canada/Mountain'
 
 DEFAULT_LANG = u'en'
 
-#Ignore vim undo files
-IGNORE_FILES = ['*.un~', '*~']	
+#Ignore vim files
+IGNORE_FILES = ['*.un~', '*~', '*.swp']	
 
 PROJECT_CATEGORY_TITLES = ["Studies"]
 STATIC_PATHS = [

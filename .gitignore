@@ -1,6 +1,7 @@
 *.pyc
 *.un~
 *~
+*.swp
 __pycache__
 output
 deploy
