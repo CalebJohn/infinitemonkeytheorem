@@ -85,13 +85,26 @@
 														{% if link is string %}
 															<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
 														{% elif link is iterable %}
-															<div class="dropdown">
-															<a>{{ title }}</a>
-															<div class="dropdown-content">
-														{% for menu_item, item_link in link %}
-															<a class="white" href="{{ SITEURL  }}{{ item_link }}">{{ menu_item }}</a>
-														{% endfor %}
-															</div>
+															<div id={{title}}-drop class="dropdown">
+														<a id={{title}}>{{ title }}</a>
+														<script> 
+																window.onload = function() {
+																var mennu = document.getElementById("{{title}}"); 
+																var drop_content = document.getElementById("{{title}}-drop-content");
+																var drop = document.getElementById("{{title}}-drop");
+																function check_menu(){
+																 if(mennu.matches(":hover")){drop_content.style.display="block";}
+																 if(!(mennu.matches(":hover")||drop.matches(":hover")||drop_content.matches(":hover")))
+																 	{drop_content.style.display="none";}
+																}
+																setInterval(check_menu, 200);
+																}
+														</script>
+																<div id={{title}}-drop-content class="dropdown-content">
+																{% for menu_item, item_link in link %}
+																	<a class="white" href="{{ SITEURL  }}{{ item_link }}">{{ menu_item }}</a>
+																{% endfor %}
+																</div>
 															</div>
 														{% endif %}
           							{% endfor %}

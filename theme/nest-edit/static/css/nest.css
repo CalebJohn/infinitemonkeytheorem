@@ -219,10 +219,10 @@ h4:after {
     color:#000;
     text-decoration:none;
     padding:8px;
-    margin-left:20px;
     text-transform: uppercase;
     transition: all 0.2s ease-out;
 		user-select: none;
+		margin: 25px;
 }
 
 .header-nav .nav a.white{
@@ -532,7 +532,6 @@ canvas.processing {
 
 .dropdown {
   position: relative;
-  display: inline-block;
 }
 
 .dropdown-content {
@@ -541,8 +540,8 @@ canvas.processing {
   background-color: #000;
 	line-height: 3;
   z-index: 1;
+	width: inherit;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
+.nav a:hover .dropdown:hover .dropdown-content:hover{
 }
