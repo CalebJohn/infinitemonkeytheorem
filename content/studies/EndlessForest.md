@@ -1,8 +1,9 @@
 Title: Endless Forest
 Date: 2018-06-24 11:26
 Category: Studies
-Tags: threejs
-Authors: Clay John
+Tags: threejs, noise, procedural
+Keywords: perlin noise, trees, flat shading, procedural
+Authors: Clay
 Summary: Trying to create an endless forest full of vistas
 
 <style>

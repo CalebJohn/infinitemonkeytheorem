@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = u'monkeys'
 SITENAME = u'infinitemonkeytheorem'
 SITEURL = ''
-THEME = 'theme/nest-edit'
+THEME = 'theme/twins'
 
 PATH = 'content'
 
@@ -29,13 +29,14 @@ ARTICLE_EXCLUDES = [
         ]
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["thumbnailer", "ipynb"]
+#PLUGINS = ["thumbnailer", "ipynb"]
+PLUGINS = ["ipynb"]
 
 IMAGE_PATH = "images"
-DEFAULT_THUMBNAIL_DIR = "images"
-THUMBNAIL_SIZES = {
-  'thumb': '100'
-}
+#DEFAULT_THUMBNAIL_DIR = "images"
+#THUMBNAIL_SIZES = {
+#  'thumb': '100'
+#}
 
 # Necessary for ipython notebooks
 MARKUP = ('md', 'ipynb')

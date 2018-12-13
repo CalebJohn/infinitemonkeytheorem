@@ -1,8 +1,10 @@
 Title: Mountain Study
 Date: 2016-02-23 13:53
 Category: Studies
-Tags: processing
-Authors: Clay John
+Tags: processing, mountains
+Keywords: procedural
+description: fill this in bucko
+Authors: Clay
 Summary: A study into a specific art style for a project I am working on
 
 <script src="scripts/processing.min.js"></script>

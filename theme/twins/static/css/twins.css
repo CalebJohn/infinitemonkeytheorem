@@ -1,4 +1,6 @@
+
 /*!
+ * Based on:
  * Nest v1.0.0 (http://www.molivier.com)
  * Copyright 2015 Matthieu OLIVIER
  * Licensed under Apache V2 (https://github.com/molivier/nest/blob/master/LICENSE)
@@ -7,6 +9,10 @@
 /* Responsive */
 
 .container {
+	padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 	width: 90vw;
 }
  @media (min-width: 1024px) {
@@ -18,14 +24,30 @@
 /* Default styling */
 body {
     font-family: "Muli", sans-serif;
-/*    font-size: 15px;*/
+    font-size: 14px;
     color: #000;
     background-color: #fff;
     line-height: 24px;
     -webkit-font-smoothing:antialiased;
     text-rendering: optimizeLegibility;
+		margin: 0px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%
 }
 
+* {
+	-webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+.text-right {
+    text-align: right;
+}
 
 /* Links */
 /* eb2344*/ /* A62C00 */
@@ -35,6 +57,7 @@ a, a:visited {
     color: #A62C00; 
     text-decoration: none;
     transition: all 0.2s ease-out;
+		background-color: transparent;	
 }
 a:hover, a:active{
     text-decoration:underline;
@@ -69,6 +92,7 @@ a.internal, a.internal:visited {
 		font-weight: 600;
     text-decoration: none;
     transition: all 0.2s ease-out;
+		line-height: 24px;
 }
 a.internal:hover, a.internal:active{
     text-decoration:underline;
@@ -145,6 +169,10 @@ code { padding: 3px 6px; }
 }
 
 /* Titles */
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
 
 h1 {
     font-size: 28px;
@@ -201,11 +229,114 @@ h4:after {
     border-bottom: 1px solid rgba(0,0,0,1);
 }
 
+/* setup for tables */
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+@media (min-width: 768px) {
+.dl-horizontal dd {
+    margin-left: 180px;
+}
+}
+
+@media (min-width: 768px) {
+.dl-horizontal dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+}
+
+dl {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+dd {
+    margin-left: 0;
+}
+
+dd, dt {
+    line-height: 1.42857143;
+}
+
+ol, ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-4 {
+    width: 33.33333333%;
+}
+
+.col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    float: left;
+}
+
+.col-xs-12 {
+    width: 100%;
+}
+
+@media (min-width: 992px){
+.col-md-3 {
+    width: 25%;
+}
+}
+
+@media (min-width: 992px) {
+.col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {
+    float: left;
+}
+}
+
+@media (min-width: 768px) {
+.col-sm-3 {
+    width: 25%;
+}
+}
+
+@media (min-width: 768px){
+.col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9 {
+    float: left;
+}
+}
+
+
+
 /* Navbar */
+.pull-left {
+    float: left!important;
+}
+.pull-right {
+	float: right!important;
+}
+.nav {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
 .header-nav{
     height:100px;
     line-height:100px;
-    /* color:#fff; */
     color: #000;
     font-size:12px;
     font-weight:600;
@@ -215,7 +346,6 @@ h4:after {
 }
 .header-nav .nav a{
     font-weight:600;
-    /* color:#fff; */
     color:#000;
     text-decoration:none;
     padding:8px;
@@ -223,6 +353,7 @@ h4:after {
     transition: all 0.2s ease-out;
 		user-select: none;
 		margin: 25px;
+		margin-right: 0px;
 }
 
 .header-nav .nav a.white{
@@ -544,4 +675,43 @@ canvas.processing {
 }
 
 .nav a:hover .dropdown:hover .dropdown-content:hover{
+}
+/* before and after elements */
+.btn-group-vertical>.btn-group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+    display: table;
+    content: " ";
+}
+
+.btn-group-vertical>.btn-group:after, .btn-toolbar:after, .clearfix:after, .container-fluid:after, .container:after, .dl-horizontal dd:after, .form-horizontal .form-group:after, .modal-footer:after, .nav:after, .navbar-collapse:after, .navbar-header:after, .navbar:after, .pager:after, .panel-body:after, .row:after {
+    clear: both;
+}
+
+.btn-group-vertical>.btn-group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+    display: table;
+    content: " ";
+}
+
+/*misc from bootstrap*/
+:after, :before {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
 }

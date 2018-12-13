@@ -2,7 +2,7 @@ Title: Draw Tones!
 Date: 2018-08-19 17:00
 Category: Blog
 Tags: clojurescript, audio
-Authors: Caleb John
+Authors: Caleb
 Summary: A simple web app that allows a user to draw a volume envelope and a frequency envelope for a specific tone.
 
 #### Background

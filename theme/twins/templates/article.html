@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block title %}{{ article.title }} - {{ super() }}{% endblock title %}
-{% block description %}{{ article.content|striptags|truncate(200)|escape }}{% endblock description %}
-{% block keywords %}{% for tag in article.tags|sort %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% endblock keywords %}
+{% block description %}{% if article.summary %}{{ article.summary|striptags }}{% else %}{{ article.content|striptags|truncate(200)|escape }}{% endif %}{% endblock description %}
+{% block keywords %}{{ article.keywords }}, {% for tag in article.tags|sort %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% endblock keywords %}
 
 {% block headerstyle %}
     {% if NEST_HEADER_IMAGES %}
@@ -26,7 +26,6 @@
 
         <p class="header-date">{{ NEST_ARTICLE_HEADER_BY }} {% for author in article.authors %}<a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %}, {% endif %}{% endfor %}, {{ article.locale_date }}{% if article.modified %}, {{ NEST_ARTICLE_HEADER_MODIFIED }} {{ article.locale_modified }}{% endif %}, {{ NEST_ARTICLE_HEADER_IN }} <a href="{{ SITEURL }}/{{ category.url }}">{{ article.category|capitalize }}</a></p>
         <p class="header-tags">
-          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
            {% for tag in article.tags|sort %}<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
         </p>
 
