@@ -20,9 +20,11 @@ PROJECT_CATEGORY_TITLES = ["Studies"]
 STATIC_PATHS = [
         "scripts",
         "images",
-        "apps"]
+        "apps",
+        "extra/favicon.png"]
 EXTRA_PATH_METADATA = {
-        'apps/audiodraw/audio.html': {'path': 'apps/audiodraw/audio.html'}
+        'apps/audiodraw/audio.html': {'path': 'apps/audiodraw/audio.html'},
+        'extra/favicon.png' : {'path': 'favicon.png'}
         }
 ARTICLE_EXCLUDES = [
         "apps"
