@@ -14,7 +14,7 @@ TIMEZONE = 'Canada/Mountain'
 DEFAULT_LANG = u'en'
 
 #Ignore vim files
-IGNORE_FILES = ['*.un~', '*~', '*.swp']	
+IGNORE_FILES = ['*.un~', '*~', '*.swp', '*.ipynb' '*.ipynb_checkpoints']
 
 PROJECT_CATEGORY_TITLES = ["Studies"]
 STATIC_PATHS = [
@@ -30,18 +30,16 @@ ARTICLE_EXCLUDES = [
         "apps"
         ]
 
-PLUGIN_PATHS = ["plugins"]
+PLUGIN_PATHS = ["./plugins"]
 #PLUGINS = ["thumbnailer", "ipynb"]
-PLUGINS = ["ipynb"]
+# PLUGINS = ["ipynb.markup"]
+# IPYNB_USE_METACELL = True
 
 IMAGE_PATH = "images"
 #DEFAULT_THUMBNAIL_DIR = "images"
 #THUMBNAIL_SIZES = {
 #  'thumb': '100'
 #}
-
-# Necessary for ipython notebooks
-MARKUP = ('md', 'ipynb')
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None

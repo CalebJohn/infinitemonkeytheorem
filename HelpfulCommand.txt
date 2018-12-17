@@ -8,3 +8,6 @@ python -m pelican.server
   -- Opens a server at localhost:8000
 
 It is recommended that during development you run the second and third commands provided here in separate terminals.
+
+jupyter nbconvert --to markdown file.ipynb  --template=md.tpl
+
