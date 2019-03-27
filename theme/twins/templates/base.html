@@ -69,6 +69,8 @@
 
     <body>
 
+        <!-- Accept touch on apple devices -->
+				<div onclick="void(0)" class="apple-hack"> 
         <!-- Header -->
         {% block headerstyle %}
         {% endblock headerstyle %}
@@ -84,8 +86,8 @@
 														{% if link is string %}
 															<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
 														{% elif link is iterable %}
-															<div id={{title}}-drop class="dropdown">
-														<a id={{title}}>{{ title }}</a>
+															<div onclick="void(0)" id={{title}}-drop class="dropdown">
+														<a onclick="void(0)" id={{title}}>{{ title }}</a>
 														<script> 
 																window.onload = function() {
 																var mennu = document.getElementById("{{title}}"); 
@@ -175,5 +177,6 @@
             </div>
         </div>
         <!-- /Footer -->
+				</div>
     </body>
 </html>

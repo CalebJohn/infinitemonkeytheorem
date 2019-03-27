@@ -349,7 +349,7 @@ ol, ul {
     /*color:#fff;*/
     color:#000;
     font-weight:600;
-    background-color: rgba(0,0,0,0.2);
+    /*background-color: rgba(0,0,0,0.2);*/
 }
 .header-logo {
     font-size:15px;
@@ -695,4 +695,12 @@ button, input, optgroup, select, textarea {
 button, html input[type=button], input[type=reset], input[type=submit] {
     -webkit-appearance: button;
     cursor: pointer;
+}
+
+/* special class to make apple register touch */
+.apple-hack {
+	height: 100vh;
+}
+.apple-hack:active {
+	background-color: transparent;
 }
