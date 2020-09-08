@@ -10,7 +10,7 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = ''
+SITEURL = 'https://www.inmoth.ca'
 RELATIVE_URLS = False
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
@@ -18,5 +18,5 @@ FEED_ALL_ATOM = 'feeds/all.atom.xml'
 OUTPUT_PATH = 'deploy/'
 
 DELETE_OUTPUT_DIRECTORY = True
-OUTPUT_RETENTION = ['CNAME', '.git']
+# OUTPUT_RETENTION = ['CNAME', '.git']
 

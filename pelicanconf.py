@@ -19,7 +19,9 @@ IGNORE_FILES = ['*.un~', '*~', '*.swp', '*.ipynb' '*.ipynb_checkpoints']
 STATIC_PATHS = [
         "scripts",
         "images",
-        "apps"]
+        "apps",
+        "extra"]
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 ARTICLE_EXCLUDES = STATIC_PATHS + [
 ]
 
@@ -37,6 +39,8 @@ IMAGE_PATH = "images"
 # We don't bother generating categories
 CATEGORY_SAVE_AS = ''
 CATEGORIES_SAVE_AS = ''
+
+DEFAULT_DATE_FORMAT = '%B %d, %Y'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None

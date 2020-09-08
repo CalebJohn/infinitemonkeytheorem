@@ -1,0 +1,42 @@
+name: Build inmoth
+
+on:
+  push
+
+jobs:
+  build_job:
+    name: Build inmoth with Pelican
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Checkout master
+        id: checkout-master
+        uses: actions/checkout@v2
+      - name: Cache pip packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pelican-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pelican-\
+      - name: Install Pelican
+        run: |
+          pip install -r requirements.txt
+      - name: Run Pelican
+        id: run-pelican
+        run: |
+          pelican content -o deploy -s publishconf.py
+      - name: Push to pages branch
+        id: push-to-gh-pages
+        run: |
+          cd deploy
+          git init
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+          git add .
+          git commit -m "rebuild site from ${GITHUB_SHA}"
+          git push origin master:gh-pages --force

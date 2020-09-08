@@ -10,7 +10,7 @@
       {% for article in articles %}
 				<p class="page-list-item">
 					<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
-					<small>{{ article.date|strftime("%B %d, %Y") }}</small>
+					<small>{{ article.date }}</small>
 				</p>
       {% endfor %}
   </div>

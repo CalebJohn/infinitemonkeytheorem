@@ -7,7 +7,7 @@
 {% block content %}
 	<h1 class="article-title">{{ article.title }}</h1>
 
-	<p class="article-date">By {% for author in article.authors %}<a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %}, {% endif %}{% endfor %} on {{ article.date|strftime("%B %d, %Y") }}{% if article.modified %}, updated {{ article.modified|strftime("%B %d, %Y") }}{% endif %}</p>
+	<p class="article-date">By {% for author in article.authors %}<a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %}, {% endif %}{% endfor %}, {{ article.locale_date }}{% if article.modified %}, updated {{ article.locale_modified }}{% endif %}</p>
 	<p class="article-tags">tags:
      {% for tag in article.tags|sort %}<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
   </p>
