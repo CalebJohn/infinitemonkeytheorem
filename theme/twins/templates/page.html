@@ -3,19 +3,7 @@
 {% block title %}{{ page.title }} - {{ super() }}{% endblock title %}
 {% block description %}{{ page.content|striptags|truncate(200)|escape }}{% endblock description %}
 
-{% block headerstyle %}
-    {% if NEST_HEADER_IMAGES %}
-    <div class="header-container" style="background: url('{{ SITEURL }}/images/{{ NEST_HEADER_IMAGES }}'); background-position: center; ">
-    {% else %}
-    <div class="header-container gradient">
-    {% endif %}
-{% endblock headerstyle %}
-
 {% block content %}
-    <div class="archive-container">
-    <div id="page-container" class="container content archive">
-			<h2> <a href={{ SITEURL }}/{{ page.url }}>{{ page.title }}</a></h2>
-        {{ page.content }}
-    </div>
-    </div>
+	<h2> <a href={{ SITEURL }}/{{ page.url }}>{{ page.title }}</a></h2>
+		{{ page.content }}
 {% endblock %}

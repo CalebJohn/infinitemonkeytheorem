@@ -20,11 +20,9 @@ PROJECT_CATEGORY_TITLES = ["Studies"]
 STATIC_PATHS = [
         "scripts",
         "images",
-        "apps",
-        "extra/favicon.png"]
+        "apps"]
 EXTRA_PATH_METADATA = {
         'apps/audiodraw/audio.html': {'path': 'apps/audiodraw/audio.html'},
-        'extra/favicon.png' : {'path': 'favicon.png'}
         }
 ARTICLE_EXCLUDES = [
         "apps"
@@ -48,31 +46,17 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),)
-
 # Add items to top menu before pages
-MENUITEMS = [('Menu', [('About Us', '/pages/about-us.html'), ('Authors','/authors.html'), ('Categories','/categories.html'), ('Tags','/tags.html')])]
+MENUITEMS = [('About Us', '/pages/about-us.html'), ('Authors','/authors.html'), ('Tags','/tags.html')]
 # NEST_HEADER_IMAGES = 'banana.jpg'
 # Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
-NEST_SITEMAP_MENU = [('Archives', '/archives.html')]
-NEST_SITEMAP_ATOM_LINK = u'Atom Feed'
-NEST_SITEMAP_RSS_LINK = u'RSS Feed'
-NEST_SOCIAL_COLUMN_TITLE = u'Social'
-NEST_LINKS_COLUMN_TITLE = u'Links'
-NEST_COPYRIGHT = u'&copy; infinitemonkeytheorem 2018'
+NEST_SITEMAP_ATOM_LINK = u'Get the feed'
+NEST_COPYRIGHT = u'&copy; infinitemonkeytheorem 2020'
 # index.html
 NEST_INDEX_HEAD_TITLE = u'Homepage'
 NEST_INDEX_HEADER_TITLE = u'Posts'
-NEST_INDEX_CONTENT_TITLE = u'All Posts'
-# archives.html
-NEST_ARCHIVES_HEAD_TITLE = u'Archives'
-NEST_ARCHIVES_HEAD_DESCRIPTION = u'Posts Archives'
-NEST_ARCHIVES_HEADER_TITLE = u'Archives'
-NEST_ARCHIVES_CONTENT_TITLE = u'Archives'
+NEST_INDEX_CONTENT_TITLE = u'All Articles'
 # article.html
 NEST_ARTICLE_HEADER_BY = u'By'
 NEST_ARTICLE_HEADER_MODIFIED = u'modified'
@@ -85,22 +69,6 @@ NEST_AUTHOR_CONTENT_TITLE = u'Posts'
 NEST_AUTHORS_HEAD_TITLE = u'Author list'
 NEST_AUTHORS_HEAD_DESCRIPTION = u'Author list'
 NEST_AUTHORS_HEADER_TITLE = u'Author list'
-# categories.html
-NEST_CATEGORIES_HEAD_TITLE = u'Categories'
-NEST_CATEGORIES_HEAD_DESCRIPTION = u'Archives listed by category'
-NEST_CATEGORIES_HEADER_TITLE = u'Categories'
-# category.html
-NEST_CATEGORY_HEAD_TITLE = u'Category Archive'
-NEST_CATEGORY_HEAD_DESCRIPTION = u'Category Archive'
-NEST_CATEGORY_HEADER_TITLE = u'Category'
-# pagination.html
-NEST_PAGINATION_PREVIOUS = u'Previous'
-NEST_PAGINATION_NEXT = u'Next'
-# period_archives.html
-NEST_PERIOD_ARCHIVES_HEAD_TITLE = u'Archives for'
-NEST_PERIOD_ARCHIVES_HEAD_DESCRIPTION = u'Archives for'
-NEST_PERIOD_ARCHIVES_HEADER_TITLE = u'Archives'
-NEST_PERIOD_ARCHIVES_CONTENT_TITLE = u'Archives for'
 # tag.html
 NEST_TAG_HEAD_TITLE = u'Tag archives'
 NEST_TAG_HEAD_DESCRIPTION = u'Tag archives'
@@ -112,11 +80,6 @@ NEST_TAGS_HEADER_TITLE = u'Tags'
 NEST_TAGS_CONTENT_TITLE = u'Tags List'
 NEST_TAGS_CONTENT_LIST = u'tagged'
 
-# Social widget
-SOCIAL = (('Caleb\'s', 'https://github.com/CalebJohn'),
-         ('Clay\'s', 'https://lowpolygen.wordpress.com'),)
-
-DEFAULT_PAGINATION = 20
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
