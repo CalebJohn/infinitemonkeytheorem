@@ -20,7 +20,3 @@ OUTPUT_PATH = 'deploy/'
 DELETE_OUTPUT_DIRECTORY = True
 OUTPUT_RETENTION = ['CNAME', '.git']
 
-# Following items are often useful when publishing
-
-#DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""

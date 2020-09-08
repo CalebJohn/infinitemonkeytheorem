@@ -1,6 +1,5 @@
 Title: Mountain Study
 Date: 2016-02-23 13:53
-Category: Studies
 Tags: processing, mountains
 Keywords: procedural
 description: fill this in bucko

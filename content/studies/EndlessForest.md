@@ -1,6 +1,5 @@
 Title: Endless Forest
 Date: 2018-06-24 11:26
-Category: Studies
 Tags: threejs, noise, procedural
 Keywords: perlin noise, trees, flat shading, procedural
 Authors: Clay

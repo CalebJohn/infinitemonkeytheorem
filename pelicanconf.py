@@ -16,17 +16,12 @@ DEFAULT_LANG = u'en'
 #Ignore vim files
 IGNORE_FILES = ['*.un~', '*~', '*.swp', '*.ipynb' '*.ipynb_checkpoints']
 
-PROJECT_CATEGORY_TITLES = ["Studies"]
 STATIC_PATHS = [
         "scripts",
         "images",
         "apps"]
-EXTRA_PATH_METADATA = {
-        'apps/audiodraw/audio.html': {'path': 'apps/audiodraw/audio.html'},
-        }
-ARTICLE_EXCLUDES = [
-        "apps"
-        ]
+ARTICLE_EXCLUDES = STATIC_PATHS + [
+]
 
 PLUGIN_PATHS = ["./plugins"]
 #PLUGINS = ["thumbnailer", "ipynb"]
@@ -38,6 +33,10 @@ IMAGE_PATH = "images"
 #THUMBNAIL_SIZES = {
 #  'thumb': '100'
 #}
+
+# We don't bother generating categories
+CATEGORY_SAVE_AS = ''
+CATEGORIES_SAVE_AS = ''
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
