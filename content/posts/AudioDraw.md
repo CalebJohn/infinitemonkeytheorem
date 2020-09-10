@@ -17,9 +17,10 @@ The idea is simple (and if you follow the link you'll see the implementation is 
 
 Still not convinced? Check out this sweet screenshot showing a tone with an approximately gaussian volume envelope and a chirping frequency.
 
-![envelope](images/envelope.png)
+![Screenshot of the application displaying a chirp](images/envelope.png)
 
 Notice that the above interface is plain:
+
 - "Play Note" does exactly as it sounds (makes a sound)
 - "Toggle Line" switches between volume and frequency input
 - The slider allows you to change the timescale of the program
