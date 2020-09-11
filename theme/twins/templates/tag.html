@@ -7,10 +7,15 @@
   <div class="archive">
     <h2><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></h2>
       {% for article in articles %}
-				<p class="page-list-item">
-					<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
-					<small>{{ article.locale_date}}</small>
-				</p>
+				<dl class="page-list-item">
+					<dt>
+						<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
+						<small>{{ article.locale_date}}</small>
+					</dt>
+					<dd>
+						{{ article.summary }}
+					</dd>
+				</dl>
       {% endfor %}
   </div>
 {% endblock content %}

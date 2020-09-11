@@ -20,6 +20,7 @@ STATIC_PATHS = [
         "scripts",
         "images",
         "apps",
+        "style",
         "extra"]
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 ARTICLE_EXCLUDES = STATIC_PATHS + [
@@ -27,7 +28,7 @@ ARTICLE_EXCLUDES = STATIC_PATHS + [
 
 PLUGIN_PATHS = ["./plugins"]
 #PLUGINS = ["thumbnailer", "ipynb"]
-# PLUGINS = ["ipynb.markup"]
+PLUGINS = ["inline-css"]
 # IPYNB_USE_METACELL = True
 
 IMAGE_PATH = "images"
@@ -54,3 +55,7 @@ MENUITEMS = [('About', '/pages/about-us.html'), ('Authors','/authors.html'), ('T
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
+
+# This is for the inline css plugin, having this saves the site from having to do an extra
+# server request to get the css, it's all loaded at once
+SITE_CSS_LOCATION = 'content/style/twins.css'
