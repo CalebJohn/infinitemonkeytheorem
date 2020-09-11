@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}{{ NEST_AUTHORS_HEAD_TITLE }} - {{ super() }}{% endblock title %}
-{% block description %}{{ NEST_AUTHORS_HEAD_DESCRIPTION }}{% endblock description %}
+{% block title %}{{ author }} - {{ super() }}{% endblock title %}
+{% block description %}{{ author }}'s Posts{% endblock description %}
 
 {% block content %}
   <div class="archive">
@@ -10,7 +10,7 @@
       {% for article in articles %}
 				<p class="page-list-item">
 					<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
-					<small>{{ article.date }}</small>
+					<small>{{ article.locale_date }}</small>
 				</p>
       {% endfor %}
     {% endfor %}

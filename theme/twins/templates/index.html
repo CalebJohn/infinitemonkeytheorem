@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{{ NEST_INDEX_HEAD_TITLE }} {% if articles_page.has_previous() %}- page {{ articles_page.number }} {% endif %}- {{ super() }}{% endblock title %}
+{% block title %}{% if articles_page.has_previous() %}- page {{ articles_page.number }} {% endif %}- {{ super() }}{% endblock title %}
 {% block description %}{{ SITENAME }}, {{ SITESUBTITLE }}{% endblock description %}
 
 {% block content %}
   <div class="archive">
-    <h2><a href="{{ SITEURL }}/">{{ NEST_INDEX_CONTENT_TITLE }}</a></h2>
+    <h2><a href="{{ SITEURL }}/">Articles</a></h2>
       {% for article in articles %}
 				<p class="page-list-item">
 					<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 

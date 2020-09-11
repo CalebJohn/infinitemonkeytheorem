@@ -1,26 +1,27 @@
 body {
-	font-size: 18px;
-	font-family: "sans";
+	font-size: 16px;
+	line-height: 1.45em;
+	font-family: sans-serif;
 }
-header, article, footer {
-	max-width: 1000px;
-	margin: 0 auto;
-	padding-left: 5px;
-	padding-right: 5px;
+header, article {
+	max-width: 800px;
+	margin: 30px auto;
+	padding-left: 5px, 0px;
 }
 
 a { text-decoration: none; }
+a:hover { text-decoration: underline; }
 
 header {
 	border-bottom: 1px solid #aaa;
 	overflow: auto;
-	margin-top: 10px;
 }
 
 .site-title {
-	font-size: 2em;
+	font-size: 1.8em;
 	color: #222;
 	float: inline-start;
+	font-family: serif;
 }
 
 .menu-items {
@@ -60,17 +61,6 @@ h2 a {
 canvas.processing {
 	max-width: 75vw;
 	max-height: 90vh;
-}
-
-footer {
-	border-top: 1px solid #aaa;
-	overflow: auto;
-	padding-top: 10px;
-	margin-top: 60px;
-}
-
-footer p {
-	float: right;
 }
 
 
@@ -134,7 +124,6 @@ footer p {
 .highlight .vg { color: #f8f8f2 } /* Name.Variable.Global */
 .highlight .vi { color: #f8f8f2 } /* Name.Variable.Instance */
 .highlight .il { color: #ae81ff } /* Literal.Number.Integer.Long */
-
 .highlight .gh { } /* Generic Heading & Diff Header */
 .highlight .gu { color: #75715e; } /* Generic.Subheading & Diff Unified/Comment? */
 .highlight .gd { color: #f92672; } /* Generic.Deleted & Diff Deleted */

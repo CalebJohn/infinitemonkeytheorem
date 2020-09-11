@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}{{ NEST_TAGS_HEAD_TITLE }} - {{ super() }}{% endblock title %}
-{% block description %}{{ NEST_TAGS_HEAD_DESCRIPTION }}{% endblock description %}
+{% block title %}{{ tag }} - {{ super() }}{% endblock title %}
+{% block description %}{{ tag }}{% endblock description %}
 
 
 {% block content %}
   <div class="archive">
-      <h2><a href="{{ SITEURL }}/tags.html">{{ NEST_TAGS_CONTENT_TITLE }}</a></h2>
+      <h2><a href="{{ SITEURL }}/tags.html">Tags list</a></h2>
       	{% for tag, articles in tags|sort %}
 					{% set articles_count = articles | count %}
 					<p class="page-list-item">

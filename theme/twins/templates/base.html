@@ -39,18 +39,5 @@
 				{% block content %}
 				{% endblock %}
 			</article>
-
-      <footer>
-        {% if FEED_ALL_ATOM %}
-				<small><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate">{{ NEST_SITEMAP_ATOM_LINK }}</a></small>
-				{% else %}
-        <small><a href="/">{{ NEST_SITEMAP_ATOM_LINK }}</a></small>
-        {% endif %}
-				<p>
-					<small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
-        	<small><em>Theme based on <a href="https://github.com/molivier/nest" target="_blank">nest</a> by <a href="http://www.molivier.com/" target="_blank">molivier</a></em></small><br/>
-        	<small>{{ NEST_COPYRIGHT }}</small>
-				</p>
-			</footer>
     </body>
 </html>

@@ -50,39 +50,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Add items to top menu before pages
-MENUITEMS = [('About Us', '/pages/about-us.html'), ('Authors','/authors.html'), ('Tags','/tags.html')]
-# NEST_HEADER_IMAGES = 'banana.jpg'
-# Footer
-NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
-NEST_SITEMAP_ATOM_LINK = u'Get the feed'
-NEST_COPYRIGHT = u'&copy; infinitemonkeytheorem 2020'
-# index.html
-NEST_INDEX_HEAD_TITLE = u'Homepage'
-NEST_INDEX_HEADER_TITLE = u'Posts'
-NEST_INDEX_CONTENT_TITLE = u'All Articles'
-# article.html
-NEST_ARTICLE_HEADER_BY = u'By'
-NEST_ARTICLE_HEADER_MODIFIED = u'modified'
-NEST_ARTICLE_HEADER_IN = u'in category'
-# author.html
-NEST_AUTHOR_HEAD_TITLE = u'Posts by'
-NEST_AUTHOR_HEAD_DESCRIPTION = u'Posts by'
-NEST_AUTHOR_CONTENT_TITLE = u'Posts'
-# authors.html
-NEST_AUTHORS_HEAD_TITLE = u'Author list'
-NEST_AUTHORS_HEAD_DESCRIPTION = u'Author list'
-NEST_AUTHORS_HEADER_TITLE = u'Author list'
-# tag.html
-NEST_TAG_HEAD_TITLE = u'Tag archives'
-NEST_TAG_HEAD_DESCRIPTION = u'Tag archives'
-NEST_TAG_HEADER_TITLE = u'Tag'
-# tags.html
-NEST_TAGS_HEAD_TITLE = u'Tags'
-NEST_TAGS_HEAD_DESCRIPTION = u'Tags List'
-NEST_TAGS_HEADER_TITLE = u'Tags'
-NEST_TAGS_CONTENT_TITLE = u'Tags List'
-NEST_TAGS_CONTENT_LIST = u'tagged'
-
+MENUITEMS = [('About', '/pages/about-us.html'), ('Authors','/authors.html'), ('Tags','/tags.html')]
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True

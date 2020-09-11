@@ -4,7 +4,7 @@ Tags: clojurescript, audio
 Authors: Caleb
 Summary: A simple web app that allows a user to draw a volume envelope and a frequency envelope for a specific tone.
 
-#### Background
+### Background
 A few years ago I started a test project that would allow a user to have fine
 grained control over a tone by drawing the frequency and volume envelopes
 themselves. I've since come back to the project and added a little polish.
@@ -12,7 +12,7 @@ You can find the app below.
 
 [Skip the words and jump to it!](apps/audiodraw/audio.html)
 
-#### Some details
+### Some details
 The idea is simple (and if you follow the link you'll see the implementation is even simpler), what if a creator could just draw what they wanted their sound to be? This project emerged out of that idea, and basic follows the vision. Albeit a rather simple more proof-of-concept version of that vision. I won't go into details here about how this was done (as it's actually rather simple) becuase the entire source, a little under 200 lines with some javascript glue, is [available on github.](https://github.com/CalebJohn/infinitemonkeytheorem/tree/gh-pages/apps/audiodraw)
 
 Still not convinced? Check out this sweet screenshot showing a tone with an approximately gaussian volume envelope and a chirping frequency.
