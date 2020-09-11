@@ -19,8 +19,9 @@ IGNORE_FILES = ['*.un~', '*~', '*.swp', '*.ipynb' '*.ipynb_checkpoints']
 STATIC_PATHS = [
         "scripts",
         "images",
-        "apps"]
-# EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
+        "apps",
+        "extra"]
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 ARTICLE_EXCLUDES = STATIC_PATHS + [
 ]
 
