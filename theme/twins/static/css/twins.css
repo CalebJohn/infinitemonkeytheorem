@@ -6,7 +6,11 @@ body {
 header, article {
 	max-width: 800px;
 	margin: 30px auto;
-	padding-left: 5px, 0px;
+	padding: 5px 0px;
+}
+
+article {
+	padding-bottom: 10em;
 }
 
 a { text-decoration: none; }

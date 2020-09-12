@@ -20,7 +20,6 @@ STATIC_PATHS = [
         "scripts",
         "images",
         "apps",
-        "style",
         "extra"]
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 ARTICLE_EXCLUDES = STATIC_PATHS + [
@@ -28,7 +27,8 @@ ARTICLE_EXCLUDES = STATIC_PATHS + [
 
 PLUGIN_PATHS = ["./plugins"]
 #PLUGINS = ["thumbnailer", "ipynb"]
-PLUGINS = ["inline-css"]
+# Enable this in publishconf so that we can still get auto reload on css changes
+# PLUGINS = ["inline-css"]
 # IPYNB_USE_METACELL = True
 
 IMAGE_PATH = "images"
@@ -58,4 +58,4 @@ RELATIVE_URLS = True
 
 # This is for the inline css plugin, having this saves the site from having to do an extra
 # server request to get the css, it's all loaded at once
-SITE_CSS_LOCATION = 'content/style/twins.css'
+SITE_CSS_LOCATION = 'theme/twins/static/css/twins.css'

@@ -14,9 +14,13 @@
         <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
         {% endif %}
 
+				{% if SITE_CSS %}
 				<style>
 					{{ SITE_CSS}}
 				</style>
+				{% else %}
+					<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
+				{% endif %}
 
 
     {% endblock head %}
