@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'monkeys'
-SITENAME = u'infinitemonkeytheorem'
+SITENAME = u'infinite<wbr>monkey<wbr>theorem'
 SITEURL = ''
 THEME = 'theme/twins'
 
