@@ -3,7 +3,9 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'monkeys'
-SITENAME = u'infinite<wbr>monkey<wbr>theorem'
+SITENAME = u'infinitemonkeytheorem'
+# title is used as the header on every page, the wbr tags allow breaking only between words
+SITETITLE = u'infinite<wbr>monkey<wbr>theorem'
 SITEURL = ''
 THEME = 'theme/twins'
 
