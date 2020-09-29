@@ -1,12 +1,11 @@
 body {
-	font-size: 18px;
-	line-height: 1.45em;
-	font-family: Helvetica, Arial, sans-serif;
+	line-height: 1.6em;
+	font-family: sans-serif;
 }
 
 header, article {
-	max-width: 800px;
-	margin: 30px auto;
+	max-width: 720px;
+	margin: 10px auto;
 	padding: 5px 0px;
 }
 
@@ -18,18 +17,25 @@ img {
 
 article {
 	padding-bottom: 10em;
+	color: #333;
+}
+
+h1 { font-size: 2em; }
+h1, h2, h3, h4, h5, h6, strong, b {
+	color: #000;
 }
 
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 header {
+	margin-top: 25px;
 	border-bottom: 1px solid #aaa;
 	overflow: auto;
 }
 
 .site-title {
-	font-size: 1.8em;
+	font-size: 2em;
 	color: #222;
 	float: inline-start;
 	font-family: monospace;
@@ -68,6 +74,7 @@ h2 a {
 	color: #555;
 	margin-top: 0px;
 	margin-bottom: 2px;
+	font-style: italic;
 }
 
 .article-date a, .article-tags a {
