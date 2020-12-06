@@ -1,6 +1,7 @@
 body {
 	line-height: 1.6em;
 	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1.1em;
 }
 
 header, article {
@@ -25,8 +26,9 @@ h1, h2, h3, h4, h5, h6, strong, b {
 	color: #000;
 }
 
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+a { text-decoration-color: #00e5; }
+a:visited { text-decoration-color: #551A8B55; }
+a:hover, a:focus { text-decoration: underline; }
 
 header {
 	margin-top: 25px;
@@ -39,21 +41,24 @@ header {
 	color: #222;
 	float: inline-start;
 	font-family: monospace;
+	text-decoration: none;
 }
 
-.menu-items {
+nav {
 	float: inline-end;
 }
 
-.menu-items a, .menu-items span {
+nav a, nav span {
 	font-size: 1.2em;
 	line-height: 1.6em;
 	color: #444;
 	padding-left: 4px;
+	text-decoration: none;
 }
 
 h2 a {
 	color: #333;
+	text-decoration: none;
 }
 
 .page-list-item {
@@ -79,11 +84,58 @@ h2 a {
 
 .article-date a, .article-tags a {
 	color: black;
+	text-decoration: none;
 }
 
 canvas.processing {
 	max-width: 75vw;
 	max-height: 90vh;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #222;
+	}
+
+	a {
+		color: #07e;
+		text-decoration-color: #07e5;
+	}
+	a:visited {
+		color: #95C;
+		text-decoration-color: #95C5;
+	}
+
+	.article-date, .article-tags {
+		color: #aaa;
+	}
+	
+	.article-date a, .article-tags a {
+		color: white;
+	}
+
+	nav a, nav span {
+		color: #bbb;
+	}
+	h2 a {
+		color: #aaa;
+	}
+	h2 a:visited {
+		color: #aaa;
+	}
+	.site-title {
+		color: #ccc;
+	}
+	.site-title:visited {
+		color: #ccc;
+	}
+	article {
+		color: #bbb;
+	}
+	
+	h1, h2, h3, h4, h5, h6, strong, b {
+		color: #fff;
+	}
 }
 
 /* Pygments*/
