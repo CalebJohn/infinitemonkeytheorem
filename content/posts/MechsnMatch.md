@@ -7,7 +7,7 @@ Summary: A game made during the recent Global Game Jam
 ## The Game
 This year we participated in the Global Game Jam with a few friends. The theme was "Lost and Found".
 To that end, the game has the player scrounge through abandoned weapon parts looking for something to 
-outfight their mech for battle with a series of battles with a diverse group of enemies. 
+outfight their mech for a series of battles with a diverse group of enemies. 
 
 [You can play it now in your browser!](apps/MechsnMatch/MechsnMatch.html)
 
@@ -19,7 +19,7 @@ Lukas was our software architect, he handled setting up the framework that held 
 also did the lion's share of the coding for the Scrounging mini game. He is responsible for the ease of
 which we built the game without resorting to any unfortunate hacks
 
-Zach created all of our art assets by hand. He inked everything by hand and then used his computer to
+Zach created all of our art assets. He inked everything by hand and then used his computer to
 add colour. You can thank him for the creative visuals and the high level of polish that the game presents.
 Much of the gameplay and visual direction is a direct result of Zach's imaginative and whimsical mind.
 
@@ -30,8 +30,7 @@ Caleb was responsible for programming the combat scene which was certainly the m
 Clay mostly focused on visual effects and adding that extra level of pizazz that can only be achieved with custom shaders.
 
 ## The Engine: Godot
-We chose Godot for this project. In part because Clay is a frequent contributor to Godot on an engine level, but also because Lukas has been
-getting good experience with Godot on personal projects. 
+We chose Godot for this project. In part because Clay is a frequent contributor to Godot on an engine level, but also because Lukas has good experience with Godot on personal projects. 
 
 We found the experience completely smooth. Godot's scene system made it a breeze for us to have 3 coders working together on a small codebase
 without bumping into one another. We were able to export the game to 4 platforms minutes before the deadline without hassle. But most importantly, 
