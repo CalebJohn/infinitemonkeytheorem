@@ -7,9 +7,9 @@
 {% block content %}
 	<h1 class="article-title">{{ article.title }}</h1>
 
-	<p class="article-date">By {% for author in article.authors %}<a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %}, {% endif %}{% endfor %}, {{ article.locale_date }}{% if article.modified %}, updated {{ article.locale_modified }}{% endif %}</p>
-	<p class="article-tags">tags:
+	<section class="article-date">By {% for author in article.authors %}<a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %}, {% endif %}{% endfor %}, {{ article.locale_date }}{% if article.modified %}, updated {{ article.locale_modified }}{% endif %}</section>
+	<section class="article-tags">tags:
      {% for tag in article.tags|sort %}<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
-  </p>
+  </section>
   {{ article.content }}
 {% endblock %}
