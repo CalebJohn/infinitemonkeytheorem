@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Trying to create an endless forest full of vistas">
+        <meta name="keywords" content="perlin noise, trees, flat shading, procedural, noise, procedural, threejs">
+
+        <title>Endless Forest - infinitemonkeytheorem</title>
+
+        <link href="https://www.inmoth.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="infinitemonkeytheorem Full Atom Feed" />
+
+				<style>
+					body {
+	line-height: 1.4em;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 18px;
+}
+
+header, article {
+	max-width: 720px;
+	margin: 10px auto;
+	padding: 5px 0px;
+}
+
+img {
+	width: auto;
+	height: auto;
+	max-width:100%;
+}
+
+article {
+	padding-bottom: 10em;
+	color: #333;
+}
+
+h1 { font-size: 2em; }
+h1, h2, h3, h4, h5, h6, strong, b {
+	color: #000;
+}
+
+a { text-decoration-color: #00e5; }
+a:visited { text-decoration-color: #551A8B55; }
+a:hover, a:focus { text-decoration: underline; }
+
+header {
+	margin-top: 25px;
+	border-bottom: 1px solid #aaa;
+	overflow: auto;
+}
+
+.site-title {
+	font-size: 1.5em;
+	color: #222;
+	float: inline-start;
+	font-family: monospace;
+	text-decoration: none;
+}
+
+nav {
+	float: inline-end;
+}
+
+nav a, nav span {
+	font-size: 1.2em;
+	line-height: 1.6em;
+	color: #444;
+	padding-left: 4px;
+	text-decoration: none;
+}
+
+h2 a {
+	color: #333;
+	text-decoration: none;
+}
+
+.page-list-item {
+	margin-left: 3em;
+}
+
+.page-list-item dd p {
+	margin-top: 0px;
+	font-style: italic;
+}
+
+.article-title {
+	margin-bottom: 2px;
+}
+
+.article-date, .article-tags {
+	font-size: 0.8em;
+	color: #555;
+	margin-top: 0px;
+	margin-bottom: 2px;
+	font-style: italic;
+}
+
+.article-date a, .article-tags a {
+	color: black;
+	text-decoration: none;
+}
+
+canvas.processing {
+	max-width: 75vw;
+	max-height: 90vh;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #222;
+	}
+
+	a {
+		color: #07e;
+		text-decoration-color: #07e5;
+	}
+	a:visited {
+		color: #95C;
+		text-decoration-color: #95C5;
+	}
+
+	.article-date, .article-tags {
+		color: #aaa;
+	}
+	
+	.article-date a, .article-tags a {
+		color: white;
+	}
+
+	nav a, nav span {
+		color: #bbb;
+	}
+	h2 a {
+		color: #aaa;
+	}
+	h2 a:visited {
+		color: #aaa;
+	}
+	.site-title {
+		color: #ccc;
+	}
+	.site-title:visited {
+		color: #ccc;
+	}
+	article {
+		color: #bbb;
+	}
+	
+	h1, h2, h3, h4, h5, h6, strong, b {
+		color: #fff;
+	}
+}
+
+/* Pygments*/
+.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #ffffff; }
+.highlight .c { color: #aaaaaa; font-style: italic } /* Comment */
+.highlight .err { color: #FF0000; background-color: #FFAAAA } /* Error */
+.highlight .k { color: #0000aa } /* Keyword */
+.highlight .ch { color: #aaaaaa; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #aaaaaa; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #4c8317 } /* Comment.Preproc */
+.highlight .cpf { color: #aaaaaa; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #aaaaaa; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #0000aa; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #aa0000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00aa00 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { color: #0000aa } /* Keyword.Constant */
+.highlight .kd { color: #0000aa } /* Keyword.Declaration */
+.highlight .kn { color: #0000aa } /* Keyword.Namespace */
+.highlight .kp { color: #0000aa } /* Keyword.Pseudo */
+.highlight .kr { color: #0000aa } /* Keyword.Reserved */
+.highlight .kt { color: #00aaaa } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #aa5500 } /* Literal.String */
+.highlight .na { color: #1e90ff } /* Name.Attribute */
+.highlight .nb { color: #00aaaa } /* Name.Builtin */
+.highlight .nc { color: #00aa00; text-decoration: underline } /* Name.Class */
+.highlight .no { color: #aa0000 } /* Name.Constant */
+.highlight .nd { color: #888888 } /* Name.Decorator */
+.highlight .ni { color: #880000; font-weight: bold } /* Name.Entity */
+.highlight .nf { color: #00aa00 } /* Name.Function */
+.highlight .nn { color: #00aaaa; text-decoration: underline } /* Name.Namespace */
+.highlight .nt { color: #1e90ff; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #aa0000 } /* Name.Variable */
+.highlight .ow { color: #0000aa } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #009999 } /* Literal.Number.Bin */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sa { color: #aa5500 } /* Literal.String.Affix */
+.highlight .sb { color: #aa5500 } /* Literal.String.Backtick */
+.highlight .sc { color: #aa5500 } /* Literal.String.Char */
+.highlight .dl { color: #aa5500 } /* Literal.String.Delimiter */
+.highlight .sd { color: #aa5500 } /* Literal.String.Doc */
+.highlight .s2 { color: #aa5500 } /* Literal.String.Double */
+.highlight .se { color: #aa5500 } /* Literal.String.Escape */
+.highlight .sh { color: #aa5500 } /* Literal.String.Heredoc */
+.highlight .si { color: #aa5500 } /* Literal.String.Interpol */
+.highlight .sx { color: #aa5500 } /* Literal.String.Other */
+.highlight .sr { color: #009999 } /* Literal.String.Regex */
+.highlight .s1 { color: #aa5500 } /* Literal.String.Single */
+.highlight .ss { color: #0000aa } /* Literal.String.Symbol */
+.highlight .bp { color: #00aaaa } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #00aa00 } /* Name.Function.Magic */
+.highlight .vc { color: #aa0000 } /* Name.Variable.Class */
+.highlight .vg { color: #aa0000 } /* Name.Variable.Global */
+.highlight .vi { color: #aa0000 } /* Name.Variable.Instance */
+.highlight .vm { color: #aa0000 } /* Name.Variable.Magic */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+				</style>
+
+
+    </head>
+
+    <body>
+			<header>
+				<a class="site-title" href="https://www.inmoth.ca/">infinite<wbr>monkey<wbr>theorem</a>
+				<nav >
+							<a href="https://www.inmoth.ca/pages/about-us.html">About</a>
+							<span> | </span>
+							<a href="https://www.inmoth.ca/authors.html">Authors</a>
+							<span> | </span>
+							<a href="https://www.inmoth.ca/tags.html">Tags</a>
+      	</nav>
+			</header>
+
+			<article>
+	<h1 class="article-title">Endless Forest</h1>
+
+	<section class="article-date">By <a href="https://www.inmoth.ca/author/clay.html">Clay</a>, June 24, 2018</section>
+	<section class="article-tags">tags:
+<a href="https://www.inmoth.ca/tag/noise.html">noise</a>, <a href="https://www.inmoth.ca/tag/procedural.html">procedural</a>, <a href="https://www.inmoth.ca/tag/threejs.html">threejs</a>  </section>
+  <style>
+
+    #blocker {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    }
+    #instructions {
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        -webkit-box-orient: horizontal;
+        -moz-box-orient: horizontal;
+        box-orient: horizontal;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        box-pack: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        box-align: center;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+    }
+    #top {
+  position: fixed;
+  width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+    div {
+        user-select: auto;
+    }
+    canvas {
+        user-select: none;
+    }
+</style>
+
+<div id="top" style="display:none">
+</div>
+
+<script src="scripts/three.min.js"></script>
+
+<script src="scripts/EF_include/hsluv.min.js"></script>
+
+<script src="scripts/EF_include/PointerLockControls.js"></script>
+
+<script src="scripts/EF_include/DeviceOrientationControls.js"></script>
+
+<script src="scripts/EF_include/perlin.js"></script>
+
+<script src="scripts/EF_include/groundShader.js"></script>
+
+<script src="scripts/EF_include/instanceShader.js"></script>
+
+<script src="scripts/EF_include/infiniteTerrain.js"></script>
+
+<script src="scripts/EF_include/Flora.js"></script>
+
+<!--Seeded RNG from http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html-->
+
+<script src="scripts/EF_include/seedrandom.min.js"></script>
+
+<script src="scripts/EF_include/tween.min.js"></script>
+
+<script src="scripts/EF_include/ConvexGeometry.js"></script>
+
+<script src="scripts/EF_include/QuickHull.js"></script>
+
+<script>
+  var clock, controls, scene, renderer, camera, terrain, deltas, waterPlane;
+  var init = function() {
+        clock = new THREE.Clock();
+    clock.start();
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xaaaaff);
+        scene.fog = new THREE.FogExp2( new THREE.Color(0xaaaaff), 0.003 );
+
+        camera = new THREE.PerspectiveCamera( 50, window.innerWidth/window.innerHeight, 0.1, 10000 );
+
+        renderer = new THREE.WebGLRenderer({antialias: true && quality.medium}); //move to SMAA for low end computers
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        document.getElementById("top").appendChild( renderer.domElement );
+        window.addEventListener( 'resize', onWindowResize, false );
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+      // Take the user to a different screen here.
+      controls = new THREE.DeviceOrientationControls(camera);
+      var blocker = document.getElementById( 'blocker' );
+      blocker.remove();
+            var list = document.getElementsByTagName("div");
+            for (var i=0;i<list.length;i++) {
+                list[i].style.userSelect = "none";
+            }
+    } else {
+          controls = new THREE.PointerLockControls( camera );
+
+          scene.add( controls.getObject() );
+    }
+        terrain = new Terrain(360, 10, camera, scene);
+
+        //place a single blue plane in the scene that moves with the camera to act as water
+        var waterGeometry = new THREE.PlaneBufferGeometry(720, 720);
+    var waterMaterial = new THREE.MeshBasicMaterial( {color: 0x4477aa} );
+    waterPlane = new THREE.Mesh( waterGeometry, waterMaterial );
+    scene.add( waterPlane );
+    waterPlane.rotateX(-Math.PI*0.5);
+    waterPlane.position.y = -30;
+
+    //just for debugging terrain
+    //var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
+    //scene.add( directionalLight );
+
+          //this requires:
+            //c) a plant generator for each tile //including grass, flowers, maybe shrubs
+              //ii) flowers can be done same as rock and trees
+            //h) Monuments that have a random chance at spawning
+
+        deltas = [];
+
+        controls.update(0, terrain.group);
+    terrain.update( controls.getObject().position.clone() );
+
+      renderer.render(scene, camera);
+
+      animate();
+  }
+  function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
+    var animate = function (time) {
+      requestAnimationFrame( animate );
+    var delta = clock.getDelta();
+      controls.update( delta , terrain.group);
+        if (controls.enabled) {
+      terrain.update( controls.getObject().position.clone() );
+      TWEEN.update(time);
+
+      waterPlane.position.x = controls.getObject().position.x;
+      waterPlane.position.z = controls.getObject().position.z;
+
+            renderer.render(scene, camera);
+
+            //record frame time
+            deltas.push(delta);
+            var ft = 0;
+            for (let i=0;i<deltas.length;i++) {
+              ft+=deltas[i];
+            }
+            ft/=deltas.length;
+            while (deltas.length > 100) { deltas.pop(); }
+            //console.log(ft*1000);
+      }
+    };
+
+    var setQuality = function(it) {
+    blocker.style.display = "block";
+    window.quality = {low: true, medium: false, high:false};
+    if (it.value != "Low") {
+      window.quality.medium = true;
+      if (it.value == "High") {
+        window.quality.high = true;
+      }
+    }
+    window.low_gravity = document.getElementById( 'gravity' ).checked;
+    window.free_fly = document.getElementById( 'flight' ).checked;
+    it.parentNode.remove();
+    document.getElementById("top").style.display = '';
+    init();
+    };
+</script>
+
+<div>
+  <p>Select Options:</p>
+  <input type="radio" id="gravity" name="gravity" value="on">
+  <label for="gravity">Low-Gravity</label>
+  <input type="radio" id="flight" name="flight" value="on">
+  <label for="flight">Free Fly</label>
+  <p>Select Desired Quality:</p>
+  <input type="button" id="Low"
+   name="contact" value="Low" onclick="setQuality(this)">
+  <input type="button" id="Medium"
+   name="contact" value="Medium" onclick="setQuality(this)">
+  <input type="button" id="High"
+   name="contact" value="High" onclick="setQuality(this)">
+
+</div>
+
+<!--Used directly from the threejs pointer lock control example. https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_pointerlock.html-->
+
+<div id="blocker" style="display:none">
+    <div id="instructions">
+        <span style="font-size:40px">Click to play</span>
+        <br />
+        (W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+    </div>
+
+</div>
+
+<p>Trying to put together a few ideas I have had going for awhile.</p>
+			</article>
+    </body>
+</html>

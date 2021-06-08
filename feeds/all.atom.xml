@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>infinitemonkeytheorem</title><link href="https://www.inmoth.ca/" rel="alternate"></link><link href="https://www.inmoth.ca/feeds/all.atom.xml" rel="self"></link><id>https://www.inmoth.ca/</id><updated>2021-01-31T21:00:00-07:00</updated><entry><title>Mechs n' Match</title><link href="https://www.inmoth.ca/mechs-n-match.html" rel="alternate"></link><published>2021-01-31T21:00:00-07:00</published><updated>2021-01-31T21:00:00-07:00</updated><author><name>Clay</name></author><id>tag:www.inmoth.ca,2021-01-31:/mechs-n-match.html</id><summary type="html">&lt;p&gt;A game made during the recent Global Game Jam&lt;/p&gt;</summary><content type="html">&lt;h2&gt;The Game&lt;/h2&gt;
+&lt;p&gt;This year we participated in the Global Game Jam with a few friends. The theme was "Lost and Found".
+To that end, the game has the player scrounge through abandoned weapon parts looking for something to 
+outfight their mech for a series of battles with a diverse group of enemies. &lt;/p&gt;
+&lt;p&gt;&lt;a href="apps/MechsnMatch/MechsnMatch.html"&gt;You can play it now in your browser!&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The game is also available for Windows, Linux, and Android on our &lt;a href="https://globalgamejam.org/2021/games/mechs-n-match-4"&gt;Global Game Jam page&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;The Team&lt;/h2&gt;
+&lt;p&gt;Lukas was our software architect, he handled setting up the framework that held up the entire game. He
+also did the lion's share of the coding for the Scrounging mini game. He is responsible for the ease of
+which we built the game without resorting to any unfortunate hacks&lt;/p&gt;
+&lt;p&gt;Zach created all of our art assets. He inked everything by hand and then used his computer to
+add colour. You can thank him for the creative visuals and the high level of polish that the game presents.
+Much of the gameplay and visual direction is a direct result of Zach's imaginative and whimsical mind.&lt;/p&gt;
+&lt;p&gt;You can check out high resolution images of Zach's work and some of his other projects on his &lt;a href="https://zmschuster.com/mechs-n-match-global-game-jam-2021"&gt;website&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;Caleb was responsible for programming the combat scene which was certainly the most complex chunk of the game. &lt;/p&gt;
+&lt;p&gt;Clay mostly focused on visual effects and adding that extra level of pizazz that can only be achieved with custom shaders.&lt;/p&gt;
+&lt;h2&gt;The Engine: Godot&lt;/h2&gt;
+&lt;p&gt;We chose Godot for this project. In part because Clay is a frequent contributor to Godot on an engine level, but also because Lukas has good experience with Godot on personal projects. &lt;/p&gt;
+&lt;p&gt;We found the experience completely smooth. Godot's scene system made it a breeze for us to have 3 coders working together on a small codebase
+without bumping into one another. We were able to export the game to 4 platforms minutes before the deadline without hassle. But most importantly, 
+Godot allowed us to rapidly build systems in a clean way. We are confident that, if we return to this project, we can complete all our stretch goals
+without having to rip apart our core systems.&lt;/p&gt;</content><category term="posts"></category><category term="Godot"></category><category term="Game"></category><category term="GGJ"></category></entry><entry><title>Draw Tones!</title><link href="https://www.inmoth.ca/draw-tones.html" rel="alternate"></link><published>2018-08-19T17:00:00-06:00</published><updated>2018-08-19T17:00:00-06:00</updated><author><name>Caleb</name></author><id>tag:www.inmoth.ca,2018-08-19:/draw-tones.html</id><summary type="html">&lt;p&gt;A simple web app that allows a user to draw a volume envelope and a frequency envelope for a specific tone.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;A few years ago I started a test project that would allow a user to have fine
+grained control over a tone by drawing the frequency and volume envelopes
+themselves. I've since come back to the project and added a little polish.
+You can find the app below.&lt;/p&gt;
+&lt;p&gt;&lt;a href="apps/audiodraw/audio.html"&gt;Skip the words and jump to it!&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Some details&lt;/h2&gt;
+&lt;p&gt;The idea is simple (and if you follow the link you'll see the implementation is even simpler), what if a creator could just draw what they wanted their sound to be? This project emerged out of that idea, and basic follows the vision. Albeit a rather simple more proof-of-concept version of that vision. I won't go into details here about how this was done (as it's actually rather simple) becuase the entire source, a little under 200 lines with some javascript glue, is &lt;a href="https://github.com/CalebJohn/infinitemonkeytheorem/tree/gh-pages/apps/audiodraw"&gt;available on github.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Still not convinced? Check out this sweet screenshot showing a tone with an approximately gaussian volume envelope and a chirping frequency.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Screenshot of the application displaying a chirp" src="images/envelope.png"&gt;&lt;/p&gt;
+&lt;p&gt;Notice that the above interface is plain:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;"Play Note" does exactly as it sounds (makes a sound)&lt;/li&gt;
+&lt;li&gt;"Toggle Line" switches between volume and frequency input&lt;/li&gt;
+&lt;li&gt;The slider allows you to change the timescale of the program
+With that in place you can freely draw on the canvas to creat the tones of your dreams!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="apps/audiodraw/audio.html"&gt;Now go ahead and create your own sounds!&lt;/a&gt;
+Please share anything cool you come up with!&lt;/p&gt;
+&lt;p&gt;This project was created with clojurescript and the &lt;a href="https://github.com/r0man/sablono"&gt;sablono&lt;/a&gt; library. You can see the &lt;a href="https://github.com/CalebJohn/infinitemonkeytheorem/tree/gh-pages/apps/audiodraw/audio.cljs"&gt;entire file here&lt;/a&gt;.&lt;/p&gt;</content><category term="posts"></category><category term="clojurescript"></category><category term="audio"></category></entry><entry><title>Endless Forest</title><link href="https://www.inmoth.ca/endless-forest.html" rel="alternate"></link><published>2018-06-24T11:26:00-06:00</published><updated>2018-06-24T11:26:00-06:00</updated><author><name>Clay</name></author><id>tag:www.inmoth.ca,2018-06-24:/endless-forest.html</id><summary type="html">&lt;p&gt;Trying to create an endless forest full of vistas&lt;/p&gt;</summary><content type="html">&lt;style&gt;
+
+    #blocker {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    }
+    #instructions {
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        -webkit-box-orient: horizontal;
+        -moz-box-orient: horizontal;
+        box-orient: horizontal;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        box-pack: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        box-align: center;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+    }
+    #top {
+  position: fixed;
+  width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+    div {
+        user-select: auto;
+    }
+    canvas {
+        user-select: none;
+    }
+&lt;/style&gt;
+
+&lt;div id="top" style="display:none"&gt;
+&lt;/div&gt;
+
+&lt;script src="scripts/three.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/hsluv.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/PointerLockControls.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/DeviceOrientationControls.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/perlin.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/groundShader.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/instanceShader.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/infiniteTerrain.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/Flora.js"&gt;&lt;/script&gt;
+
+&lt;!--Seeded RNG from http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html--&gt;
+
+&lt;script src="scripts/EF_include/seedrandom.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/tween.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/ConvexGeometry.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/QuickHull.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  var clock, controls, scene, renderer, camera, terrain, deltas, waterPlane;
+  var init = function() {
+        clock = new THREE.Clock();
+    clock.start();
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xaaaaff);
+        scene.fog = new THREE.FogExp2( new THREE.Color(0xaaaaff), 0.003 );
+
+        camera = new THREE.PerspectiveCamera( 50, window.innerWidth/window.innerHeight, 0.1, 10000 );
+
+        renderer = new THREE.WebGLRenderer({antialias: true &amp;&amp; quality.medium}); //move to SMAA for low end computers
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        document.getElementById("top").appendChild( renderer.domElement );
+        window.addEventListener( 'resize', onWindowResize, false );
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+      // Take the user to a different screen here.
+      controls = new THREE.DeviceOrientationControls(camera);
+      var blocker = document.getElementById( 'blocker' );
+      blocker.remove();
+            var list = document.getElementsByTagName("div");
+            for (var i=0;i&lt;list.length;i++) {
+                list[i].style.userSelect = "none";
+            }
+    } else {
+          controls = new THREE.PointerLockControls( camera );
+
+          scene.add( controls.getObject() );
+    }
+        terrain = new Terrain(360, 10, camera, scene);
+
+        //place a single blue plane in the scene that moves with the camera to act as water
+        var waterGeometry = new THREE.PlaneBufferGeometry(720, 720);
+    var waterMaterial = new THREE.MeshBasicMaterial( {color: 0x4477aa} );
+    waterPlane = new THREE.Mesh( waterGeometry, waterMaterial );
+    scene.add( waterPlane );
+    waterPlane.rotateX(-Math.PI*0.5);
+    waterPlane.position.y = -30;
+
+    //just for debugging terrain
+    //var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
+    //scene.add( directionalLight );
+
+          //this requires:
+            //c) a plant generator for each tile //including grass, flowers, maybe shrubs
+              //ii) flowers can be done same as rock and trees
+            //h) Monuments that have a random chance at spawning
+
+        deltas = [];
+
+        controls.update(0, terrain.group);
+    terrain.update( controls.getObject().position.clone() );
+
+      renderer.render(scene, camera);
+
+      animate();
+  }
+  function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
+    var animate = function (time) {
+      requestAnimationFrame( animate );
+    var delta = clock.getDelta();
+      controls.update( delta , terrain.group);
+        if (controls.enabled) {
+      terrain.update( controls.getObject().position.clone() );
+      TWEEN.update(time);
+
+      waterPlane.position.x = controls.getObject().position.x;
+      waterPlane.position.z = controls.getObject().position.z;
+
+            renderer.render(scene, camera);
+
+            //record frame time
+            deltas.push(delta);
+            var ft = 0;
+            for (let i=0;i&lt;deltas.length;i++) {
+              ft+=deltas[i];
+            }
+            ft/=deltas.length;
+            while (deltas.length &gt; 100) { deltas.pop(); }
+            //console.log(ft*1000);
+      }
+    };
+
+    var setQuality = function(it) {
+    blocker.style.display = "block";
+    window.quality = {low: true, medium: false, high:false};
+    if (it.value != "Low") {
+      window.quality.medium = true;
+      if (it.value == "High") {
+        window.quality.high = true;
+      }
+    }
+    window.low_gravity = document.getElementById( 'gravity' ).checked;
+    window.free_fly = document.getElementById( 'flight' ).checked;
+    it.parentNode.remove();
+    document.getElementById("top").style.display = '';
+    init();
+    };
+&lt;/script&gt;
+
+&lt;div&gt;
+  &lt;p&gt;Select Options:&lt;/p&gt;
+  &lt;input type="radio" id="gravity" name="gravity" value="on"&gt;
+  &lt;label for="gravity"&gt;Low-Gravity&lt;/label&gt;
+  &lt;input type="radio" id="flight" name="flight" value="on"&gt;
+  &lt;label for="flight"&gt;Free Fly&lt;/label&gt;
+  &lt;p&gt;Select Desired Quality:&lt;/p&gt;
+  &lt;input type="button" id="Low"
+   name="contact" value="Low" onclick="setQuality(this)"&gt;
+  &lt;input type="button" id="Medium"
+   name="contact" value="Medium" onclick="setQuality(this)"&gt;
+  &lt;input type="button" id="High"
+   name="contact" value="High" onclick="setQuality(this)"&gt;
+
+&lt;/div&gt;
+
+&lt;!--Used directly from the threejs pointer lock control example. https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_pointerlock.html--&gt;
+
+&lt;div id="blocker" style="display:none"&gt;
+    &lt;div id="instructions"&gt;
+        &lt;span style="font-size:40px"&gt;Click to play&lt;/span&gt;
+        &lt;br /&gt;
+        (W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;Trying to put together a few ideas I have had going for awhile.&lt;/p&gt;</content><category term="studies"></category><category term="threejs"></category><category term="noise"></category><category term="procedural"></category></entry><entry><title>Mountain Study</title><link href="https://www.inmoth.ca/mountain-study.html" rel="alternate"></link><published>2016-02-23T13:53:00-07:00</published><updated>2016-02-23T13:53:00-07:00</updated><author><name>Clay</name></author><id>tag:www.inmoth.ca,2016-02-23:/mountain-study.html</id><summary type="html">&lt;p&gt;A study into a specific art style for a project I am working on&lt;/p&gt;</summary><content type="html">&lt;script src="scripts/processing.min.js"&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;canvas id="proc-canvas" class="processing" data-processing-sources="scripts/Mountain_study.pde"&gt;&lt;/canvas&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;This is a quick experiment I threw together this weekend to play with simple scenes and get an idea about how I want the art direction to go in a future project.&lt;/p&gt;</content><category term="studies"></category><category term="processing"></category><category term="mountains"></category></entry></feed>
