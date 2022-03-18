@@ -12,7 +12,7 @@ A Personalized Address (or Vanity Address) is a wallet address that contains som
 0x60C42Ecb80C2069eb7aC1Ee18A84244c8617E8Ab
 ```
 
-But when sharing my ETH address, I might want something more reflective of my culinary skills:
+But when sharing your ethereum address, you might want something more reflective of your culinary skills (maybe just mine):
 
 ```
 0xbadf00db80C2069eb7aC1Ee18A84244c8617E8Ab
@@ -20,13 +20,13 @@ But when sharing my ETH address, I might want something more reflective of my cu
 
 
 # Why?
-To look cool, and impress my friends.
+To look cool, and impress your friends.
 
 
 # Why do it yourself?
 You could perform an internet search for Personalized Wallet Addresses or Vanity Addresses, and run whatever code you find. If you plan on using the generated address, it might be worth using a generator that you trust.
 
-To trust a generator you'll probably want to read the source code, and understand its funky dependencies. In the case of an ETH address, it's just easier to write your own generator that directly uses [`go-ethereum`](https://github.com/ethereum/go-ethereum).
+To trust a generator you'll probably want to read the source code, and understand its funky dependencies. In the case of an ethereum address, it's just easier to write your own generator that directly uses [`go-ethereum`](https://github.com/ethereum/go-ethereum).
 
 
 # How
