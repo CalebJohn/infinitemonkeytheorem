@@ -67,6 +67,6 @@ MARKDOWN = {
         'markdown.extensions.codehilite': {},
         'markdown.extensions.extra': {},
         'markdown.extensions.meta': {},
-        'markdown.extensions.toc': {},
+        'markdown.extensions.toc': {'anchorlink': True},
     },
 }
