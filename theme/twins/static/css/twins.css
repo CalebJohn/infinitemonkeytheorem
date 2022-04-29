@@ -94,11 +94,11 @@ canvas.processing {
 }
 
 pre {
-  font-family: monospace;
+	font-family: monospace;
 }
 /* Pygments*/
 .highlight .hll { background-color: #ffffcc }
-.highlight  { background: #ffffff; }
+.highlight { background: #ffffff; }
 .highlight .c { font-style: italic } /* Comment */
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { font-weight: bold } /* Keyword */
@@ -130,11 +130,11 @@ pre {
 	}
 
 	a {
-		color: #07e;
+		color: #7BF;
 		text-decoration-color: #07e5;
 	}
 	a:visited {
-		color: #95C;
+		color: #B9F;
 		text-decoration-color: #95C5;
 	}
 
