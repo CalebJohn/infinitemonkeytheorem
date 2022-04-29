@@ -22,8 +22,14 @@ article {
 	color: #333;
 }
 
-h1 { font-size: 2em; }
+h1 {
+	font-size: 2em;
+	line-height: 1em;
+}
 h1, h2, h3, h4, h5, h6, strong, b {
+	color: #000;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 	color: #000;
 }
 
@@ -173,6 +179,9 @@ pre {
 	}
 	
 	h1, h2, h3, h4, h5, h6, strong, b {
+		color: #fff;
+	}
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 		color: #fff;
 	}
 
