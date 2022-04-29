@@ -30,9 +30,9 @@ To trust a generator you'll probably want to read the source code, and understan
 
 
 # How
-A wallet address in ethereum is a 42 character hexadecimal string<sup>[\[1\]](https://info.etherscan.com/what-is-an-ethereum-address)</sup>. "0x" takes the first two characters, so the actual address is 40 characters. 
+A wallet address in ethereum is a 42 character hexadecimal string[^1]. "0x" takes the first two characters, so the actual address is 40 characters.
 
-An ethereum wallet address is generated in a three<sup>[\[2\]](#ref-2)</sup> stage process. First, use a random entropy source to generate a private key (anything that samples [vacuum fluctuations](https://arxiv.org/abs/1703.00559) should be sufficient). Second, derive a public key that corresponds to the generated private key. Lastly, derive an address that corresponds to the public key. 
+An ethereum wallet address is generated in a three[:I did a little bit of simplification here, there is a fourth stage, <a href='https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md'>checksum</a>. The checksum only affects the case, so I don't discuss it here. However, prior to using an address, it's important to run it through a checksum encoding so that the address can be verified.] stage process. First, use a random entropy source to generate a private key (anything that samples [vacuum fluctuations](https://arxiv.org/abs/1703.00559) should be sufficient). Second, derive a public key that corresponds to the generated private key. Lastly, derive an address that corresponds to the public key.
 
 It's important that the private key (and thus the public key, and the address) not be generated with anything deterministic. Using a non-random source will make it possible for an attacker to duplicate your generation process, generate your private/public keys, and gain access to your wallet.
 
@@ -49,31 +49,18 @@ def personalized_address(vanity_prefix: string):
     # Securely save the private key
 ```
 
-You might think this process will be too slow, and you'd be correct for longer personalizations. But, for short customizations (~5 characters) the generation can be done in a few minutes<sup>[\[3\]](#ref-3)</sup>.
+You might think this process will be too slow, and you'd be correct for longer personalizations. But, for short customizations (~5 characters) the generation can be done in a few minutes[:A naive implementation written in go running on my laptop generates ~16,000 addresses/sec].
 
 And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at [`go-ethereum`](https://github.com/ethereum/go-ethereum)).
 
 
 # Bonus
-I applied to same procedure to generate a [Filecoin](https://filecoin.io/) wallet address. The only difference (aside from the libraries used) is that a Filecoin wallet address is base 32 encoded using the characters [a-z2-7]<sup>[\[4\]](https://github.com/filecoin-project/go-address/blob/master/constants.go#L71)</sup>. This allows for a denser address (hexadecimal is base 16, so half the density). Another cool benefit is that it doesn't suffer from the ambiguity of 1 and l, or o and 0 (because the numbers 0, 1, 8, and 9 are not used).
+I applied to same procedure to generate a [Filecoin](https://filecoin.io/) wallet address. The only difference (aside from the libraries used) is that a Filecoin wallet address is base 32 encoded using the characters [a-z2-7][^4]. This allows for a denser address (hexadecimal is base 16, so half the density). Another cool benefit is that it doesn't suffer from the ambiguity of 1 and l, or o and 0 (because the numbers 0, 1, 8, and 9 are not used).
 
 
----
 
+[^1]: <https://info.etherscan.com/what-is-an-ethereum-address>
 
-<p id='ref-1'>
-[1]: <a href='https://info.etherscan.com/what-is-an-ethereum-address'>https://info.etherscan.com/what-is-an-ethereum-address</a>
-</p>
-
-<p id='ref-2'>
-[2]: I did a little bit of simplification here, there is a fourth stage, <a href='https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md'>checksum</a>. The checksum only affects the case, so I don't discuss it here. However, prior to using an address, it's important to run it through a checksum encoding so that the address can be verified.
-</p>
-
-<p id='ref-3'>
-[3]: A naive implementation written in go running on my laptop generates ~16,000 addresses/sec.
 5 characters means ((1/16)^5 * 16000)^-1 = ~1 minute to generate
-</p>
 
-<p id='ref-4'>
-[4]: <a href='https://github.com/filecoin-project/go-address/blob/master/constants.go#L71'>https://github.com/filecoin-project/go-address/blob/master/constants.go#L71</a>
-</p>
+[^4]: <a href='https://github.com/filecoin-project/go-address/blob/master/constants.go#L71'>https://github.com/filecoin-project/go-address/blob/master/constants.go#L71</a>
