@@ -16,7 +16,7 @@ RELATIVE_URLS = False
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 
 OUTPUT_PATH = 'deploy/'
-PLUGINS = ["inline-css"]
+PLUGINS = ["inline-css", "tufte-sidenotes"]
 
 DELETE_OUTPUT_DIRECTORY = True
 # OUTPUT_RETENTION = ['CNAME', '.git']
