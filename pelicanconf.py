@@ -61,3 +61,12 @@ RELATIVE_URLS = True
 # This is for the inline css plugin, having this saves the site from having to do an extra
 # server request to get the css, it's all loaded at once
 SITE_CSS_LOCATION = 'theme/twins/static/css/twins.css'
+
+MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.codehilite': {},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+        'markdown.extensions.toc': {},
+    },
+}
