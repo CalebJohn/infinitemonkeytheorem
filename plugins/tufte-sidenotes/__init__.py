@@ -3,8 +3,7 @@ import re
 
 sidenote_regex = re.compile(r"\[:([^\]]+)\]")
 
-sidenote_html = r"""
-<label for="{}" class="margin-toggle sidenote-number"></label>
+sidenote_html = r"""<label for="{}" class="margin-toggle sidenote-number"></label>
 <input type="checkbox" id="{}" class="margin-toggle"/>
 <span class="sidenote">\1</span>
 """
