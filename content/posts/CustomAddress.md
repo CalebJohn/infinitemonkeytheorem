@@ -49,7 +49,7 @@ def personalized_address(vanity_prefix: string):
     # Securely save the private key
 ```
 
-You might think this process will be too slow, and you'd be correct for longer personalizations. But, for short customizations (~5 characters) the generation can be done in a few minutes[:A naive implementation written in go running on my laptop generates ~16,000 addresses/sec].
+You might think this process will be too slow, and you'd be correct for longer personalizations. But, for short customizations (~5 characters) the generation can be done in a few minutes[:A naive implementation written in go running on my laptop generates ~16,000 addresses/sec. 5 characters means ((1/16)^5 * 16000)^-1 = ~1 minute to generate.].
 
 And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at [`go-ethereum`](https://github.com/ethereum/go-ethereum)).
 
@@ -61,6 +61,6 @@ I applied to same procedure to generate a [Filecoin](https://filecoin.io/) walle
 
 [^1]: <https://info.etherscan.com/what-is-an-ethereum-address>
 
-5 characters means ((1/16)^5 * 16000)^-1 = ~1 minute to generate
+
 
 [^4]: <a href='https://github.com/filecoin-project/go-address/blob/master/constants.go#L71'>https://github.com/filecoin-project/go-address/blob/master/constants.go#L71</a>

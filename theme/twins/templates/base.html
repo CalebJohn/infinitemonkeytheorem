@@ -1,49 +1,50 @@
 <!DOCTYPE html>
 <html lang="{{ DEFAULT_LANG }}">
-    <head>
-    {% block head %}
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="{% block description %}{% endblock description %}">
-        <meta name="keywords" content="{% block keywords %}{% endblock keywords %}">
+		<head>
+		{% block head %}
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="{% block description %}{% endblock description %}">
+				<meta name="keywords" content="{% block keywords %}{% endblock keywords %}">
 
-        <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+				<title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
 
-        {% if FEED_ALL_ATOM %}
-        <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
-        {% endif %}
+				{% if FEED_ALL_ATOM %}
+				<link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
+				{% endif %}
 
 				{% if SITE_CSS %}
 				<style>
-					{{ SITE_CSS}}
+					{{ SITE_CSS }}
+					{% block custom_css %}{% endblock custom_css %}
 				</style>
 				{% else %}
 					<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
 				{% endif %}
 
 
-    {% endblock head %}
-    </head>
+		{% endblock head %}
+		</head>
 
-    <body>
+		<body>
 			<header>
 				<a class="site-title" href="{{ SITEURL }}/">{{ SITETITLE }}</a>
 				<nav >
-      		{% for title, link in MENUITEMS %}
+					{% for title, link in MENUITEMS %}
 						{% if link is string %}
 							<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
 							{% if not loop.last %}
 							<span> | </span>
 							{% endif %}
 						{% endif %}
-      		{% endfor %}
-      	</nav>
+					{% endfor %}
+				</nav>
 			</header>
 
 			<article>
 				{% block content %}
 				{% endblock %}
 			</article>
-    </body>
+		</body>
 </html>
