@@ -30,7 +30,7 @@ ARTICLE_EXCLUDES = STATIC_PATHS + [
 PLUGIN_PATHS = ["./plugins"]
 #PLUGINS = ["thumbnailer", "ipynb"]
 # Enable this in publishconf so that we can still get auto reload on css changes
-PLUGINS = ["inline-css", "tufte-sidenotes"]
+PLUGINS = ["tufte-sidenotes"]
 # IPYNB_USE_METACELL = True
 
 IMAGE_PATH = "images"
