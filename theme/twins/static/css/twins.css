@@ -63,11 +63,6 @@ nav a, nav span {
 	text-decoration: none;
 }
 
-h2 a {
-	color: #333;
-	text-decoration: none;
-}
-
 .page-list-item {
 	margin-left: 3em;
 }
@@ -81,7 +76,7 @@ h2 a {
 	margin-bottom: 2px;
 }
 
-.article-date, .article-tags {
+.article-date {
 	font-size: 0.8em;
 	color: #555;
 	margin-top: 0px;
@@ -89,7 +84,7 @@ h2 a {
 	font-style: italic;
 }
 
-.article-date a, .article-tags a {
+.article-date a {
 	color: black;
 	text-decoration: none;
 }
@@ -151,22 +146,16 @@ pre {
 		text-decoration-color: #95C5;
 	}
 
-	.article-date, .article-tags {
+	.article-date {
 		color: #aaa;
 	}
 	
-	.article-date a, .article-tags a {
+	.article-date a {
 		color: white;
 	}
 
 	nav a, nav span {
 		color: #bbb;
-	}
-	h2 a {
-		color: #aaa;
-	}
-	h2 a:visited {
-		color: #aaa;
 	}
 	.site-title {
 		color: #ccc;
@@ -182,10 +171,10 @@ pre {
 		color: #fff;
 	}
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-		color: #fff;
+		color: #fff !important;
 	}
 
 	.highlight .hll { background-color: #222 }
-	.highlight	{ background: #222; }
+	.highlight { background: #222; }
 }
 
