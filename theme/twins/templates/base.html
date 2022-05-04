@@ -20,7 +20,7 @@
 					{% block custom_css %}{% endblock custom_css %}
 				</style>
 				{% else %}
-					<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
+				<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
 				{% endif %}
 
 
@@ -28,6 +28,7 @@
 		</head>
 
 		<body>
+			{% block navigation_header %}
 			<header>
 				<a class="site-title" href="{{ SITEURL }}/">{{ SITETITLE }}</a>
 				<nav >
@@ -41,6 +42,7 @@
 					{% endfor %}
 				</nav>
 			</header>
+			{% endblock navigation_header %}
 
 			<article>
 				{% block content %}

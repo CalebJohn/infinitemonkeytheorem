@@ -7,8 +7,8 @@ body {
 header, article {
 	max-width: 720px;
 	width: 60%;
-	margin: 10px auto;
-	padding: 5px 0px;
+	margin: 0px auto;
+	padding: 0px;
 }
 
 img {
@@ -41,6 +41,15 @@ header {
 	margin-top: 25px;
 	border-bottom: 1px solid #aaa;
 	overflow: auto;
+}
+
+header.article-site-title .site-title {
+	font-size: 1em;
+}
+
+header.article-site-title {
+	margin-top: 5px;
+	border: none;
 }
 
 .site-title {

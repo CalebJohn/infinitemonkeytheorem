@@ -5,16 +5,15 @@
 
 
 {% block content %}
-  <div class="archive">
-      <h2><a href="{{ SITEURL }}/tags.html">Tags list</a></h2>
-      	{% for tag, articles in tags|sort %}
+	<div class="archive">
+			<h2><a href="{{ SITEURL }}/tags.html">Tags list</a></h2>
+				{% for tag, articles in tags|sort %}
 					{% set articles_count = articles | count %}
 					<p class="page-list-item">
 						{{ articles | count }} {% if articles_count == 1 %}article{% else %}articles{% endif %} tagged
 						<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
 					</p>
-      	{% endfor %}
-  </div>
+				{% endfor %}
+	</div>
 {% endblock content %}
-
 

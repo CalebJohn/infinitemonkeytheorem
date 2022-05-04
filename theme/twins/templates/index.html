@@ -4,9 +4,9 @@
 {% block description %}{{ SITENAME }}, {{ SITESUBTITLE }}{% endblock description %}
 
 {% block content %}
-  <div class="archive">
-    <h2><a href="{{ SITEURL }}/">Articles</a></h2>
-      {% for article in articles %}
+	<div class="archive">
+		<h2><a href="{{ SITEURL }}/">Articles</a></h2>
+			{% for article in articles %}
 				<dl class="page-list-item">
 					<dt>
 						<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
@@ -16,6 +16,6 @@
 						{{ article.summary }}
 					</dd>
 				</dl>
-      {% endfor %}
-  </div>
+			{% endfor %}
+	</div>
 {% endblock content %}
