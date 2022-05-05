@@ -46,7 +46,7 @@ def personalized_address(vanity_prefix: string)
 You might think this process will be slow (it is). But, for short substrings (~5 characters) the generation can be done in a few minutes. There are 16 hexadecimal characters (again, ignoring the checksum). So the probability of finding an address that starts with an `n` length substring is `(1/16)^n`. For a 5 character word, there is a `(1/16)^5` chance of generating an address starting[: The probability is 35x higher if you don't care where the substring is] with your string. I can generate ~16,000 addresses/sec on my laptop, which means it should be possible to generate an address in about one minute. Not too bad. The scaling is pretty steep though, a 6 character substring would be ~17 minutes, and an 8 character substring would be ~3 days[: I know this isn't how random variables work, but it gives an estimate of the order].
 
 
-And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at [`go-ethereum`](https://github.com/ethereum/go-ethereum/tree/master/crypto))).
+And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at [`go-ethereum`](https://github.com/ethereum/go-ethereum/tree/master/crypto)).
 
 
 [^check]: <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md>
