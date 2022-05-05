@@ -17,9 +17,8 @@
 				<style>
 				{% if SITE_CSS %}
 					{{ SITE_CSS }}
-				{% else %}
-					{% block custom_css %}{% endblock custom_css %}
 				{% endif %}
+					{% block custom_css %}{% endblock custom_css %}
 				</style>
 				{% if not SITE_CSS %}
 				<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
