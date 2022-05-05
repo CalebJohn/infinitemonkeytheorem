@@ -1,7 +1,7 @@
 body {
 	line-height: 1.4em;
 	font-family: Helvetica, Arial, sans-serif;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 header, article {
@@ -19,7 +19,7 @@ img {
 
 article {
 	padding-bottom: 10em;
-	color: #333;
+	color: #222;
 }
 
 h1 {
@@ -137,7 +137,8 @@ pre {
 
 @media (max-width: 900px) {
 	header, article {
-		width: 80%;
+		font-size: 18px;
+		width: 90%;
 	}
 }
 
@@ -167,13 +168,13 @@ pre {
 		color: #bbb;
 	}
 	.site-title {
-		color: #ccc;
+		color: #bbb;
 	}
 	.site-title:visited {
-		color: #ccc;
+		color: #bbb;
 	}
 	article {
-		color: #bbb;
+		color: #ccc;
 	}
 	
 	h1, h2, h3, h4, h5, h6, strong, b {
