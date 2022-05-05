@@ -95,7 +95,7 @@ def inject_notes(article_generator):
         while match:
             hsh = f"sn-{i}"
             html = sidenote_html.format(hsh, hsh)
-            content = re.sub(sidenote_regex, html, content)
+            content = re.sub(sidenote_regex, html, content, count=1)
             match = re.search(sidenote_regex, content)
             i += 1
             article.metadata['custom_css'] = sidenote_css
