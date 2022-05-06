@@ -2,7 +2,6 @@ Title: Personalized Wallet Addresses
 Date: 2022-05-05 00:00
 Tags: eth, go
 Authors: Caleb
-Status: draft
 Summary: The 0xABCs of generating custom wallet addresses
 
 A Personalized Address (or Vanity Address) is a wallet address that is customized in some way. It's the web3 equivalent of a [vanity license plate](https://en.wikipedia.org/wiki/Vanity_plate). A typical (Ethereum) wallet address looks like this:
