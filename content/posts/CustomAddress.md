@@ -1,6 +1,7 @@
 Title: Personalized Wallet Addresses
 Date: 2022-05-05 00:00
-Tags: eth, go
+Tags: eth, golang
+Keywords: go, vanity address, ethereum
 Authors: Caleb
 Summary: The 0xABCs of generating custom wallet addresses
 
