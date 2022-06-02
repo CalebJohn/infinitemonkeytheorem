@@ -34,7 +34,6 @@ label.margin-toggle:not(.sidenote-number) {
   width: 35%;
   margin-top: 0.3rem;
   margin-bottom: 0;
-  font-size: 1.1rem;
   line-height: 1.3;
   vertical-align: baseline;
   position: relative;
