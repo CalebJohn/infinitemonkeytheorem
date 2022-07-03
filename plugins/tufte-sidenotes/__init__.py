@@ -66,6 +66,9 @@ label.margin-toggle:not(.sidenote-number) {
   label.margin-toggle:not(.sidenote-number) {
     display: inline;
   }
+  body {
+    width: 100%;
+  }
   .sidenote,
   .marginnote {
     display: none;
