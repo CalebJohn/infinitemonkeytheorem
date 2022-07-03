@@ -14,6 +14,7 @@ SITEURL = 'https://www.inmoth.ca'
 RELATIVE_URLS = False
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
+FEED_ALL_RSS = 'feeds/all.rss'
 
 OUTPUT_PATH = 'deploy/'
 PLUGINS = ["inline-css", "tufte-sidenotes"]

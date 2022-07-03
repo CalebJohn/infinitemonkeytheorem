@@ -1,10 +1,6 @@
 """A Pelican plugin which will inline a given css file at the head of all pages."""
 
-from logging import getLogger
-
 from pelican import signals
-
-logger = getLogger(__name__)
 
 
 def inline_css(pelican):
