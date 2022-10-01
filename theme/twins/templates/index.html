@@ -1,21 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}{% if articles_page.has_previous() %}- page {{ articles_page.number }} {% endif %}- {{ super() }}{% endblock title %}
-{% block description %}{{ SITENAME }}, {{ SITESUBTITLE }}{% endblock description %}
+{% block description %}{{ SITENAME }}{% endblock description %}
 
 {% block content %}
-	<div class="archive">
-		<h2><a href="{{ SITEURL }}/">Articles</a></h2>
-			{% for article in articles %}
-				<dl class="page-list-item">
-					<dt>
-						<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
-						<small>{{ article.locale_date}}</small>
-					</dt>
-					<dd>
-						{{ article.summary }}
-					</dd>
-				</dl>
-			{% endfor %}
-	</div>
+<main>
+	<section>
+		{% for article in articles %}
+			<dl class="page-list-item">
+				<dt>
+					<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+					<small>{{ article.locale_date}}</small>
+				</dt>
+				<dd>
+					{{ article.summary }}
+				</dd>
+			</dl>
+		{% endfor %}
+	</section>
+
+  <aside>
+    Hi! We're Clay and Caleb, brothers who share this site. We're most active on twitter {<a href="https://twitter.com/john_clayjohn">@johnclayjohn</a>} and github {<a href="https://github.com/clayjohn">clayjohn</a>, <a href="https://github.com/CalebJohn/">CalebJohn</a>}.
+    Also feel free to reach out by email.
+    <pre>{clay, caleb}@inmoth.ca</pre>
+  </aside>
+</main>
 {% endblock content %}

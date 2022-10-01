@@ -12,10 +12,12 @@
 {% endblock navigation_header %}
 
 {% block content %}
+<article>
 	<h1 class="article-title">{{ article.title }}</h1>
 
-	<section class="article-date">{% for author in article.authors %}<a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %}, {% endif %}{% endfor %} - {{ article.locale_date }}{% if article.modified %}, updated {{ article.locale_modified }}{% endif %} - 
-		 {% for tag in article.tags|sort %}<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+  <section class="article-date">[ {% for author in article.authors %}<a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %} {% endif %}{% endfor %} ] - {{ article.locale_date }}{% if article.modified %}, updated {{ article.locale_modified }}{% endif %} -
+		 [ {% for tag in article.tags|sort %}<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>{% if not loop.last %} {% endif %}{% endfor %} ]
 	</section>
 	{{ article.content }}
+</article>
 {% endblock %}

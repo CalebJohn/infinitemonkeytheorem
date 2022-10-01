@@ -53,7 +53,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Add items to top menu before pages
-MENUITEMS = [('About', '/pages/about-us.html'), ('Authors','/authors.html'), ('Tags','/tags.html')]
+MENUITEMS = [('home', '/'), ('atom', '/feeds/all.atom.xml'), ('rss', '/feeds/all.rss'), ('tags','/tags.html')]
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True

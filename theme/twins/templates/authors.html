@@ -4,7 +4,8 @@
 {% block description %}{{ author }}'s Posts{% endblock description %}
 
 {% block content %}
-  <div class="archive">
+<main>
+  <section>
   	{% for author, articles in authors|sort %}
       <h2><a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a></h2>
       {% for article in articles %}
@@ -19,5 +20,6 @@
 				</dl>
       {% endfor %}
     {% endfor %}
-  </div>
+  </section>
+</main>
 {% endblock content %}

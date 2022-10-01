@@ -4,7 +4,8 @@
 {% block description %}{{ tag }}{% endblock description %}
 
 {% block content %}
-  <div class="archive">
+<main>
+  <section>
     <h2><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></h2>
       {% for article in articles %}
 				<dl class="page-list-item">
@@ -17,5 +18,6 @@
 					</dd>
 				</dl>
       {% endfor %}
-  </div>
+  </section>
+</main>
 {% endblock content %}

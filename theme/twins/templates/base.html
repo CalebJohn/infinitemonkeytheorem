@@ -11,18 +11,21 @@
 				<title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
 
 				{% if FEED_ALL_ATOM %}
-				<link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
+				<link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+				{% endif %}
+				{% if FEED_ALL_RSS %}
+				<link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
 				{% endif %}
 
+				{% if not SITE_CSS %}
+				<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
+				{% endif %}
 				<style>
 				{% if SITE_CSS %}
 					{{ SITE_CSS }}
 				{% endif %}
 					{% block custom_css %}{% endblock custom_css %}
 				</style>
-				{% if not SITE_CSS %}
-				<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
-				{% endif %}
 
 
 		{% endblock head %}
@@ -31,23 +34,21 @@
 		<body>
 			{% block navigation_header %}
 			<header>
-				<a class="site-title" href="{{ SITEURL }}/">{{ SITETITLE }}</a>
 				<nav >
 					{% for title, link in MENUITEMS %}
 						{% if link is string %}
 							<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
 							{% if not loop.last %}
-							<span> | </span>
+							<span> :: </span>
 							{% endif %}
 						{% endif %}
 					{% endfor %}
 				</nav>
+			<h3 class="site-title" href="{{ SITEURL }}/">{{ SITETITLE }}</h3>
 			</header>
 			{% endblock navigation_header %}
 
-			<article>
 				{% block content %}
 				{% endblock %}
-			</article>
 		</body>
 </html>
