@@ -31,6 +31,11 @@ a { text-decoration-color: #00e5; }
 a:visited { text-decoration-color: #551A8B55; }
 a:hover, a:focus { text-decoration: underline; }
 
+pre {
+	overflow-x: auto;
+	padding: 1em 0;
+}
+
 main {
 	display: flex;
 	flex-direction: row;
