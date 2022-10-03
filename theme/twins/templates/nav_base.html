@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block description %}{{ SITENAME }}{% endblock description %}
+
+
+{% block content %}
+<header class="navbar">
+  <nav>
+    {% for title, link in MENUITEMS %}
+      {% if link is string %}
+        <a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
+        {% if not loop.last %}
+        <span> :: </span>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </nav>
+  <h3 class="site-title" href="{{ SITEURL }}/">{{ SITETITLE }}</h3>
+</header>
+
+<main>
+  <section>
+    {% block section %}
+    {% endblock section %}
+  </section>
+
+  <aside>
+    {% block aside %}
+    {% endblock aside %}
+  </aside>
+</main>
+{% endblock content %}

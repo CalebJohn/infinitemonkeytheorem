@@ -1,23 +1,19 @@
-{% extends "base.html" %}
+{% extends "nav_base.html" %}
 
 {% block title %}{{ tag }} - {{ super() }}{% endblock title %}
 {% block description %}{{ tag }}{% endblock description %}
 
-{% block content %}
-<main>
-  <section>
-    <h2><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></h2>
-      {% for article in articles %}
-				<dl class="page-list-item">
-					<dt>
-						<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
-						<small>{{ article.locale_date}}</small>
-					</dt>
-					<dd>
-						{{ article.summary }}
-					</dd>
-				</dl>
-      {% endfor %}
-  </section>
-</main>
-{% endblock content %}
+{% block section %}
+<h2><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></h2>
+{% for article in articles %}
+  <dl class="page-list-item">
+    <dt>
+      <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> - 
+      <small>{{ article.locale_date}}</small>
+    </dt>
+    <dd>
+      {{ article.summary }}
+    </dd>
+  </dl>
+{% endfor %}
+{% endblock section %}

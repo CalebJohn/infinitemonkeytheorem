@@ -32,23 +32,7 @@
 		</head>
 
 		<body>
-			{% block navigation_header %}
-			<header>
-				<nav >
-					{% for title, link in MENUITEMS %}
-						{% if link is string %}
-							<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
-							{% if not loop.last %}
-							<span> :: </span>
-							{% endif %}
-						{% endif %}
-					{% endfor %}
-				</nav>
-			<h3 class="site-title" href="{{ SITEURL }}/">{{ SITETITLE }}</h3>
-			</header>
-			{% endblock navigation_header %}
-
-				{% block content %}
-				{% endblock %}
+			{% block content %}
+			{% endblock %}
 		</body>
 </html>

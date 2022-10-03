@@ -1,20 +1,14 @@
-{% extends "base.html" %}
+{% extends "nav_base.html" %}
 
 {% block title %}{{ tag }} - {{ super() }}{% endblock title %}
 {% block description %}{{ tag }}{% endblock description %}
 
-
-{% block content %}
-<main>
-	<section>
-		{% for tag, articles in tags|sort %}
-			{% set articles_count = articles | count %}
-			<p class="page-list-item">
-				{{ articles | count }} {% if articles_count == 1 %}article{% else %}articles{% endif %} tagged
-				<a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
-			</p>
-		{% endfor %}
-	</section>
-</main>
-{% endblock content %}
-
+{% block section %}
+{% for tag, articles in tags|sort %}
+  {% set articles_count = articles | count %}
+  <p class="page-list-item">
+    {{ articles | count }} {% if articles_count == 1 %}article{% else %}articles{% endif %} tagged
+    <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
+  </p>
+{% endfor %}
+{% endblock section %}

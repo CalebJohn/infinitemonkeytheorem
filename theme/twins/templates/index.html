@@ -1,27 +1,21 @@
-{% extends "base.html" %}
+{% extends "nav_base.html" %}
 
-{% block description %}{{ SITENAME }}{% endblock description %}
+{% block section %}
+{% for article in articles %}
+	<dl class="page-list-item">
+		<dt>
+			<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+			<small>{{ article.locale_date}}</small>
+		</dt>
+		<dd>
+			{{ article.summary }}
+		</dd>
+	</dl>
+{% endfor %}
+{% endblock section %}
 
-{% block content %}
-<main>
-	<section>
-		{% for article in articles %}
-			<dl class="page-list-item">
-				<dt>
-					<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
-					<small>{{ article.locale_date}}</small>
-				</dt>
-				<dd>
-					{{ article.summary }}
-				</dd>
-			</dl>
-		{% endfor %}
-	</section>
-
-  <aside>
-    Hi! We're Clay and Caleb, brothers who share this site. We're most active on twitter {<a href="https://twitter.com/john_clayjohn">@johnclayjohn</a>} and github {<a href="https://github.com/clayjohn">clayjohn</a>, <a href="https://github.com/CalebJohn/">CalebJohn</a>}.
-    Also feel free to reach out by email.
-    <pre>{clay, caleb}@inmoth.ca</pre>
-  </aside>
-</main>
-{% endblock content %}
+{% block aside %}
+Hi! We're Clay and Caleb, brothers who share this site. We're most active on twitter {<a href="https://twitter.com/john_clayjohn">@johnclayjohn</a>} and github {<a href="https://github.com/clayjohn">clayjohn</a>, <a href="https://github.com/CalebJohn/">CalebJohn</a>}.
+Also feel free to reach out by email.
+<pre>{clay, caleb}@inmoth.ca</pre>
+{% endblock aside %}

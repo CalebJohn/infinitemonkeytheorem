@@ -5,13 +5,12 @@
 {% block keywords %}{{ article.keywords }}, {% for tag in article.tags|sort %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% endblock keywords %}
 {% block custom_css %}{{ article.metadata.custom_css }}{% endblock custom_css %}
 
-{% block navigation_header %}
+
+{% block content %}
 <header class="article-site-title">
 	<a class="site-title" href="{{ SITEURL }}/">&#171;{{ SITETITLE }}</a>
 </header>
-{% endblock navigation_header %}
 
-{% block content %}
 <article>
 	<h1 class="article-title">{{ article.title }}</h1>
 
