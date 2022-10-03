@@ -10,6 +10,8 @@ let
   ]);
 in
 pkgs.mkShell {
+  name = "python";
+
   buildInputs = [
     python-with-my-packages
   ];
