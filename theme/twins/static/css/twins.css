@@ -1,13 +1,13 @@
 body {
-	line-height: 1.4em;
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 18px;
+	line-height: 1.6rem;
+	font-family: Liberation Sans, Helvetica, Arial, sans-serif;
+	font-size: 1.15rem;
 	color: #111;
 	padding: 0 1em 10em 1em;
 }
 
 header, article {
-	max-width: 720px;
+	max-width: 680px;
 	margin: 0px auto;
 	padding: 0px;
 }
@@ -45,7 +45,7 @@ main {
 main, header.navbar {
 	max-width: 1000px;
 	font-family: monospace;
-	font-size: 16px;
+	font-size: 1rem;
 }
 main section {
 	max-width: 600px;
