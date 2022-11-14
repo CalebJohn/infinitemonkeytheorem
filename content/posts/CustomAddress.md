@@ -52,6 +52,6 @@ I can generate ~16,000 addresses/sec on my laptop. This means you can find a 5 c
 And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at [`go-ethereum`](https://github.com/ethereum/go-ethereum/tree/master/crypto)).
 
 
-[^check]: <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md>
+[^check]: See [EIP-55](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md)
 [^goeth]: <https://github.com/ethereum/go-ethereum>
 [^1]: <https://info.etherscan.com/what-is-an-ethereum-address>
