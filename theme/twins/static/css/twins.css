@@ -1,7 +1,7 @@
 body {
 	line-height: 1.6rem;
-	font-family: Liberation Sans, Helvetica, Arial, sans-serif;
-	font-size: 1.15rem;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1.2rem;
 	color: #111;
 	padding: 0 1em 10em 1em;
 }
@@ -113,6 +113,12 @@ canvas.processing {
 .highlight .nt { font-weight: bold } /* Name.Tag */
 .highlight .ow { font-weight: bold } /* Operator.Word */
 
+@media (max-width: 900px) {
+	body {
+		line-height: 1.5rem;
+		font-size: 1rem;
+	}
+}
 @media (prefers-color-scheme: dark) {
 	body {
 		background: #222;
