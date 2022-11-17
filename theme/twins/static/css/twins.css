@@ -1,7 +1,7 @@
 body {
-	line-height: 1.6rem;
+	line-height: 1.5em;
 	font-family: Helvetica, Arial, sans-serif;
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 	color: #111;
 	padding: 0 1em 10em 1em;
 }
@@ -115,7 +115,6 @@ canvas.processing {
 
 @media (max-width: 900px) {
 	body {
-		line-height: 1.5rem;
 		font-size: 1rem;
 	}
 }
