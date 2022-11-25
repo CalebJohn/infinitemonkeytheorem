@@ -6,7 +6,7 @@ Authors: Caleb
 Summary: Framing new projects as optimization problems
 
 
-When starting the research phase of a product (or project), you often don't know what form the final solution will take. Ideally you would arrive at the final form quickly, and iterate from there. For example, you might have decided that the existing secure messaging tools (signal et. al.) are insufficient and you will build your own. At this stage, you don't know if the communication will be P2P, centralized, or federated (or some combination). You don't know what crypto to use (is AES-256 still secure?). To what extent should it leverage blockchain technology? Does it need to be quantum-hardened? Will it use a push or pull model? etc. 
+Starting a new project is difficult. Really difficult. You don't necessarily know what your actual product will be[: Finding product/market fit is **hard**]. Ideally you would arrive at the final solution quickly, and iterate from there. For example, you might have decided that the existing secure messaging tools (signal et. al.) are insufficient and you will build your own. At this stage, you don't know if the communication will be P2P, centralized, or federated (or some combination). You don't know what crypto to use (is AES-256 still secure?). To what extent should it leverage blockchain technology? Does it need to be quantum-hardened? Will it use a push or pull model? etc. 
 
 This is a common position to be in when you're not a domain expert (and sometimes even if you are) and will occur on a project of any scale. Even building a modest CRUD app will require you to be familiar with multiple technology stacks (frontend/backend), the trade-offs between databases, and the different hosting options. 
 
