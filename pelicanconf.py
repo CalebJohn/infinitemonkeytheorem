@@ -43,7 +43,7 @@ IMAGE_PATH = "images"
 CATEGORY_SAVE_AS = ''
 CATEGORIES_SAVE_AS = ''
 
-DEFAULT_DATE_FORMAT = '%B %d, %Y'
+DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
