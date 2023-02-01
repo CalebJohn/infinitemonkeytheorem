@@ -62,7 +62,7 @@ label.margin-toggle:not(.sidenote-number) {
   top: -0.5rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1400px) {
   label.margin-toggle:not(.sidenote-number) {
     display: inline;
   }
