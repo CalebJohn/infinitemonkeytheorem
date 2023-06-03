@@ -12,7 +12,7 @@ This is a common position to be in when you're not a domain expert (and sometime
 
 Put differently, you want to find the optimal solution for your project (i.e. optimal technologies, optimal feature set, etc.) as quickly as possible. Thus you should employ an optimization technique.
 
-I propose Simulated Annealing[^1]. The name comes from the metallurgical process of annealing, which involves heating, then slowly cooling a material. For example, glass is annealed to provide a uniform rigid structure, glass that is improperly annealed will contain internal stress points making it fragile.
+I propose [Simulated Annealing](https://en.wikipedia.org/wiki/Simulated_annealing). The name comes from the metallurgical process of annealing, which involves heating, then slowly cooling a material. For example, glass is annealed to provide a uniform rigid structure, glass that is improperly annealed will contain internal stress points making it fragile.
 
 Simulated Annealing uses an internal "temperature" or "energy", which is intuitively understood as the willingness of the algorithm to jump around the search space. The "temperature" is slowly lowered until the algorithm (hopefully) settles on the global optimum. If the temperature is lowered too quickly the algorithm will settle on a local maximum (the probability of finding a global optimum approaches 1 as annealing time increases), lowering to slowly wastes compute time.
 
@@ -27,8 +27,5 @@ This is not an exact prescription to be followed[: In the case of a new project 
     - It's never too late to make modifications to a project, but as time goes on changes should get smaller. Stability is important.
    
 3. Don't let the "temperature" reach 0  
-    - Even though the "temperature" of the project is always trending down, remember that it should never reach absolute zero[^2]; there is always room to correct technological mistakes.
+    - Even though the "temperature" of the project is always trending down, remember that it should never reach [absolute zero](https://en.wikipedia.org/wiki/Absolute_zero); there is always room to correct technological mistakes.
 
-
-[^1]: https://en.wikipedia.org/wiki/Simulated_annealing
-[^2]: https://en.wikipedia.org/wiki/Absolute_zero

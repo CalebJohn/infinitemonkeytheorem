@@ -22,13 +22,13 @@ If you're like me, then you're in the right place, keep reading. If not, enjoy y
 ## Why do it yourself?
 You could perform an internet search for Personalized Wallet Addresses or Vanity Addresses, and run whatever code you find. If you plan on using the generated address, it might be worth using a generator that you trust.
 
-To trust a generator you'll probably want to read the source and understand its funky dependencies. Especially for Ethereum addresses, it's just easier to write your own generator that directly uses `go-ethereum`[^goeth].
+To trust a generator you'll probably want to read the source and understand its funky dependencies. Especially for Ethereum addresses, it's just easier to write your own generator that directly uses [`go-ethereum`](<https://github.com/ethereum/go-ethereum).
 
 
 ## How
-A wallet address in Ethereum is a 42 character hexadecimal string[^1]. "0x" takes the first two characters, so the actual address is 40 characters.
+A wallet address in Ethereum is a [42 character](https://info.etherscan.com/what-is-an-ethereum-address) hexadecimal string. "0x" takes the first two characters, so the actual address is 40 characters.
 
-An Ethereum wallet address is generated in four stages. First, use a random entropy source to generate a private key (anything that samples [vacuum fluctuations](https://arxiv.org/abs/1703.00559) will be fine). Second, derive a public key that corresponds to the generated private key. Next, calculate the address that corresponds to the public key. Finally, compute the checksum[^check] (which affects the case of the hexadecimal letters). For the rest of this post I'm going to ignore the checksum stage because I don't care about casing.
+An Ethereum wallet address is generated in four stages. First, use a random entropy source to generate a private key (anything that samples [vacuum fluctuations](https://arxiv.org/abs/1703.00559) will be fine). Second, derive a public key that corresponds to the generated private key. Next, calculate the address that corresponds to the public key. Finally, compute the checksum[: See [EIP-55](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md)] (which affects the case of the hexadecimal letters). For the rest of this post I'm going to ignore the checksum stage because I don't care about casing.
 
 It's important that the private key (and thus the public key and address) not be generated with anything deterministic. Using a non-random source will make it possible for an attacker to duplicate your generation process, generate your private/public keys, and gain access to your wallet.
 
@@ -52,6 +52,4 @@ I can generate ~16,000 addresses/sec on my laptop. This means you can find a 5 c
 And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at [`go-ethereum`](https://github.com/ethereum/go-ethereum/tree/master/crypto)).
 
 
-[^check]: See [EIP-55](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md)
-[^goeth]: <https://github.com/ethereum/go-ethereum>
-[^1]: <https://info.etherscan.com/what-is-an-ethereum-address>
+
