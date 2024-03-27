@@ -8,10 +8,7 @@
   <nav>
     {% for title, link in MENUITEMS %}
       {% if link is string %}
-        <a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
-        {% if not loop.last %}
-        <span> :: </span>
-        {% endif %}
+        /<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
       {% endif %}
     {% endfor %}
   </nav>

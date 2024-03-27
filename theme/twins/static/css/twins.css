@@ -1,13 +1,14 @@
+html {
+	color-scheme: light dark;
+}
+
 body {
-	line-height: 1.5em;
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 1.1rem;
-	color: #111;
+	font: 17px/1.5 system-ui, sans-serif;
 	padding: 0 1em 10em 1em;
 }
 
 header, article {
-	max-width: 800px;
+	max-width: 66ch;
 	margin: 0px auto;
 	padding: 0px;
 }
@@ -60,24 +61,15 @@ aside {
 	margin-top: 0px;
 }
 
-header.article-site-title {
-	margin-top: 5px;
-	font-size: 1em;
-	font-family: monospace;
-}
-
-.article-title {
-	margin-bottom: 2px;
+.article-title, .navbar {
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
 }
 
 .article-date {
 	font-size: 0.8em;
-	color: #555;
+	opacity: 0.7;
 	font-family: monospace;
-}
-
-.article-date a {
-	color: black;
 }
 
 canvas.processing {
@@ -113,33 +105,7 @@ canvas.processing {
 .highlight .nt { font-weight: bold } /* Name.Tag */
 .highlight .ow { font-weight: bold } /* Operator.Word */
 
-@media (max-width: 900px) {
-	body {
-		font-size: 1rem;
-	}
-}
 @media (prefers-color-scheme: dark) {
-	body {
-		background: #222;
-		color: #eee;
-	}
-
-	a {
-		color: #7BF;
-		text-decoration-color: #07e5;
-	}
-	a:visited {
-		color: #B9F;
-		text-decoration-color: #95C5;
-	}
-
-	.article-date {
-		color: #aaa;
-	}
-	.article-date a {
-		color: white;
-	}
-	
 	h1, h2, h3, h4, h5, h6, strong, b,
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 		color: #fff !important;
