@@ -42,6 +42,9 @@ IMAGE_PATH = "images"
 # We don't bother generating categories
 CATEGORY_SAVE_AS = ''
 CATEGORIES_SAVE_AS = ''
+# or tags
+TAGS_SAVE_AS = ''
+TAG_SAVE_AS = ''
 
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
@@ -53,7 +56,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Add items to top menu before pages
-MENUITEMS = [('home', '/'), ('atom', '/feeds/all.atom.xml'), ('rss', '/feeds/all.rss'), ('tags','/tags.html')]
+MENUITEMS = [('home', '/'), ('atom', '/feeds/all.atom.xml'), ('rss', '/feeds/all.rss')]
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
