@@ -1,7 +1,7 @@
 # shell.nix
 { pkgs ? import <nixpkgs> {} }:
 let
-  my-python = pkgs.python310;
+  my-python = pkgs.python312;
   python-with-my-packages = my-python.withPackages (p: with p; [
     pelican
     markdown
