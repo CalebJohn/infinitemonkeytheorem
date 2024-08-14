@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="A simple web app that allows a user to draw a volume envelope and a frequency envelope for a specific tone.">
+				<meta name="keywords" content=", audio, clojurescript">
+
+				<title>Draw Tones! - infinitemonkeytheorem</title>
+
+				<link href="https://www.inmoth.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="infinitemonkeytheorem Atom Feed" />
+				<link href="https://www.inmoth.ca/feeds/all.rss" type="application/rss+xml" rel="alternate" title="infinitemonkeytheorem RSS Feed" />
+
+				<style>
+					html {
+	color-scheme: light dark;
+}
+
+body {
+	font: 17px/1.5 system-ui, sans-serif;
+	padding: 0 1em 10em 1em;
+}
+
+header, article {
+	max-width: 66ch;
+	margin: 0px auto;
+	padding: 0px;
+}
+
+img {
+	width: auto;
+	height: auto;
+	max-width:100%;
+}
+
+h1 {
+	font-size: 2em;
+	line-height: 1em;
+}
+h1, h2, h3, h4, h5, h6, strong, b,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	color: #000;
+}
+
+a { text-decoration-color: #00e5; }
+a:visited { text-decoration-color: #551A8B55; }
+a:hover, a:focus { text-decoration: underline; }
+
+pre {
+	overflow-x: auto;
+	padding: 1em 0;
+}
+
+main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 0px auto;
+}
+main, header.navbar {
+	max-width: 1000px;
+	font-family: monospace;
+	font-size: 1rem;
+}
+main section {
+	max-width: 600px;
+	border-top: 5px double;
+}
+aside {
+	max-width: 350px;
+	margin: 40px 0 auto auto;
+}
+
+.page-list-item dd p {
+	margin-top: 0px;
+}
+
+.article-title, .navbar {
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+.article-date {
+	font-size: 0.8em;
+	opacity: 0.7;
+	font-family: monospace;
+}
+
+canvas.processing {
+	max-width: 75vw;
+	max-height: 90vh;
+}
+
+/* Pygments*/
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #ffffff; }
+.highlight .c { font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .ch { font-style: italic } /* Comment.Hashbang */
+.highlight .cm { font-style: italic } /* Comment.Multiline */
+.highlight .cpf { font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { font-style: italic } /* Comment.Single */
+.highlight .cs { font-style: italic } /* Comment.Special */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gh { font-weight: bold } /* Generic.Heading */
+.highlight .gp { font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { font-weight: bold } /* Generic.Subheading */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { font-weight: bold } /* Keyword.Namespace */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .s { font-style: italic } /* Literal.String */
+.highlight .nc { font-weight: bold } /* Name.Class */
+.highlight .ni { font-weight: bold } /* Name.Entity */
+.highlight .ne { font-weight: bold } /* Name.Exception */
+.highlight .nn { font-weight: bold } /* Name.Namespace */
+.highlight .nt { font-weight: bold } /* Name.Tag */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+
+@media (prefers-color-scheme: dark) {
+	h1, h2, h3, h4, h5, h6, strong, b,
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+		color: #fff !important;
+	}
+
+	.highlight .hll { background-color: #222 }
+	.highlight { background: #222; }
+}
+
+
+				</style>
+
+
+		</head>
+
+		<body>
+<header class="article-title">
+  <nav>
+	  / <a href="https://www.inmoth.ca/">home</a> / Draw Tones!
+  </nav>
+</header>
+
+<article>
+	<section class="article-date">2018-08-19	</section>
+	<h2 id="background"><a class="toclink" href="#background">Background</a></h2>
+<p>A few years ago I started a test project that would allow a user to have fine
+grained control over a tone by drawing the frequency and volume envelopes
+themselves. I've since come back to the project and added a little polish.
+You can find the app below.</p>
+<p><a href="apps/audiodraw/audio.html">Skip the words and jump to it!</a></p>
+<h2 id="some-details"><a class="toclink" href="#some-details">Some details</a></h2>
+<p>The idea is simple (and if you follow the link you'll see the implementation is even simpler), what if a creator could just draw what they wanted their sound to be? This project emerged out of that idea, and basic follows the vision. Albeit a rather simple more proof-of-concept version of that vision. I won't go into details here about how this was done (as it's actually rather simple) becuase the entire source, a little under 200 lines with some javascript glue, is <a href="https://github.com/CalebJohn/infinitemonkeytheorem/tree/gh-pages/apps/audiodraw">available on github.</a></p>
+<p>Still not convinced? Check out this sweet screenshot showing a tone with an approximately gaussian volume envelope and a chirping frequency.</p>
+<p><img alt="Screenshot of the application displaying a chirp" src="images/envelope.png" /></p>
+<p>Notice that the above interface is plain:</p>
+<ul>
+<li>"Play Note" does exactly as it sounds (makes a sound)</li>
+<li>"Toggle Line" switches between volume and frequency input</li>
+<li>The slider allows you to change the timescale of the program
+With that in place you can freely draw on the canvas to creat the tones of your dreams!</li>
+</ul>
+<p><a href="apps/audiodraw/audio.html">Now go ahead and create your own sounds!</a>
+Please share anything cool you come up with!</p>
+<p>This project was created with clojurescript and the <a href="https://github.com/r0man/sablono">sablono</a> library. You can see the <a href="https://github.com/CalebJohn/infinitemonkeytheorem/tree/gh-pages/apps/audiodraw/audio.cljs">entire file here</a>.</p>
+</article>
+		</body>
+</html>
