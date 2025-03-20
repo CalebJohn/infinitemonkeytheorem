@@ -8,20 +8,11 @@ jobs:
     name: Build inmoth with Pelican
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.12
-      - name: Checkout master
-        id: checkout-master
-        uses: actions/checkout@v2
-      - name: Cache pip packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pelican-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pelican-\
+          cache: 'pip'
       - name: Install Pelican
         run: |
           pip install -r requirements.txt
