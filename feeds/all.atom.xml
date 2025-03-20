@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>infinitemonkeytheorem</title><link href="https://www.inmoth.ca/" rel="alternate"></link><link href="https://www.inmoth.ca/feeds/all.atom.xml" rel="self"></link><id>https://www.inmoth.ca/</id><updated>2024-03-27T00:00:00-06:00</updated><entry><title>Keyboard Latency Testing</title><link href="https://www.inmoth.ca/keyboard-latency-testing.html" rel="alternate"></link><published>2024-03-27T00:00:00-06:00</published><updated>2024-03-27T00:00:00-06:00</updated><author><name>Caleb</name></author><id>tag:www.inmoth.ca,2024-03-27:/keyboard-latency-testing.html</id><summary type="html">&lt;p&gt;Lightweight keyboard re-mapper latency testing&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently wanted to experiment with &lt;a href="https://precondition.github.io/home-row-mods"&gt;home-row mods&lt;/a&gt;. I have a QMK enabled keyboard, but I want my mods to be portable for when I'm travelling and don't have my external keyboard. There are several remapping tools that can implement home-row mods on linux, notably &lt;a href="https://github.com/kmonad/kmonad"&gt;KMonad&lt;/a&gt;, &lt;a href="https://github.com/jtroo/kanata"&gt;Kanata&lt;/a&gt;, and &lt;a href="https://github.com/rvaiya/keyd"&gt;keyd&lt;/a&gt;. While these tools have different feature sets and goals, they all overlap in meeting my needs. The deciding factor for me is latency, I want the tool that imparts smallest additional latency to my typing &lt;label for="sn-0" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-0" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; See &lt;a href="https://danluu.com/keyboard-latency/"&gt;Dan Luu's&lt;/a&gt; writings about latency&lt;/span&gt;
+. To compare latency between the different tools, I wrote a small python script; which is the subject of this post.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note about latency testing: robust end-to-end latency testing is done  using a circuit that triggers a key-press and a light sensor to catch actual rendering&lt;label for="sn-1" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-1" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; See a cool setup by &lt;a href="https://thume.ca/2020/05/20/making-a-latency-tester/"&gt;Tristan Hume&lt;/a&gt;&lt;/span&gt;
+. This is a great way to determine actual latency. But for my use, I only care about relative latency (which tool introduces the most latency), so a lightweight method will be suitable.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;I would like to directly measure the latency (delay) introduced by the remapping tool from the point it receives my keypress, to the time the application receives the keypress — but I don't know how to do that. What I can do is prompt myself to press a key, and measure how long it takes from the start of the prompt, to when my script receives the keypress. The measured latency includes roughly 3 components.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;System/OS latency. This is from my keyboard, the OS, my terminal, etc.&lt;/li&gt;
+&lt;li&gt;My reaction time. &lt;a href="https://en.wikipedia.org/wiki/Mental_chronometry#Distribution_of_response_times"&gt;Wikipedia&lt;/a&gt; says the fastest human reaction times are somewhere between 100ms and 200ms.&lt;/li&gt;
+&lt;li&gt;Latency introduced by the remapping tool.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;While none of these components will be consistent across every keypress, we can assume they all have a consistent distribution &lt;label for="sn-2" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-2" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; The &lt;a href="https://en.wikipedia.org/wiki/Mental_chronometry#Distribution_of_response_times"&gt;distribution of human reaction times&lt;/a&gt; seems to be consistent at least&lt;/span&gt;
+. Since all the delay distributions are consistent, I can directly compare the mean reaction delay using each tool to determine the relative latencies. The differences in mean reaction time will be the differences in latency of each remapping tool. &lt;/p&gt;
+&lt;details&gt;
+    &lt;summary&gt;
+        Boring Math
+    &lt;/summary&gt;
+
+&lt;math xmlns="http://www.w3.org/1998/Math/MathML" display="block"&gt;
+  &lt;mstyle displaystyle="true" scriptlevel="0"&gt;
+    &lt;mrow data-mjx-texclass="ORD"&gt;
+      &lt;mtable rowspacing=".5em" columnspacing="1em" displaystyle="true"&gt;
+        &lt;mtr&gt;
+          &lt;mtd&gt;
+            &lt;mtable columnalign="left left" columnspacing="1em" rowspacing="4pt"&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;s&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;mtext&gt;System/OS latency&lt;/mtext&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;h&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;mtext&gt;Human reaction time&lt;/mtext&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;a&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;mtext&gt;Latency from remapping tool A&lt;/mtext&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;b&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;mtext&gt;Latency from remapping tool B&lt;/mtext&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;m&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;mtext&gt;Mean Latency from&amp;#xA0;&lt;/mtext&gt;
+                  &lt;mi&gt;n&lt;/mi&gt;
+                  &lt;mtext&gt;&amp;#xA0;trials&lt;/mtext&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;m&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;s&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;+&lt;/mo&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;h&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;+&lt;/mo&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                  &lt;/msub&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+            &lt;/mtable&gt;
+          &lt;/mtd&gt;
+        &lt;/mtr&gt;
+      &lt;/mtable&gt;
+    &lt;/mrow&gt;
+  &lt;/mstyle&gt;
+&lt;/math&gt;
+&lt;br&gt;
+&lt;math xmlns="http://www.w3.org/1998/Math/MathML" display="block"&gt;
+  &lt;mstyle displaystyle="true" scriptlevel="0"&gt;
+    &lt;mrow data-mjx-texclass="ORD"&gt;
+      &lt;mtable rowspacing=".5em" columnspacing="1em" displaystyle="true"&gt;
+        &lt;mtr&gt;
+          &lt;mtd&gt;
+            &lt;mtable displaystyle="true" columnalign="right left" columnspacing="0em" rowspacing="3pt"&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;
+                  &lt;mtext&gt;Latency Difference&lt;/mtext&gt;
+                &lt;/mtd&gt;
+                &lt;mtd&gt;
+                  &lt;mi&gt;&lt;/mi&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;m&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;a&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                  &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;m&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;b&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;&lt;/mtd&gt;
+                &lt;mtd&gt;
+                  &lt;mi&gt;&lt;/mi&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;mo stretchy="false"&gt;(&lt;/mo&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;s&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;+&lt;/mo&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;h&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;+&lt;/mo&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;a&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                  &lt;mo stretchy="false"&gt;)&lt;/mo&gt;
+                  &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+                  &lt;mo stretchy="false"&gt;(&lt;/mo&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;s&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;+&lt;/mo&gt;
+                  &lt;msub&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;h&lt;/mi&gt;
+                  &lt;/msub&gt;
+                  &lt;mo&gt;+&lt;/mo&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;b&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                  &lt;mo stretchy="false"&gt;)&lt;/mo&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+              &lt;mtr&gt;
+                &lt;mtd&gt;&lt;/mtd&gt;
+                &lt;mtd&gt;
+                  &lt;mi&gt;&lt;/mi&gt;
+                  &lt;mo&gt;=&lt;/mo&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;a&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                  &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+                  &lt;msubsup&gt;
+                    &lt;mi&gt;l&lt;/mi&gt;
+                    &lt;mi&gt;t&lt;/mi&gt;
+                    &lt;mi&gt;b&lt;/mi&gt;
+                  &lt;/msubsup&gt;
+                &lt;/mtd&gt;
+              &lt;/mtr&gt;
+            &lt;/mtable&gt;
+          &lt;/mtd&gt;
+        &lt;/mtr&gt;
+      &lt;/mtable&gt;
+    &lt;/mrow&gt;
+  &lt;/mstyle&gt;
+&lt;/math&gt;
+&lt;/details&gt;
+
+&lt;p&gt;&lt;img alt="image demonstrating the distribution of human response times" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Reaction_time_density_plot.svg/2880px-Reaction_time_density_plot.svg.png" /&gt;
+&lt;p&gt;&lt;center&gt;Distribution of Human Reaction times. Source:&lt;a href="https://commons.wikimedia.org/wiki/File:Reaction_time_density_plot.svg"&gt;Emily Willoughby&lt;/a&gt;, &lt;a href="https://creativecommons.org/licenses/by-sa/4.0"&gt;CC BY-SA 4.0&lt;/a&gt;, via Wikimedia Commons&lt;/center&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;To measure reaction time, I set up a basic python script that prompts me to press a key &lt;label for="sn-3" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-3" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; If you just want to play around with reactions times, checkout &lt;a href="https://humanbenchmark.com/tests/reactiontime"&gt;Human Benchmark&lt;/a&gt;&lt;/span&gt;
+. The trick is that the prompt comes after a random delay, which prevents me from accidentally finding a rhythm and reflexively pressing early.&lt;/p&gt;
+&lt;p&gt;This is done with the following python code&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mf"&gt;1.5&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# 1s - 2.5s delay&lt;/span&gt;
+&lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;perf_counter&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;read -n 1 -s -r -p &amp;quot;Press any key&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;perf_counter&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The reaction time from each key press is measured, and then reduced into mean, and median. I would also like to calculate mode, but I didn't feel I was working with enough samples to calculate it accurately &lt;label for="sn-4" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-4" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; This is probably an indication that I don't have enough samples to draw &lt;em&gt;any&lt;/em&gt; meaningful conclusion, but &lt;code&gt;¯\_(ツ)_/¯&lt;/code&gt;&lt;/span&gt;
+. I can then compare these statistics between keyd, kanata, and the baseline of nothing.&lt;/p&gt;
+&lt;p&gt;While gathering data I did occasionally twitch and get a sub 100ms reaction time, or lose focus and get a 1s reaction time. Outliers were removed with the following code:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# These boundaries were chosen based on my own reaction times&lt;/span&gt;
+&lt;span class="c1"&gt;# They might need tuning on other systems &lt;/span&gt;
+&lt;span class="n"&gt;delays&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mf"&gt;0.1&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;0.4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For the tests I measured the latencies of pressing my home-row mod key (&lt;code&gt;f&lt;/code&gt;) on my base system, keyd, and kanata. I did an additional test with kanata using a different key (&lt;code&gt;j&lt;/code&gt;). Each metric was calculated based on 50 keypresses done 10 at a time — I should do more, but it's boring.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Mean (s)&lt;/th&gt;
+&lt;th&gt;Median (s)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Base (f)&lt;/td&gt;
+&lt;td&gt;0.2772&lt;/td&gt;
+&lt;td&gt;0.2732&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;keyd (f)&lt;/td&gt;
+&lt;td&gt;0.3112&lt;/td&gt;
+&lt;td&gt;0.3099&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kanata (f)&lt;/td&gt;
+&lt;td&gt;0.3216&lt;/td&gt;
+&lt;td&gt;0.3174&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kanata (j)*&lt;/td&gt;
+&lt;td&gt;0.2628&lt;/td&gt;
+&lt;td&gt;0.2602&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;*Note: The &lt;code&gt;j&lt;/code&gt; Kanata test was done the next day after a good sleep. A quick retest of the Base shows a mean of 0.2537s. I didn't want to go through all 50 again, so the discrepancy stands.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;While this isn't the most statistically sound test, the results definitely show that adding home-row mods can add latency. While it seems clear that keyd and kanata are adding a delay; the keypress isn't triggered until the key-up event (vs. key-down in the base) for the home-row mod remapping. This means that there is an additional component to the delay (how low it takes me to lift my finger back up after pressing). The &lt;code&gt;j&lt;/code&gt; test shows that the tools are not adding meaningful latencies to other characters, which suggest that much of the latency difference is the time it takes me to lift my finger off the key. Based on my testing, there does still seem to be a small difference in the keyd and Kanata latencies. Speed is &lt;a href="https://github.com/rvaiya/keyd?tab=readme-ov-file#goals"&gt;a core goal&lt;/a&gt; of keyd, so I'm not surprised that it performs well here.&lt;/p&gt;
+&lt;p&gt;At the beginning of this post I said that I would choose a remapping tool based on latencies alone, but I ended up just using kanata. At the time I was setting up my system, keyd didn't quite support my desired configuration, but it does now. I've stayed with Kanata because I like the direction of the project and how responsive &lt;a href="https://github.com/jtroo"&gt;jtroo&lt;/a&gt; is to new ideas. That said, I admire the design of keyd and it's minimalism, this testing shows that it's worth checking out again.&lt;/p&gt;
+&lt;p&gt;Please let me know if you find this technique helpful, or if you have any additions to improve it!&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;details&gt;
+    &lt;summary&gt;
+        Full Code Listing
+    &lt;/summary&gt;
+
+The up-to-date code, as well as the raw data from my testing can be found &lt;a href="https://github.com/CalebJohn/latency_testing"&gt;on github&lt;/a&gt;. 
+
+
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;time&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;random&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;json&lt;/span&gt;
+
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;This script measures the latency of the keyboard input by prompting the user for a &lt;/span&gt;
+&lt;span class="sd"&gt;keypress at a random interval between 1 and 3 seconds. The latency is measured as the&lt;/span&gt;
+&lt;span class="sd"&gt;time between the prompt and the keypress. The script repeats this process 11 times and&lt;/span&gt;
+&lt;span class="sd"&gt;prints the mean, median, max, and min latency.&lt;/span&gt;
+
+&lt;span class="sd"&gt;This is not sufficient for measuring absolute latency. But is useful for comparing&lt;/span&gt;
+&lt;span class="sd"&gt;relative latency between different systems (QMK configurations in my case).&lt;/span&gt;
+
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;delays&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mf"&gt;1.5&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;perf_counter&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;read -n 1 -s -r -p &amp;quot;Press any key &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;delay&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;perf_counter&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;read -n 1 -s -r -p &amp;quot;Take a quick break, press a key when you&lt;/span&gt;&lt;span class="se"&gt;\&amp;#39;&lt;/span&gt;&lt;span class="s1"&gt;re ready to continue &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+&lt;span class="n"&gt;delays&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mf"&gt;0.1&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;0.4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;mean&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;bucketed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;# This is the formula for variance of sample, rather than&lt;/span&gt;
+&lt;span class="c1"&gt;# variance of a population&lt;/span&gt;
+&lt;span class="n"&gt;variance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;mean:     &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;median:   &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;sorted&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mode:     &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bucketed&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;bucketed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;std. dev.:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;variance&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;max:      &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;min:      &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/details&gt;</content><category term="posts"></category><category term="qmk"></category><category term="keyboard"></category></entry><entry><title>Product Annealing</title><link href="https://www.inmoth.ca/product-annealing.html" rel="alternate"></link><published>2022-11-14T00:00:00-07:00</published><updated>2022-11-14T00:00:00-07:00</updated><author><name>Caleb</name></author><id>tag:www.inmoth.ca,2022-11-14:/product-annealing.html</id><summary type="html">&lt;p&gt;Framing new projects as optimization problems&lt;/p&gt;</summary><content type="html">&lt;p&gt;Starting a new project is difficult. Really difficult. You don't necessarily know what your actual product will be. Ideally you would arrive at the final solution quickly, and iterate from there. For example, you might have decided that the existing secure messaging tools (signal et. al.) are insufficient and you will build your own. At this stage, you don't know if the communication will be P2P, centralized, or federated (or some combination). You don't know what crypto to use (is AES-256 still secure?). To what extent should it leverage blockchain technology? Does it need to be quantum-hardened? Will it use a push or pull model? etc. &lt;/p&gt;
+&lt;p&gt;This is a common position to be in when you're not a domain expert (and sometimes even if you are) and will occur on a project of any scale. Even building a modest CRUD app will require you to be familiar with multiple technology stacks (frontend/backend), the trade-offs between databases, and the different hosting options. &lt;/p&gt;
+&lt;p&gt;Put differently, you want to find the optimal solution for your project (i.e. optimal technologies, optimal feature set, etc.) as quickly as possible. Thus you should employ an optimization technique.&lt;/p&gt;
+&lt;p&gt;I propose &lt;a href="https://en.wikipedia.org/wiki/Simulated_annealing"&gt;Simulated Annealing&lt;/a&gt;. The name comes from the metallurgical process of annealing, which involves heating, then slowly cooling a material. For example, glass is annealed to provide a uniform rigid structure, glass that is improperly annealed will contain internal stress points making it fragile.&lt;/p&gt;
+&lt;p&gt;Simulated Annealing uses an internal "temperature" or "energy", which is intuitively understood as the willingness of the algorithm to jump around the search space. The "temperature" is slowly lowered until the algorithm (hopefully) settles on the global optimum. If the temperature is lowered too quickly the algorithm will settle on a local maximum (the probability of finding a global optimum approaches 1 as annealing time increases), lowering to slowly wastes compute time.&lt;/p&gt;
+&lt;p&gt;When starting a new project, I suggest keeping the annealing metaphor in mind. Early on the project should be in a high "temperature" state. This means testing out and researching many solutions without commitment. As time progresses the "temperature" should decrease, resulting in less broad solution changes, and more refinements on a few chosen solutions. Eventually, the system should be in a state with very few changes, and primarily refinements as requirements change/issues are discovered.&lt;/p&gt;
+&lt;p&gt;This is not an exact prescription to be followed&lt;label for="sn-0" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-0" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; In the case of a new project where you are already familiar with the space, it might make sense to start from a lower "temperature" for example. &lt;/span&gt;
+, but I believe the following lessons are important to keep in mind.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The start of a new project requires a lot of energy  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It's important to spend this time experimenting and researching many diverse solutions to the problem at hand. Don't commit (or over-commit) to anything at this point. This means that discovering a flaw in a critical dependency should not result in the death of the project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Reduce the "temperature" with time  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It's never too late to make modifications to a project, but as time goes on changes should get smaller. Stability is important.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Don't let the "temperature" reach 0  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Even though the "temperature" of the project is always trending down, remember that it should never reach &lt;a href="https://en.wikipedia.org/wiki/Absolute_zero"&gt;absolute zero&lt;/a&gt;; there is always room to correct technological mistakes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</content><category term="posts"></category><category term="research"></category><category term="optimization"></category></entry><entry><title>Personalized Wallet Addresses</title><link href="https://www.inmoth.ca/personalized-wallet-addresses.html" rel="alternate"></link><published>2022-05-05T00:00:00-06:00</published><updated>2022-05-05T00:00:00-06:00</updated><author><name>Caleb</name></author><id>tag:www.inmoth.ca,2022-05-05:/personalized-wallet-addresses.html</id><summary type="html">&lt;p&gt;The 0xABCs of generating custom wallet addresses&lt;/p&gt;</summary><content type="html">&lt;p&gt;A Personalized Address (or Vanity Address) is a wallet address that is customized in some way. It's the web3 equivalent of a &lt;a href="https://en.wikipedia.org/wiki/Vanity_plate"&gt;vanity license plate&lt;/a&gt;. A typical (Ethereum) wallet address looks like this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x60C42Ecb80C2069eb7aC1Ee18A84244c8617E8Ab&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;But when sharing your Ethereum address, you might want something more reflective of your culinary skills (maybe just mine):&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xbadf00db80C2069eb7aC1Ee18A84244c8617E8Ab&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you're like me, then you're in the right place, keep reading. If not, enjoy your random address ¯\_(ツ)_/¯.&lt;/p&gt;
+&lt;h2 id="why-do-it-yourself"&gt;&lt;a class="toclink" href="#why-do-it-yourself"&gt;Why do it yourself?&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;You could perform an internet search for Personalized Wallet Addresses or Vanity Addresses, and run whatever code you find. If you plan on using the generated address, it might be worth using a generator that you trust.&lt;/p&gt;
+&lt;p&gt;To trust a generator you'll probably want to read the source and understand its funky dependencies. Especially for Ethereum addresses, it's just easier to write your own generator that directly uses &lt;a href="&amp;lt;https://github.com/ethereum/go-ethereum"&gt;&lt;code&gt;go-ethereum&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="how"&gt;&lt;a class="toclink" href="#how"&gt;How&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A wallet address in Ethereum is a &lt;a href="https://info.etherscan.com/what-is-an-ethereum-address"&gt;42 character&lt;/a&gt; hexadecimal string. "0x" takes the first two characters, so the actual address is 40 characters.&lt;/p&gt;
+&lt;p&gt;An Ethereum wallet address is generated in four stages. First, use a random entropy source to generate a private key (anything that samples &lt;a href="https://arxiv.org/abs/1703.00559"&gt;vacuum fluctuations&lt;/a&gt; will be fine). Second, derive a public key that corresponds to the generated private key. Next, calculate the address that corresponds to the public key. Finally, compute the checksum&lt;label for="sn-0" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-0" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; See &lt;a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md"&gt;EIP-55&lt;/a&gt;&lt;/span&gt;
+ (which affects the case of the hexadecimal letters). For the rest of this post I'm going to ignore the checksum stage because I don't care about casing.&lt;/p&gt;
+&lt;p&gt;It's important that the private key (and thus the public key and address) not be generated with anything deterministic. Using a non-random source will make it possible for an attacker to duplicate your generation process, generate your private/public keys, and gain access to your wallet.&lt;/p&gt;
+&lt;p&gt;This begs the question, how do we generate a custom address if we can only use a random source? Don't generate just one address, generate millions! It's a game of guess-and-check. You can continually generate addresses, until you find one that matches your criteria. The below pseudo code demonstrates an example of searching for a substring at the beginning of an address.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;personalized_address&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vanity_prefix&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;private_key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;generate_key&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="n"&gt;public_key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;generate_public_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;private_key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;generate_address&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;public_key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vanity_prefix&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;# Securely save the private key&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You might think this process will be slow (it is). But, for short substrings (~5 characters) the generation can be done in a few minutes. There are 16 hexadecimal characters (again, ignoring the checksum).
+When looking for an address that starts with an &lt;code&gt;n&lt;/code&gt; length substring, the probability of finding a match in one iteration is &lt;code&gt;(1/16)^n&lt;/code&gt;&lt;label for="sn-1" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-1" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; The probability is &lt;code&gt;(40-n)&lt;/code&gt; times higher if you don't care where the substring is&lt;/span&gt;
+.
+The probability of finding a match after &lt;code&gt;i&lt;/code&gt; iterations is &lt;code&gt;1-(1-p)^i&lt;/code&gt; where &lt;code&gt;p&lt;/code&gt; is &lt;code&gt;(1/16)^n&lt;/code&gt; and &lt;code&gt;n&lt;/code&gt; is the substring length&lt;label for="sn-2" class="margin-toggle sidenote-number"&gt;&lt;/label&gt;
+&lt;input type="checkbox" id="sn-2" class="margin-toggle"/&gt;
+&lt;span class="sidenote"&gt; This comes from the &lt;a href="https://en.wikipedia.org/wiki/Binomial_distribution"&gt;binomial distribution&lt;/a&gt;&lt;/span&gt;
+.
+I can generate ~16,000 addresses/sec on my laptop. This means you can find a 5 character substring with 99% probability in about 5 minutes. You can find a 6 character substring (99% probability) in about 80 minutes, and an 8 character substring in around 15 days.&lt;/p&gt;
+&lt;p&gt;And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at &lt;a href="https://github.com/ethereum/go-ethereum/tree/master/crypto"&gt;&lt;code&gt;go-ethereum&lt;/code&gt;&lt;/a&gt;).&lt;/p&gt;</content><category term="posts"></category><category term="eth"></category><category term="golang"></category></entry><entry><title>Mechs n' Match</title><link href="https://www.inmoth.ca/mechs-n-match.html" rel="alternate"></link><published>2021-01-31T21:00:00-07:00</published><updated>2021-01-31T21:00:00-07:00</updated><author><name>Clay</name></author><id>tag:www.inmoth.ca,2021-01-31:/mechs-n-match.html</id><summary type="html">&lt;p&gt;A game made during the recent Global Game Jam&lt;/p&gt;</summary><content type="html">&lt;h2 id="the-game"&gt;&lt;a class="toclink" href="#the-game"&gt;The Game&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This year we participated in the Global Game Jam with a few friends. The theme was "Lost and Found".
+To that end, the game has the player scrounge through abandoned weapon parts looking for something to 
+outfight their mech for a series of battles with a diverse group of enemies. &lt;/p&gt;
+&lt;p&gt;&lt;a href="apps/MechsnMatch/MechsnMatch.html"&gt;You can play it now in your browser!&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The game is also available for Windows, Linux, and Android on our &lt;a href="https://globalgamejam.org/2021/games/mechs-n-match-4"&gt;Global Game Jam page&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="the-team"&gt;&lt;a class="toclink" href="#the-team"&gt;The Team&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Lukas was our software architect, he handled setting up the framework that held up the entire game. He
+also did the lion's share of the coding for the Scrounging mini game. He is responsible for the ease of
+which we built the game without resorting to any unfortunate hacks&lt;/p&gt;
+&lt;p&gt;Zach created all of our art assets. He inked everything by hand and then used his computer to
+add colour. You can thank him for the creative visuals and the high level of polish that the game presents.
+Much of the gameplay and visual direction is a direct result of Zach's imaginative and whimsical mind.&lt;/p&gt;
+&lt;p&gt;You can check out high resolution images of Zach's work and some of his other projects on his &lt;a href="https://zmschuster.com/mechs-n-match-global-game-jam-2021"&gt;website&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;Caleb was responsible for programming the combat scene which was certainly the most complex chunk of the game. &lt;/p&gt;
+&lt;p&gt;Clay mostly focused on visual effects and adding that extra level of pizazz that can only be achieved with custom shaders.&lt;/p&gt;
+&lt;h2 id="the-engine-godot"&gt;&lt;a class="toclink" href="#the-engine-godot"&gt;The Engine: Godot&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;We chose Godot for this project. In part because Clay is a frequent contributor to Godot on an engine level, but also because Lukas has good experience with Godot on personal projects. &lt;/p&gt;
+&lt;p&gt;We found the experience completely smooth. Godot's scene system made it a breeze for us to have 3 coders working together on a small codebase
+without bumping into one another. We were able to export the game to 4 platforms minutes before the deadline without hassle. But most importantly, 
+Godot allowed us to rapidly build systems in a clean way. We are confident that, if we return to this project, we can complete all our stretch goals
+without having to rip apart our core systems.&lt;/p&gt;</content><category term="posts"></category><category term="Godot"></category><category term="Game"></category><category term="GGJ"></category></entry><entry><title>Draw Tones!</title><link href="https://www.inmoth.ca/draw-tones.html" rel="alternate"></link><published>2018-08-19T17:00:00-06:00</published><updated>2018-08-19T17:00:00-06:00</updated><author><name>Caleb</name></author><id>tag:www.inmoth.ca,2018-08-19:/draw-tones.html</id><summary type="html">&lt;p&gt;A simple web app that allows a user to draw a volume envelope and a frequency envelope for a specific tone.&lt;/p&gt;</summary><content type="html">&lt;h2 id="background"&gt;&lt;a class="toclink" href="#background"&gt;Background&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A few years ago I started a test project that would allow a user to have fine
+grained control over a tone by drawing the frequency and volume envelopes
+themselves. I've since come back to the project and added a little polish.
+You can find the app below.&lt;/p&gt;
+&lt;p&gt;&lt;a href="apps/audiodraw/audio.html"&gt;Skip the words and jump to it!&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="some-details"&gt;&lt;a class="toclink" href="#some-details"&gt;Some details&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The idea is simple (and if you follow the link you'll see the implementation is even simpler), what if a creator could just draw what they wanted their sound to be? This project emerged out of that idea, and basic follows the vision. Albeit a rather simple more proof-of-concept version of that vision. I won't go into details here about how this was done (as it's actually rather simple) becuase the entire source, a little under 200 lines with some javascript glue, is &lt;a href="https://github.com/CalebJohn/infinitemonkeytheorem/tree/gh-pages/apps/audiodraw"&gt;available on github.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Still not convinced? Check out this sweet screenshot showing a tone with an approximately gaussian volume envelope and a chirping frequency.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Screenshot of the application displaying a chirp" src="images/envelope.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Notice that the above interface is plain:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;"Play Note" does exactly as it sounds (makes a sound)&lt;/li&gt;
+&lt;li&gt;"Toggle Line" switches between volume and frequency input&lt;/li&gt;
+&lt;li&gt;The slider allows you to change the timescale of the program
+With that in place you can freely draw on the canvas to creat the tones of your dreams!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="apps/audiodraw/audio.html"&gt;Now go ahead and create your own sounds!&lt;/a&gt;
+Please share anything cool you come up with!&lt;/p&gt;
+&lt;p&gt;This project was created with clojurescript and the &lt;a href="https://github.com/r0man/sablono"&gt;sablono&lt;/a&gt; library. You can see the &lt;a href="https://github.com/CalebJohn/infinitemonkeytheorem/tree/gh-pages/apps/audiodraw/audio.cljs"&gt;entire file here&lt;/a&gt;.&lt;/p&gt;</content><category term="posts"></category><category term="clojurescript"></category><category term="audio"></category></entry><entry><title>Endless Forest</title><link href="https://www.inmoth.ca/endless-forest.html" rel="alternate"></link><published>2018-06-24T11:26:00-06:00</published><updated>2018-06-24T11:26:00-06:00</updated><author><name>Clay</name></author><id>tag:www.inmoth.ca,2018-06-24:/endless-forest.html</id><summary type="html">&lt;p&gt;Trying to create an endless forest full of vistas&lt;/p&gt;</summary><content type="html">&lt;style&gt;
+
+    #blocker {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    }
+    #instructions {
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        -webkit-box-orient: horizontal;
+        -moz-box-orient: horizontal;
+        box-orient: horizontal;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        box-pack: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        box-align: center;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+    }
+    #top {
+  position: fixed;
+  width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+    div {
+        user-select: auto;
+    }
+    canvas {
+        user-select: none;
+    }
+&lt;/style&gt;
+
+&lt;div id="top" style="display:none"&gt;
+&lt;/div&gt;
+
+&lt;script src="scripts/three.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/hsluv.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/PointerLockControls.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/DeviceOrientationControls.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/perlin.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/groundShader.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/instanceShader.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/infiniteTerrain.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/Flora.js"&gt;&lt;/script&gt;
+
+&lt;!--Seeded RNG from http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html--&gt;
+
+&lt;script src="scripts/EF_include/seedrandom.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/tween.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/ConvexGeometry.js"&gt;&lt;/script&gt;
+
+&lt;script src="scripts/EF_include/QuickHull.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  var clock, controls, scene, renderer, camera, terrain, deltas, waterPlane;
+  var init = function() {
+        clock = new THREE.Clock();
+    clock.start();
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xaaaaff);
+        scene.fog = new THREE.FogExp2( new THREE.Color(0xaaaaff), 0.003 );
+
+        camera = new THREE.PerspectiveCamera( 50, window.innerWidth/window.innerHeight, 0.1, 10000 );
+
+        renderer = new THREE.WebGLRenderer({antialias: true &amp;&amp; quality.medium}); //move to SMAA for low end computers
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        document.getElementById("top").appendChild( renderer.domElement );
+        window.addEventListener( 'resize', onWindowResize, false );
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+      // Take the user to a different screen here.
+      controls = new THREE.DeviceOrientationControls(camera);
+      var blocker = document.getElementById( 'blocker' );
+      blocker.remove();
+            var list = document.getElementsByTagName("div");
+            for (var i=0;i&lt;list.length;i++) {
+                list[i].style.userSelect = "none";
+            }
+    } else {
+          controls = new THREE.PointerLockControls( camera );
+
+          scene.add( controls.getObject() );
+    }
+        terrain = new Terrain(360, 10, camera, scene);
+
+        //place a single blue plane in the scene that moves with the camera to act as water
+        var waterGeometry = new THREE.PlaneBufferGeometry(720, 720);
+    var waterMaterial = new THREE.MeshBasicMaterial( {color: 0x4477aa} );
+    waterPlane = new THREE.Mesh( waterGeometry, waterMaterial );
+    scene.add( waterPlane );
+    waterPlane.rotateX(-Math.PI*0.5);
+    waterPlane.position.y = -30;
+
+    //just for debugging terrain
+    //var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
+    //scene.add( directionalLight );
+
+          //this requires:
+            //c) a plant generator for each tile //including grass, flowers, maybe shrubs
+              //ii) flowers can be done same as rock and trees
+            //h) Monuments that have a random chance at spawning
+
+        deltas = [];
+
+        controls.update(0, terrain.group);
+    terrain.update( controls.getObject().position.clone() );
+
+      renderer.render(scene, camera);
+
+      animate();
+  }
+  function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
+    var animate = function (time) {
+      requestAnimationFrame( animate );
+    var delta = clock.getDelta();
+      controls.update( delta , terrain.group);
+        if (controls.enabled) {
+      terrain.update( controls.getObject().position.clone() );
+      TWEEN.update(time);
+
+      waterPlane.position.x = controls.getObject().position.x;
+      waterPlane.position.z = controls.getObject().position.z;
+
+            renderer.render(scene, camera);
+
+            //record frame time
+            deltas.push(delta);
+            var ft = 0;
+            for (let i=0;i&lt;deltas.length;i++) {
+              ft+=deltas[i];
+            }
+            ft/=deltas.length;
+            while (deltas.length &gt; 100) { deltas.pop(); }
+            //console.log(ft*1000);
+      }
+    };
+
+    var setQuality = function(it) {
+    blocker.style.display = "block";
+    window.quality = {low: true, medium: false, high:false};
+    if (it.value != "Low") {
+      window.quality.medium = true;
+      if (it.value == "High") {
+        window.quality.high = true;
+      }
+    }
+    window.low_gravity = document.getElementById( 'gravity' ).checked;
+    window.free_fly = document.getElementById( 'flight' ).checked;
+    it.parentNode.remove();
+    document.getElementById("top").style.display = '';
+    init();
+    };
+&lt;/script&gt;
+
+&lt;div&gt;
+  &lt;p&gt;Select Options:&lt;/p&gt;
+  &lt;input type="radio" id="gravity" name="gravity" value="on"&gt;
+  &lt;label for="gravity"&gt;Low-Gravity&lt;/label&gt;
+  &lt;input type="radio" id="flight" name="flight" value="on"&gt;
+  &lt;label for="flight"&gt;Free Fly&lt;/label&gt;
+  &lt;p&gt;Select Desired Quality:&lt;/p&gt;
+  &lt;input type="button" id="Low"
+   name="contact" value="Low" onclick="setQuality(this)"&gt;
+  &lt;input type="button" id="Medium"
+   name="contact" value="Medium" onclick="setQuality(this)"&gt;
+  &lt;input type="button" id="High"
+   name="contact" value="High" onclick="setQuality(this)"&gt;
+
+&lt;/div&gt;
+
+&lt;!--Used directly from the threejs pointer lock control example. https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_pointerlock.html--&gt;
+
+&lt;div id="blocker" style="display:none"&gt;
+    &lt;div id="instructions"&gt;
+        &lt;span style="font-size:40px"&gt;Click to play&lt;/span&gt;
+        &lt;br /&gt;
+        (W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;Trying to put together a few ideas I have had going for awhile.&lt;/p&gt;</content><category term="studies"></category><category term="threejs"></category><category term="noise"></category><category term="procedural"></category></entry><entry><title>Mountain Study</title><link href="https://www.inmoth.ca/mountain-study.html" rel="alternate"></link><published>2016-02-23T13:53:00-07:00</published><updated>2016-02-23T13:53:00-07:00</updated><author><name>Clay</name></author><id>tag:www.inmoth.ca,2016-02-23:/mountain-study.html</id><summary type="html">&lt;p&gt;A study into a specific art style for a project I am working on&lt;/p&gt;</summary><content type="html">&lt;script src="scripts/processing.min.js"&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;canvas id="proc-canvas" class="processing" data-processing-sources="scripts/Mountain_study.pde"&gt;&lt;/canvas&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;This is a quick experiment I threw together this weekend to play with simple scenes and get an idea about how I want the art direction to go in a future project.&lt;/p&gt;</content><category term="studies"></category><category term="processing"></category><category term="mountains"></category></entry></feed>

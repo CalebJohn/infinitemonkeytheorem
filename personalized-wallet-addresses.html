@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="The 0xABCs of generating custom wallet addresses">
+				<meta name="keywords" content="go, vanity address, ethereum, eth, golang">
+
+				<title>Personalized Wallet Addresses - infinitemonkeytheorem</title>
+
+				<link href="https://www.inmoth.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="infinitemonkeytheorem Atom Feed" />
+				<link href="https://www.inmoth.ca/feeds/all.rss" type="application/rss+xml" rel="alternate" title="infinitemonkeytheorem RSS Feed" />
+
+				<style>
+					html {
+	color-scheme: light dark;
+}
+
+body {
+	font: 17px/1.5 system-ui, sans-serif;
+	padding: 0 1em 10em 1em;
+}
+
+header, article {
+	max-width: 66ch;
+	margin: 0px auto;
+	padding: 0px;
+}
+
+img {
+	width: auto;
+	height: auto;
+	max-width:100%;
+}
+
+h1 {
+	font-size: 2em;
+	line-height: 1em;
+}
+h1, h2, h3, h4, h5, h6, strong, b,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	color: #000;
+}
+
+a { text-decoration-color: #00e5; }
+a:visited { text-decoration-color: #551A8B55; }
+a:hover, a:focus { text-decoration: underline; }
+
+pre {
+	overflow-x: auto;
+	padding: 1em 0;
+}
+
+main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 0px auto;
+}
+main, header.navbar {
+	max-width: 1000px;
+	font-family: monospace;
+	font-size: 1rem;
+}
+main section {
+	max-width: 600px;
+	border-top: 5px double;
+}
+aside {
+	max-width: 350px;
+	margin: 40px 0 auto auto;
+}
+
+.page-list-item dd p {
+	margin-top: 0px;
+}
+
+.article-title, .navbar {
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+.article-date {
+	font-size: 0.8em;
+	opacity: 0.7;
+	font-family: monospace;
+}
+
+canvas.processing {
+	max-width: 75vw;
+	max-height: 90vh;
+}
+
+/* Pygments*/
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #ffffff; }
+.highlight .c { font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .ch { font-style: italic } /* Comment.Hashbang */
+.highlight .cm { font-style: italic } /* Comment.Multiline */
+.highlight .cpf { font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { font-style: italic } /* Comment.Single */
+.highlight .cs { font-style: italic } /* Comment.Special */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gh { font-weight: bold } /* Generic.Heading */
+.highlight .gp { font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { font-weight: bold } /* Generic.Subheading */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { font-weight: bold } /* Keyword.Namespace */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .s { font-style: italic } /* Literal.String */
+.highlight .nc { font-weight: bold } /* Name.Class */
+.highlight .ni { font-weight: bold } /* Name.Entity */
+.highlight .ne { font-weight: bold } /* Name.Exception */
+.highlight .nn { font-weight: bold } /* Name.Namespace */
+.highlight .nt { font-weight: bold } /* Name.Tag */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+
+@media (prefers-color-scheme: dark) {
+	h1, h2, h3, h4, h5, h6, strong, b,
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+		color: #fff !important;
+	}
+
+	.highlight .hll { background-color: #222 }
+	.highlight { background: #222; }
+}
+
+
+
+/* SIDENOTES */
+/*From: https://github.com/edwardtufte/tufte-css/blob/gh-pages/tufte.css*/
+body {
+  width: 87.5%;
+  counter-reset: sidenote-counter;
+}
+input.margin-toggle {
+  display: none;
+}
+
+label.sidenote-number {
+  display: inline-block;
+  max-height: 2rem; /* should be less than or equal to paragraph line-height */
+}
+label.margin-toggle:not(.sidenote-number) {
+  display: none;
+}
+.sidenote,
+.marginnote {
+  float: right;
+  clear: right;
+  margin-right: -45%;
+  width: 35%;
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+  line-height: 1.3;
+  vertical-align: baseline;
+  position: relative;
+}
+
+.sidenote-number {
+  counter-increment: sidenote-counter;
+}
+
+.sidenote-number:after,
+.sidenote:before {
+  position: relative;
+  vertical-align: baseline;
+}
+
+.sidenote-number:after {
+  content: counter(sidenote-counter, lower-alpha);
+  font-size: 1rem;
+  top: -0.5rem;
+  left: 0.1rem;
+}
+
+.sidenote:before {
+  content: counter(sidenote-counter, lower-alpha) " ";
+  font-size: 1rem;
+  top: -0.5rem;
+}
+
+@media (max-width: 1400px) {
+  label.margin-toggle:not(.sidenote-number) {
+    display: inline;
+  }
+  body {
+    width: inherit;
+  }
+  .sidenote,
+  .marginnote {
+    display: none;
+  }
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    display: block;
+    float: left;
+    left: 1rem;
+    clear: both;
+    width: 95%;
+    margin: 1rem 2.5%;
+    vertical-align: baseline;
+    position: relative;
+  }
+}
+				</style>
+
+
+		</head>
+
+		<body>
+<header class="article-title">
+  <nav>
+	  / <a href="https://www.inmoth.ca/">home</a> / Personalized Wallet Addresses
+  </nav>
+</header>
+
+<article>
+	<section class="article-date">2022-05-05	</section>
+	<p>A Personalized Address (or Vanity Address) is a wallet address that is customized in some way. It's the web3 equivalent of a <a href="https://en.wikipedia.org/wiki/Vanity_plate">vanity license plate</a>. A typical (Ethereum) wallet address looks like this:</p>
+<div class="codehilite"><pre><span></span><span class="mf">0</span><span class="n">x60C42Ecb80C2069eb7aC1Ee18A84244c8617E8Ab</span>
+</pre></div>
+
+
+<p>But when sharing your Ethereum address, you might want something more reflective of your culinary skills (maybe just mine):</p>
+<div class="codehilite"><pre><span></span><span class="mf">0</span><span class="n">xbadf00db80C2069eb7aC1Ee18A84244c8617E8Ab</span>
+</pre></div>
+
+
+<p>If you're like me, then you're in the right place, keep reading. If not, enjoy your random address ¯\_(ツ)_/¯.</p>
+<h2 id="why-do-it-yourself"><a class="toclink" href="#why-do-it-yourself">Why do it yourself?</a></h2>
+<p>You could perform an internet search for Personalized Wallet Addresses or Vanity Addresses, and run whatever code you find. If you plan on using the generated address, it might be worth using a generator that you trust.</p>
+<p>To trust a generator you'll probably want to read the source and understand its funky dependencies. Especially for Ethereum addresses, it's just easier to write your own generator that directly uses <a href="&lt;https://github.com/ethereum/go-ethereum"><code>go-ethereum</code></a>.</p>
+<h2 id="how"><a class="toclink" href="#how">How</a></h2>
+<p>A wallet address in Ethereum is a <a href="https://info.etherscan.com/what-is-an-ethereum-address">42 character</a> hexadecimal string. "0x" takes the first two characters, so the actual address is 40 characters.</p>
+<p>An Ethereum wallet address is generated in four stages. First, use a random entropy source to generate a private key (anything that samples <a href="https://arxiv.org/abs/1703.00559">vacuum fluctuations</a> will be fine). Second, derive a public key that corresponds to the generated private key. Next, calculate the address that corresponds to the public key. Finally, compute the checksum<label for="sn-0" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-0" class="margin-toggle"/>
+<span class="sidenote"> See <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md">EIP-55</a></span>
+ (which affects the case of the hexadecimal letters). For the rest of this post I'm going to ignore the checksum stage because I don't care about casing.</p>
+<p>It's important that the private key (and thus the public key and address) not be generated with anything deterministic. Using a non-random source will make it possible for an attacker to duplicate your generation process, generate your private/public keys, and gain access to your wallet.</p>
+<p>This begs the question, how do we generate a custom address if we can only use a random source? Don't generate just one address, generate millions! It's a game of guess-and-check. You can continually generate addresses, until you find one that matches your criteria. The below pseudo code demonstrates an example of searching for a substring at the beginning of an address.</p>
+<div class="codehilite"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">personalized_address</span><span class="p">(</span><span class="n">vanity_prefix</span><span class="p">:</span> <span class="n">string</span><span class="p">)</span>
+  <span class="n">private_key</span> <span class="o">=</span> <span class="n">generate_key</span><span class="p">()</span>
+  <span class="n">public_key</span> <span class="o">=</span> <span class="n">generate_public_key</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
+  <span class="n">address</span> <span class="o">=</span> <span class="n">generate_address</span><span class="p">(</span><span class="n">public_key</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">address</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">vanity_prefix</span><span class="p">)</span>
+    <span class="c1"># Securely save the private key</span>
+</pre></div>
+
+
+<p>You might think this process will be slow (it is). But, for short substrings (~5 characters) the generation can be done in a few minutes. There are 16 hexadecimal characters (again, ignoring the checksum).
+When looking for an address that starts with an <code>n</code> length substring, the probability of finding a match in one iteration is <code>(1/16)^n</code><label for="sn-1" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-1" class="margin-toggle"/>
+<span class="sidenote"> The probability is <code>(40-n)</code> times higher if you don't care where the substring is</span>
+.
+The probability of finding a match after <code>i</code> iterations is <code>1-(1-p)^i</code> where <code>p</code> is <code>(1/16)^n</code> and <code>n</code> is the substring length<label for="sn-2" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-2" class="margin-toggle"/>
+<span class="sidenote"> This comes from the <a href="https://en.wikipedia.org/wiki/Binomial_distribution">binomial distribution</a></span>
+.
+I can generate ~16,000 addresses/sec on my laptop. This means you can find a 5 character substring with 99% probability in about 5 minutes. You can find a 6 character substring (99% probability) in about 80 minutes, and an 8 character substring in around 15 days.</p>
+<p>And that's all. I leave it as an exercise for the reader to implement the code for themselves (hint: take a look at <a href="https://github.com/ethereum/go-ethereum/tree/master/crypto"><code>go-ethereum</code></a>).</p>
+</article>
+		</body>
+</html>

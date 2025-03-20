@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="Lightweight keyboard re-mapper latency testing">
+				<meta name="keywords" content="qmk, keyboard, home-row, typing, keyboard, qmk">
+
+				<title>Keyboard Latency Testing - infinitemonkeytheorem</title>
+
+				<link href="https://www.inmoth.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="infinitemonkeytheorem Atom Feed" />
+				<link href="https://www.inmoth.ca/feeds/all.rss" type="application/rss+xml" rel="alternate" title="infinitemonkeytheorem RSS Feed" />
+
+				<style>
+					html {
+	color-scheme: light dark;
+}
+
+body {
+	font: 17px/1.5 system-ui, sans-serif;
+	padding: 0 1em 10em 1em;
+}
+
+header, article {
+	max-width: 66ch;
+	margin: 0px auto;
+	padding: 0px;
+}
+
+img {
+	width: auto;
+	height: auto;
+	max-width:100%;
+}
+
+h1 {
+	font-size: 2em;
+	line-height: 1em;
+}
+h1, h2, h3, h4, h5, h6, strong, b,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	color: #000;
+}
+
+a { text-decoration-color: #00e5; }
+a:visited { text-decoration-color: #551A8B55; }
+a:hover, a:focus { text-decoration: underline; }
+
+pre {
+	overflow-x: auto;
+	padding: 1em 0;
+}
+
+main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 0px auto;
+}
+main, header.navbar {
+	max-width: 1000px;
+	font-family: monospace;
+	font-size: 1rem;
+}
+main section {
+	max-width: 600px;
+	border-top: 5px double;
+}
+aside {
+	max-width: 350px;
+	margin: 40px 0 auto auto;
+}
+
+.page-list-item dd p {
+	margin-top: 0px;
+}
+
+.article-title, .navbar {
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+.article-date {
+	font-size: 0.8em;
+	opacity: 0.7;
+	font-family: monospace;
+}
+
+canvas.processing {
+	max-width: 75vw;
+	max-height: 90vh;
+}
+
+/* Pygments*/
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #ffffff; }
+.highlight .c { font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .ch { font-style: italic } /* Comment.Hashbang */
+.highlight .cm { font-style: italic } /* Comment.Multiline */
+.highlight .cpf { font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { font-style: italic } /* Comment.Single */
+.highlight .cs { font-style: italic } /* Comment.Special */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gh { font-weight: bold } /* Generic.Heading */
+.highlight .gp { font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { font-weight: bold } /* Generic.Subheading */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { font-weight: bold } /* Keyword.Namespace */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .s { font-style: italic } /* Literal.String */
+.highlight .nc { font-weight: bold } /* Name.Class */
+.highlight .ni { font-weight: bold } /* Name.Entity */
+.highlight .ne { font-weight: bold } /* Name.Exception */
+.highlight .nn { font-weight: bold } /* Name.Namespace */
+.highlight .nt { font-weight: bold } /* Name.Tag */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+
+@media (prefers-color-scheme: dark) {
+	h1, h2, h3, h4, h5, h6, strong, b,
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+		color: #fff !important;
+	}
+
+	.highlight .hll { background-color: #222 }
+	.highlight { background: #222; }
+}
+
+
+
+/* SIDENOTES */
+/*From: https://github.com/edwardtufte/tufte-css/blob/gh-pages/tufte.css*/
+body {
+  width: 87.5%;
+  counter-reset: sidenote-counter;
+}
+input.margin-toggle {
+  display: none;
+}
+
+label.sidenote-number {
+  display: inline-block;
+  max-height: 2rem; /* should be less than or equal to paragraph line-height */
+}
+label.margin-toggle:not(.sidenote-number) {
+  display: none;
+}
+.sidenote,
+.marginnote {
+  float: right;
+  clear: right;
+  margin-right: -45%;
+  width: 35%;
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+  line-height: 1.3;
+  vertical-align: baseline;
+  position: relative;
+}
+
+.sidenote-number {
+  counter-increment: sidenote-counter;
+}
+
+.sidenote-number:after,
+.sidenote:before {
+  position: relative;
+  vertical-align: baseline;
+}
+
+.sidenote-number:after {
+  content: counter(sidenote-counter, lower-alpha);
+  font-size: 1rem;
+  top: -0.5rem;
+  left: 0.1rem;
+}
+
+.sidenote:before {
+  content: counter(sidenote-counter, lower-alpha) " ";
+  font-size: 1rem;
+  top: -0.5rem;
+}
+
+@media (max-width: 1400px) {
+  label.margin-toggle:not(.sidenote-number) {
+    display: inline;
+  }
+  body {
+    width: inherit;
+  }
+  .sidenote,
+  .marginnote {
+    display: none;
+  }
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    display: block;
+    float: left;
+    left: 1rem;
+    clear: both;
+    width: 95%;
+    margin: 1rem 2.5%;
+    vertical-align: baseline;
+    position: relative;
+  }
+}
+				</style>
+
+
+		</head>
+
+		<body>
+<header class="article-title">
+  <nav>
+	  / <a href="https://www.inmoth.ca/">home</a> / Keyboard Latency Testing
+  </nav>
+</header>
+
+<article>
+	<section class="article-date">2024-03-27	</section>
+	<p>I recently wanted to experiment with <a href="https://precondition.github.io/home-row-mods">home-row mods</a>. I have a QMK enabled keyboard, but I want my mods to be portable for when I'm travelling and don't have my external keyboard. There are several remapping tools that can implement home-row mods on linux, notably <a href="https://github.com/kmonad/kmonad">KMonad</a>, <a href="https://github.com/jtroo/kanata">Kanata</a>, and <a href="https://github.com/rvaiya/keyd">keyd</a>. While these tools have different feature sets and goals, they all overlap in meeting my needs. The deciding factor for me is latency, I want the tool that imparts smallest additional latency to my typing <label for="sn-0" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-0" class="margin-toggle"/>
+<span class="sidenote"> See <a href="https://danluu.com/keyboard-latency/">Dan Luu's</a> writings about latency</span>
+. To compare latency between the different tools, I wrote a small python script; which is the subject of this post.</p>
+<p><em>Note about latency testing: robust end-to-end latency testing is done  using a circuit that triggers a key-press and a light sensor to catch actual rendering<label for="sn-1" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-1" class="margin-toggle"/>
+<span class="sidenote"> See a cool setup by <a href="https://thume.ca/2020/05/20/making-a-latency-tester/">Tristan Hume</a></span>
+. This is a great way to determine actual latency. But for my use, I only care about relative latency (which tool introduces the most latency), so a lightweight method will be suitable.</em></p>
+<p>I would like to directly measure the latency (delay) introduced by the remapping tool from the point it receives my keypress, to the time the application receives the keypress — but I don't know how to do that. What I can do is prompt myself to press a key, and measure how long it takes from the start of the prompt, to when my script receives the keypress. The measured latency includes roughly 3 components.</p>
+<ol>
+<li>System/OS latency. This is from my keyboard, the OS, my terminal, etc.</li>
+<li>My reaction time. <a href="https://en.wikipedia.org/wiki/Mental_chronometry#Distribution_of_response_times">Wikipedia</a> says the fastest human reaction times are somewhere between 100ms and 200ms.</li>
+<li>Latency introduced by the remapping tool.</li>
+</ol>
+<p>While none of these components will be consistent across every keypress, we can assume they all have a consistent distribution <label for="sn-2" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-2" class="margin-toggle"/>
+<span class="sidenote"> The <a href="https://en.wikipedia.org/wiki/Mental_chronometry#Distribution_of_response_times">distribution of human reaction times</a> seems to be consistent at least</span>
+. Since all the delay distributions are consistent, I can directly compare the mean reaction delay using each tool to determine the relative latencies. The differences in mean reaction time will be the differences in latency of each remapping tool. </p>
+<details>
+    <summary>
+        Boring Math
+    </summary>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mstyle displaystyle="true" scriptlevel="0">
+    <mrow data-mjx-texclass="ORD">
+      <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+        <mtr>
+          <mtd>
+            <mtable columnalign="left left" columnspacing="1em" rowspacing="4pt">
+              <mtr>
+                <mtd>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>s</mi>
+                  </msub>
+                  <mo>=</mo>
+                  <mtext>System/OS latency</mtext>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>h</mi>
+                  </msub>
+                  <mo>=</mo>
+                  <mtext>Human reaction time</mtext>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <msubsup>
+                    <mi>l</mi>
+                    <mi>t</mi>
+                    <mi>a</mi>
+                  </msubsup>
+                  <mo>=</mo>
+                  <mtext>Latency from remapping tool A</mtext>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <msubsup>
+                    <mi>l</mi>
+                    <mi>t</mi>
+                    <mi>b</mi>
+                  </msubsup>
+                  <mo>=</mo>
+                  <mtext>Latency from remapping tool B</mtext>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <msub>
+                    <mi>m</mi>
+                    <mi>t</mi>
+                  </msub>
+                  <mo>=</mo>
+                  <mtext>Mean Latency from&#xA0;</mtext>
+                  <mi>n</mi>
+                  <mtext>&#xA0;trials</mtext>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd>
+                  <msub>
+                    <mi>m</mi>
+                    <mi>t</mi>
+                  </msub>
+                  <mo>=</mo>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>s</mi>
+                  </msub>
+                  <mo>+</mo>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>h</mi>
+                  </msub>
+                  <mo>+</mo>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>t</mi>
+                  </msub>
+                </mtd>
+              </mtr>
+            </mtable>
+          </mtd>
+        </mtr>
+      </mtable>
+    </mrow>
+  </mstyle>
+</math>
+<br>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mstyle displaystyle="true" scriptlevel="0">
+    <mrow data-mjx-texclass="ORD">
+      <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+        <mtr>
+          <mtd>
+            <mtable displaystyle="true" columnalign="right left" columnspacing="0em" rowspacing="3pt">
+              <mtr>
+                <mtd>
+                  <mtext>Latency Difference</mtext>
+                </mtd>
+                <mtd>
+                  <mi></mi>
+                  <mo>=</mo>
+                  <msubsup>
+                    <mi>m</mi>
+                    <mi>t</mi>
+                    <mi>a</mi>
+                  </msubsup>
+                  <mo>&#x2212;</mo>
+                  <msubsup>
+                    <mi>m</mi>
+                    <mi>t</mi>
+                    <mi>b</mi>
+                  </msubsup>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd></mtd>
+                <mtd>
+                  <mi></mi>
+                  <mo>=</mo>
+                  <mo stretchy="false">(</mo>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>s</mi>
+                  </msub>
+                  <mo>+</mo>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>h</mi>
+                  </msub>
+                  <mo>+</mo>
+                  <msubsup>
+                    <mi>l</mi>
+                    <mi>t</mi>
+                    <mi>a</mi>
+                  </msubsup>
+                  <mo stretchy="false">)</mo>
+                  <mo>&#x2212;</mo>
+                  <mo stretchy="false">(</mo>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>s</mi>
+                  </msub>
+                  <mo>+</mo>
+                  <msub>
+                    <mi>l</mi>
+                    <mi>h</mi>
+                  </msub>
+                  <mo>+</mo>
+                  <msubsup>
+                    <mi>l</mi>
+                    <mi>t</mi>
+                    <mi>b</mi>
+                  </msubsup>
+                  <mo stretchy="false">)</mo>
+                </mtd>
+              </mtr>
+              <mtr>
+                <mtd></mtd>
+                <mtd>
+                  <mi></mi>
+                  <mo>=</mo>
+                  <msubsup>
+                    <mi>l</mi>
+                    <mi>t</mi>
+                    <mi>a</mi>
+                  </msubsup>
+                  <mo>&#x2212;</mo>
+                  <msubsup>
+                    <mi>l</mi>
+                    <mi>t</mi>
+                    <mi>b</mi>
+                  </msubsup>
+                </mtd>
+              </mtr>
+            </mtable>
+          </mtd>
+        </mtr>
+      </mtable>
+    </mrow>
+  </mstyle>
+</math>
+</details>
+
+<p><img alt="image demonstrating the distribution of human response times" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Reaction_time_density_plot.svg/2880px-Reaction_time_density_plot.svg.png" />
+<p><center>Distribution of Human Reaction times. Source:<a href="https://commons.wikimedia.org/wiki/File:Reaction_time_density_plot.svg">Emily Willoughby</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons</center></p></p>
+<p>To measure reaction time, I set up a basic python script that prompts me to press a key <label for="sn-3" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-3" class="margin-toggle"/>
+<span class="sidenote"> If you just want to play around with reactions times, checkout <a href="https://humanbenchmark.com/tests/reactiontime">Human Benchmark</a></span>
+. The trick is that the prompt comes after a random delay, which prevents me from accidentally finding a rhythm and reflexively pressing early.</p>
+<p>This is done with the following python code</p>
+<div class="codehilite"><pre><span></span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.5</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 1s - 2.5s delay</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;read -n 1 -s -r -p &quot;Press any key&quot;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The reaction time from each key press is measured, and then reduced into mean, and median. I would also like to calculate mode, but I didn't feel I was working with enough samples to calculate it accurately <label for="sn-4" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-4" class="margin-toggle"/>
+<span class="sidenote"> This is probably an indication that I don't have enough samples to draw <em>any</em> meaningful conclusion, but <code>¯\_(ツ)_/¯</code></span>
+. I can then compare these statistics between keyd, kanata, and the baseline of nothing.</p>
+<p>While gathering data I did occasionally twitch and get a sub 100ms reaction time, or lose focus and get a 1s reaction time. Outliers were removed with the following code:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># These boundaries were chosen based on my own reaction times</span>
+<span class="c1"># They might need tuning on other systems </span>
+<span class="n">delays</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">delays</span> <span class="k">if</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mf">0.1</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">]</span>
+</pre></div>
+
+
+<p>For the tests I measured the latencies of pressing my home-row mod key (<code>f</code>) on my base system, keyd, and kanata. I did an additional test with kanata using a different key (<code>j</code>). Each metric was calculated based on 50 keypresses done 10 at a time — I should do more, but it's boring.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Mean (s)</th>
+<th>Median (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base (f)</td>
+<td>0.2772</td>
+<td>0.2732</td>
+</tr>
+<tr>
+<td>keyd (f)</td>
+<td>0.3112</td>
+<td>0.3099</td>
+</tr>
+<tr>
+<td>Kanata (f)</td>
+<td>0.3216</td>
+<td>0.3174</td>
+</tr>
+<tr>
+<td>Kanata (j)*</td>
+<td>0.2628</td>
+<td>0.2602</td>
+</tr>
+</tbody>
+</table>
+<p><em>*Note: The <code>j</code> Kanata test was done the next day after a good sleep. A quick retest of the Base shows a mean of 0.2537s. I didn't want to go through all 50 again, so the discrepancy stands.</em></p>
+<p>While this isn't the most statistically sound test, the results definitely show that adding home-row mods can add latency. While it seems clear that keyd and kanata are adding a delay; the keypress isn't triggered until the key-up event (vs. key-down in the base) for the home-row mod remapping. This means that there is an additional component to the delay (how low it takes me to lift my finger back up after pressing). The <code>j</code> test shows that the tools are not adding meaningful latencies to other characters, which suggest that much of the latency difference is the time it takes me to lift my finger off the key. Based on my testing, there does still seem to be a small difference in the keyd and Kanata latencies. Speed is <a href="https://github.com/rvaiya/keyd?tab=readme-ov-file#goals">a core goal</a> of keyd, so I'm not surprised that it performs well here.</p>
+<p>At the beginning of this post I said that I would choose a remapping tool based on latencies alone, but I ended up just using kanata. At the time I was setting up my system, keyd didn't quite support my desired configuration, but it does now. I've stayed with Kanata because I like the direction of the project and how responsive <a href="https://github.com/jtroo">jtroo</a> is to new ideas. That said, I admire the design of keyd and it's minimalism, this testing shows that it's worth checking out again.</p>
+<p>Please let me know if you find this technique helpful, or if you have any additions to improve it!</p>
+<p><br></p>
+<details>
+    <summary>
+        Full Code Listing
+    </summary>
+
+The up-to-date code, as well as the raw data from my testing can be found <a href="https://github.com/CalebJohn/latency_testing">on github</a>. 
+
+
+<div class="codehilite"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This script measures the latency of the keyboard input by prompting the user for a </span>
+<span class="sd">keypress at a random interval between 1 and 3 seconds. The latency is measured as the</span>
+<span class="sd">time between the prompt and the keypress. The script repeats this process 11 times and</span>
+<span class="sd">prints the mean, median, max, and min latency.</span>
+
+<span class="sd">This is not sufficient for measuring absolute latency. But is useful for comparing</span>
+<span class="sd">relative latency between different systems (QMK configurations in my case).</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">delays</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.5</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;read -n 1 -s -r -p &quot;Press any key &quot;&#39;</span><span class="p">)</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="n">delays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;read -n 1 -s -r -p &quot;Take a quick break, press a key when you</span><span class="se">\&#39;</span><span class="s1">re ready to continue &quot;&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">()</span>
+
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">delays</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">delays</span> <span class="k">if</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mf">0.1</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">]</span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">delays</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">delays</span><span class="p">)</span>
+<span class="n">bucketed</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">delays</span><span class="p">]</span>
+<span class="c1"># This is the formula for variance of sample, rather than</span>
+<span class="c1"># variance of a population</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">delays</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">delays</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">mean:     &quot;</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;median:   &quot;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">delays</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">delays</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mode:     &quot;</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">bucketed</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">bucketed</span><span class="o">.</span><span class="n">count</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;std. dev.:&quot;</span><span class="p">,</span> <span class="n">variance</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;max:      &quot;</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">delays</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min:      &quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">delays</span><span class="p">))</span>
+</pre></div>
+
+
+</details>
+</article>
+		</body>
+</html>
