@@ -22,7 +22,7 @@ If you're like me, then you're in the right place, keep reading. If not, enjoy y
 ## Why do it yourself?
 You could perform an internet search for Personalized Wallet Addresses or Vanity Addresses, and run whatever code you find. If you plan on using the generated address, it might be worth using a generator that you trust.
 
-To trust a generator you'll probably want to read the source and understand its funky dependencies. Especially for Ethereum addresses, it's just easier to write your own generator that directly uses [`go-ethereum`](<https://github.com/ethereum/go-ethereum).
+To trust a generator you'll probably want to read the source and understand its funky dependencies. Especially for Ethereum addresses, it's just easier to write your own generator that directly uses [`go-ethereum`](https://github.com/ethereum/go-ethereum).
 
 
 ## How
