@@ -5,10 +5,10 @@
 
 {% block content %}
 <header class="navbar">
-  <nav>
+  <nav role="menubar">
     {% for title, link in MENUITEMS %}
       {% if link is string %}
-        /<a href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
+        /<a role="menuitem" href="{{ SITEURL  }}{{ link }}">{{ title }}</a>
       {% endif %}
     {% endfor %}
   </nav>
