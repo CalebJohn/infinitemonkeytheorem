@@ -23,7 +23,12 @@ STATIC_PATHS = [
         "images",
         "apps",
         "extra"]
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, 'images/favicon/favicon.ico': {'path': 'favicon.ico'}}
+EXTRA_PATH_METADATA = {
+        'extra/CNAME': {'path': 'CNAME'},
+        'images/favicon/favicon.ico': {'path': 'favicon.ico'},
+        'images/favicon/favicon.svg': {'path': 'favicon.svg'},
+        'images/favicon/favicon-96x96.png': {'path': 'favicon-96x96.png'},
+}
 ARTICLE_EXCLUDES = STATIC_PATHS + [
 ]
 

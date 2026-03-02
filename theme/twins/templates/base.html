@@ -17,6 +17,10 @@
 				<link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
 				{% endif %}
 
+				<link rel="icon" type="image/svg+xml" href="{{ SITEURL }}/favicon.svg">
+				<link rel="icon" type="image/png" sizes="96x96" href="{{ SITEURL }}/favicon-96x96.png">
+				<link rel="shortcut icon" href="{{ SITEURL }}/favicon.ico">
+
 				{% if not SITE_CSS %}
 				<link href="{{ SITEURL }}/theme/css/twins.css" rel="stylesheet">
 				{% endif %}
