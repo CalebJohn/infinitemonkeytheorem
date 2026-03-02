@@ -1,25 +1,27 @@
-name: Build inmoth
+name: Build site
 
 on:
   push
+permissions:
+  contents: write
 
 jobs:
   build_job:
-    name: Build inmoth with Pelican
+    name: Build site with Pelican
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.12
-          cache: 'pip'
-      - name: Install Pelican
-        run: |
-          pip install -r requirements.txt
+          python-version-file: "pyproject.toml"
       - name: Run Pelican
         id: run-pelican
         run: |
-          pelican content -o deploy -s publishconf.py
+          uv run pelican content -o deploy -s publishconf.py
       - name: Push to pages branch
         id: push-to-gh-pages
         run: |
@@ -31,3 +33,4 @@ jobs:
           git add .
           git commit -m "rebuild site from ${GITHUB_SHA}"
           git push origin master:gh-pages --force
+
