@@ -211,7 +211,7 @@ While none of these components will be consistent across every keypress, we can 
 </math>
 </details>
 
-![image demonstrating the distribution of human response times](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Reaction_time_density_plot.svg/2880px-Reaction_time_density_plot.svg.png)
+![image demonstrating the distribution of human response times](images/Reaction_time_density_plot.svg)
 <p><center>Distribution of Human Reaction times. Source:<a href="https://commons.wikimedia.org/wiki/File:Reaction_time_density_plot.svg">Emily Willoughby</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons</center></p>
 
 To measure reaction time, I set up a basic python script that prompts me to press a key [: If you just want to play around with reactions times, checkout [Human Benchmark][humanbenchmark]]. The trick is that the prompt comes after a random delay, which prevents me from accidentally finding a rhythm and reflexively pressing early.
