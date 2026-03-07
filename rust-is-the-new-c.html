@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="The evolution of programming continues">
+				<meta name="keywords" content="rust, c, pl, programming, thoughts">
+
+				<title>Rust is the New C - infinitemonkeytheorem</title>
+
+				<link href="https://www.inmoth.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="infinitemonkeytheorem Atom Feed" />
+				<link href="https://www.inmoth.ca/feeds/all.rss" type="application/rss+xml" rel="alternate" title="infinitemonkeytheorem RSS Feed" />
+
+				<link rel="icon" type="image/svg+xml" href="https://www.inmoth.ca/favicon.svg">
+				<link rel="icon" type="image/png" sizes="96x96" href="https://www.inmoth.ca/favicon-96x96.png">
+				<link rel="shortcut icon" href="https://www.inmoth.ca/favicon.ico">
+
+				<style>
+					html {
+	color-scheme: light dark;
+}
+
+body {
+	font: 17px/1.5 system-ui, sans-serif;
+	padding: 0 1em 10em 1em;
+}
+
+header, article {
+	max-width: 66ch;
+	margin: 0px auto;
+	padding: 0px;
+}
+
+img {
+	width: auto;
+	height: auto;
+	max-width:100%;
+}
+
+h1 {
+	font-size: 2em;
+	line-height: 1em;
+}
+h1, h2, h3, h4, h5, h6, strong, b,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	color: #000;
+}
+
+a { text-decoration-color: #00e5; }
+a:visited { text-decoration-color: #551A8B55; }
+a:hover, a:focus { text-decoration: underline; }
+
+pre {
+	overflow-x: auto;
+	padding: 1em 0;
+}
+
+main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 0px auto;
+}
+main, header.navbar {
+	max-width: 1000px;
+	font-family: monospace;
+	font-size: 1rem;
+}
+main section {
+	max-width: 600px;
+	border-top: 5px double;
+}
+aside {
+	max-width: 350px;
+	margin: 40px 0 auto auto;
+}
+
+.page-list-item dd p {
+	margin-top: 0px;
+}
+
+.article-title, .navbar {
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+.article-date {
+	font-size: 0.8em;
+	opacity: 0.7;
+	font-family: monospace;
+}
+
+canvas.processing {
+	max-width: 75vw;
+	max-height: 90vh;
+}
+
+/* Pygments*/
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #ffffff; }
+.highlight .c { font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .ch { font-style: italic } /* Comment.Hashbang */
+.highlight .cm { font-style: italic } /* Comment.Multiline */
+.highlight .cpf { font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { font-style: italic } /* Comment.Single */
+.highlight .cs { font-style: italic } /* Comment.Special */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gh { font-weight: bold } /* Generic.Heading */
+.highlight .gp { font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { font-weight: bold } /* Generic.Subheading */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { font-weight: bold } /* Keyword.Namespace */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .s { font-style: italic } /* Literal.String */
+.highlight .nc { font-weight: bold } /* Name.Class */
+.highlight .ni { font-weight: bold } /* Name.Entity */
+.highlight .ne { font-weight: bold } /* Name.Exception */
+.highlight .nn { font-weight: bold } /* Name.Namespace */
+.highlight .nt { font-weight: bold } /* Name.Tag */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+
+@media (prefers-color-scheme: dark) {
+	h1, h2, h3, h4, h5, h6, strong, b,
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+		color: #fff !important;
+	}
+
+	.highlight .hll { background-color: #222 }
+	.highlight { background: #222; }
+}
+
+
+
+/* SIDENOTES */
+/*From: https://github.com/edwardtufte/tufte-css/blob/gh-pages/tufte.css*/
+body {
+  width: 87.5%;
+  counter-reset: sidenote-counter;
+}
+input.margin-toggle {
+  display: none;
+}
+
+label.sidenote-number {
+  display: inline-block;
+  max-height: 2rem; /* should be less than or equal to paragraph line-height */
+}
+label.margin-toggle:not(.sidenote-number) {
+  display: none;
+}
+.sidenote,
+.marginnote {
+  float: right;
+  clear: right;
+  margin-right: -45%;
+  width: 35%;
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+  line-height: 1.3;
+  vertical-align: baseline;
+  position: relative;
+}
+
+.sidenote-number {
+  counter-increment: sidenote-counter;
+}
+
+.sidenote-number:after,
+.sidenote:before {
+  position: relative;
+  vertical-align: baseline;
+}
+
+.sidenote-number:after {
+  content: counter(sidenote-counter, lower-alpha);
+  font-size: 1rem;
+  top: -0.5rem;
+  left: 0.1rem;
+}
+
+.sidenote:before {
+  content: counter(sidenote-counter, lower-alpha) " ";
+  font-size: 1rem;
+  top: -0.5rem;
+}
+
+@media (max-width: 1400px) {
+  label.margin-toggle:not(.sidenote-number) {
+    display: inline;
+  }
+  body {
+    width: inherit;
+  }
+  .sidenote,
+  .marginnote {
+    display: none;
+  }
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    display: block;
+    float: left;
+    left: 1rem;
+    clear: both;
+    width: 95%;
+    margin: 1rem 2.5%;
+    vertical-align: baseline;
+    position: relative;
+  }
+}
+				</style>
+
+				<script data-goatcounter="https://analytics.inmoth.ca/count" async src="//analytics.inmoth.ca/count.js"></script>
+
+		</head>
+
+		<body>
+<header class="article-title">
+  <nav role="menubar">
+	  / <a aria-label="Home" href="https://www.inmoth.ca/">home</a> / Rust is the New C
+  </nav>
+</header>
+
+<article>
+	<section class="article-date">2026-03-02	</section>
+	<p>Hear me out. Newer languages (assembler -&gt; C<label for="sn-0" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-0" class="margin-toggle"/>
+<span class="sidenote">I know other languages pre-date C, please bear with me for colour</span>
+ or C -&gt; rust) often provide a transition from an unconstrained environment to a more constrained environment, with a significant boost in the compilers ability to detect bugs. This transition from unconstrained to constrained is always irritating for some <label for="sn-1" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-1" class="margin-toggle"/>
+<span class="sidenote">For a wonderful example of this, see <a href="https://users.cs.utah.edu/~elb/folklore/mel.html">The Story of Mel</a></span>
+, but eliminates an entire class of bug. Let me explain.</p>
+<p>C codifies some specific patterns, and in doing so adds guardrails around what can be done. I think this is best described with the <code>while</code> loop. Check this pseudo-assembler</p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">MOV</span><span class="w"> </span><span class="no">$R0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="c1">// r0 = 10</span>
+<span class="nl">start:</span>
+<span class="w">    </span><span class="nf">CMP</span><span class="w"> </span><span class="no">$R0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c1">// result = (r0 == 0)</span>
+<span class="w">    </span><span class="nf">JE</span><span class="w"> </span><span class="no">end</span><span class="w">      </span><span class="c1">// if result is true: goto end</span>
+<span class="w">    </span><span class="nf">SUB</span><span class="w"> </span><span class="no">$R0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="c1">// r0 -= 1</span>
+<span class="w">    </span><span class="nf">JMP</span><span class="w"> </span><span class="no">start</span><span class="w">   </span><span class="c1">// goto start</span>
+<span class="nl">end:</span>
+<span class="w">    </span><span class="c1">// fin</span>
+</code></pre></div>
+
+<p>This isn't the only way it could be written <label for="sn-2" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-2" class="margin-toggle"/>
+<span class="sidenote">In fact, this is not real code so it can't be written that way!</span>
+. The interesting point about the above code is that each line needs to be in this relative order or things fall apart quickly. For example, if you forget the comparison, you'll be able to run the code, but it's basically a 50-50 chance of either skipping the loop or entering an infinite loop. The same can happen if the variable initialization is missing, or the jump if equal (<code>JE</code>) is missing. </p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">MOV</span><span class="w"> </span><span class="no">$R0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="c1">// r0 = 10</span>
+<span class="nl">start:</span>
+<span class="w">    </span><span class="c1">// result is picked up from its last use</span>
+<span class="w">    </span><span class="nf">JE</span><span class="w"> </span><span class="no">end</span><span class="w">      </span><span class="c1">// if result is true: goto end</span>
+<span class="w">    </span><span class="nf">SUB</span><span class="w"> </span><span class="no">$R0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="c1">// r0 -= 1</span>
+<span class="w">    </span><span class="nf">JMP</span><span class="w"> </span><span class="no">start</span><span class="w">   </span><span class="c1">// goto start</span>
+<span class="nl">end:</span>
+<span class="w">    </span><span class="c1">// might reach this immediately, or never</span>
+</code></pre></div>
+
+<p>Now we look at how this loop is (typically) written in C.</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">x</span><span class="o">--</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>If any parts, except the loop body <label for="sn-3" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-3" class="margin-toggle"/>
+<span class="sidenote">Nobody said that C is perfect</span>
+, are missing the compiler will complain and assist the programmer with fixing the bug <label for="sn-4" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-4" class="margin-toggle"/>
+<span class="sidenote">Assistance levels will vary</span>
+. This is a move that limits what the programmer can do, but the tradeoff is the compiler can be more helpful.</p>
+<p>The power of assembler here is that the loop can be modified to get different behaviour without deviating from the norms of the language. For example, if the author felt like inserting some code between the <code>CMP</code> and the <code>JE</code> they would be free to do that. This would be a useful pattern to include code that needs to be run whether or not the loop exits. To get the equivalent behaviour in C, you would most likely use an infinite loop with a break condition. This allows a C user to get the same benefit, but they lose the ability for the compiler to infer useful things and help them prevent bugs. </p>
+<details>
+    <summary>Inserting between "`CMP` and `JE`" in C</summary>
+
+I will note that I could not come up with an interesting example, so please enjoy this placeholder comment.
+
+
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Fancy things go here</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">x</span><span class="o">--</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+</details>
+
+<p>The value of moving from assembler to C is not just code organization and expressiveness, it's the ability to constrain code in such a way that the compiler can help catch bugs. You can see a similar transition with Rust, not just in terms of having nice code patterns (enums, iterators, etc.) but in having the borrow checker, which fundamentally limits the things that a programmer can do in exchange for a reduction in bugs <label for="sn-5" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-5" class="margin-toggle"/>
+<span class="sidenote">In this case it's a more abstract from what's visibly on the screen, but no less important things like mutable aliasing, use-after-free, data races, and double frees</span>
+.</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w"> </span><span class="c1">// Compiler error: cannot borrow `v` as mutable</span>
+<span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">first</span><span class="p">);</span><span class="w"> </span><span class="c1">// `first` may point to freed memory</span>
+</code></pre></div>
+
+<p>The equivalent C code compiles without complaint, but <code>push</code> could reallocate the vector's backing memory, leaving <code>first</code> as a dangling pointer. Rust's borrow checker sees that <code>first</code> holds an immutable reference to <code>v</code>, and refuses to let you mutate <code>v</code> until that reference is no longer in use. Some programmers see this as overly restricting, and others find freedom in trusting the compiler to catch this kind of error.</p>
+<p>Sorry for the clickbait title, Rust isn't the new C, but it does follow the same trend of trading programmer freedom in exchange for compiler-assisted safety.</p>
+</article>
+		</body>
+</html>
